@@ -6,11 +6,42 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/13 15:12:43 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/15 09:45:13 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
+
+/*
+**	Checks whether line contains a label and if so sends to function processing label pointers
+*/
+void		parse_label_op(char *as_str)
+{
+	int		ctr;
+	char	*label;
+	char	*temp;
+
+	ctr = 0;
+	label = NULL;
+	temp = NULL;
+	while ((as_str[ctr] >= 'a' && as_str[ctr] <= 'z') || (as_str[ctr] >= '0' &&
+		   as_str[ctr] <= '9') || as_str[ctr] == '_')
+		ctr++;
+	if (as_str[ctr] == ':')
+	{
+		label = ft_strsub(as_str, 0, ctr);
+		temp = as_str;
+		as_str = ft_strsub(as_str, (ctr + 1), (ft_strlen(as_str) - ctr));
+		free(temp);
+		temp = as_str;
+		as_str = ft_strtrim(as_str);
+		free(temp);
+	}
+	if (label)
+		ft_printf("label  :%s\n", label);
+	ft_printf("opcode :%s\n", as_str);
+}
+		
 
 /*
 **	Checks the line read from the file, and calls relevant function to process the line
@@ -23,19 +54,30 @@ void		parse_line(char *as_str)
 	if (trim_str[0] == '.')
 	{
 		if (ft_strncmp(trim_str, ".name", 5) == 0)
+		{
 			ft_printf("Champion name\n");
+			ft_printf("%s\n", trim_str);
+		}
 		else if (ft_strncmp(trim_str, ".comment", 8) == 0)
+		{
 			ft_printf("Champion description\n");
+			ft_printf("%s\n", trim_str);
+		}
 		else
+		{
 			ft_printf("Compiler instruction\n");
+			ft_printf("%s\n", trim_str);
+		}
 	}
 	else if (trim_str[0] == '#')
+	{
 		ft_printf("Comment\n");
+		ft_printf("%s\n", trim_str);
+	}
 	else if (trim_str[0])
-		ft_printf("Label or instruction\n");
+		parse_label_op(trim_str);
 	else
 		ft_printf("Empty line\n");
-	ft_printf("%s\n\n", trim_str);
 }
 
 /*
@@ -54,7 +96,7 @@ int			check_valid_file(char *file_name)
 
 /*
 **	Checks that correct number of arguments received, and that the passed argument ends with '.s'.
-**	If arguments are correct, tries to open the file and return fd if successfull.
+**	If arguments are correct, tries to open the file and returns fd if successfull.
 */
 int			check_arguments(int argc, char **argv)
 {
