@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/15 16:27:42 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/16 11:43:05 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,49 @@ void	swap_bytes(unsigned int i, int fd)
 	write(fd, buf, sizeof(i));
 }
 
-void		parse_line(char *as_str, t_prog *head)
+void		parse_line(char *as_str, t_prog **head)
 {
 	char	*trim_str;
-	char	**temp;
+//	char	**temp;
 	t_prog	*lst;
 
+	lst = (*head)->next;
+	while (lst)
+		lst = lst->next;
 	trim_str = ft_strtrim(as_str);
 	if (trim_str[0] == '.')
 	{
 		if (ft_strncmp(trim_str, ".name", 5) == 0)
 		{
-			lst = ft_memalloc(sizeof(t_prog));
+			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 			lst->data = ft_strsplit(trim_str, '"');
+			lst->next = NULL;
 			free(trim_str);
 		}
 		else if (ft_strncmp(trim_str, ".comment", 8) == 0)
 		{
-			lst = ft_memalloc(sizeof(t_prog));
+			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 			lst->data = ft_strsplit(trim_str, '"');
-
+			lst->next = NULL;
 			free(trim_str);
 		}
 		else
-			ft_printf("Compiler instruction\n");
+		{
+			ft_printf("Invalid command %s\n", trim_str);
+			exit(-1);
+		}
 	}
 	else if (trim_str[0] == '#')
-		ft_printf("Comment\n");
+		return ;
 	else if (trim_str[0])
+	{
+		lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		lst->data = ft_strsplit(trim_str, ' ');
+		lst->next = NULL;
 		ft_printf("Label or instruction\n");
+	}
 	else
-		ft_printf("Empty line\n");
+		return ;
 	ft_printf("%s\n\n", trim_str);
 }
 
@@ -136,6 +148,8 @@ int			check_arguments(int argc, char **argv)
 	return (fd);
 }
 
+#include <stdio.h>
+
 int			main(int argc, char **argv)
 {
 	int		fd;
@@ -143,17 +157,34 @@ int			main(int argc, char **argv)
 	int		fd2;
 	int 	offset;
 	header_t header;
+	t_prog	*head;
 	
-	fd2 = open("test.s", O_WRONLY | O_TRUNC /*| O_CREAT , 0666*/);
+	head = (t_prog *)ft_memalloc(sizeof(t_prog));
+	head->next = NULL;
+	fd2 = open("test.cor", O_WRONLY | O_TRUNC | O_CREAT , 0666);
 	fd = check_arguments(argc, argv);
 	header.prog_size = lseek(fd, 0, SEEK_END);
 	lseek(fd, 0, SEEK_SET);
 	as_str = NULL;
 	while ((offset = get_next_line(fd, &as_str)) > 0)
 	{
-		parse_line(as_str, fd2, &header/*, fd, offset*/);
+		parse_line(as_str, &head);
+		printf("-->%s\n", head->data[0]);
 		if (as_str)
 			free(as_str);
+	}
+	int i = 0;
+	t_prog *lst;
+	lst = head;
+	while (lst)
+	{
+		i = 0;
+		while (lst->data[i])
+		{
+			ft_printf("-->%s\n", lst->data[i]);
+			i++;
+		}
+		lst = lst->next;
 	}
 	close(fd);
 	return (0);
