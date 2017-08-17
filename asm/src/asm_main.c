@@ -6,13 +6,15 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/17 14:05:42 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/17 14:13:16 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
-
+/*
+ * frees the linked list
+*/
 void	ft_freelst(t_prog *lst)
 {
 	t_prog *temp;
@@ -25,6 +27,9 @@ void	ft_freelst(t_prog *lst)
 	}
 }
 
+/*
+ * gets the length 2D array
+*/
 size_t	ft_arrlen(char **arr)
 {
 	size_t	i;
@@ -36,9 +41,8 @@ size_t	ft_arrlen(char **arr)
 }
 
 /*
- **	Checks the line read from the file, and calls relevant function to process the line
- */
-
+ * swaps bytes for BIG ENDIAN
+*/
 void	swap_bytes(unsigned int i, int fd)
 {
 	unsigned char buf[4];
@@ -49,6 +53,10 @@ void	swap_bytes(unsigned int i, int fd)
 	write(fd, buf, sizeof(i));
 }
 
+/*
+ * finds the first occurence of c in str and returns the index of where it was 
+ * found, else it returns -1
+*/
 int		ft_chr_i(char *str, char c)
 {
 	int		i;
@@ -63,7 +71,10 @@ int		ft_chr_i(char *str, char c)
 	return (-1);
 }
 
-
+/*
+ * Checks the line read from the file, and creates a linked list based on
+ * the data.
+ */
 void		parse_line(char *as_str, t_prog **head)
 {
 	char	*trim_str;
@@ -211,7 +222,8 @@ void		parse_line(char *as_str, t_prog **head)
 	free(trim_str);
 }
 
-void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/)
+/*
+void		parse_list(char *as_str, int fd2, header_t *header)
 {
 	char	*trim_str;
 	char	**temp;
@@ -244,6 +256,7 @@ void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/
 		ft_printf("Empty line\n");
 	ft_printf("%s\n\n", trim_str);
 }
+*/
 
 /*
  **	Checks that the last two chars in the file name is '.s'.
@@ -260,8 +273,10 @@ int			check_valid_file(char *file_name)
 }
 
 /*
- **	Checks that correct number of arguments received, and that the passed argument ends with '.s'.
- **	If arguments are correct, tries to open the file and return fd if successfull.
+ * Checks that correct number of arguments received, and that the passed 
+ * argument ends with '.s'.
+ * If arguments are correct, tries to open the file and return fd 
+ * if successfull.
  */
 int			check_arguments(int argc, char **argv)
 {
@@ -285,10 +300,6 @@ int			check_arguments(int argc, char **argv)
 	return (fd);
 }
 
-
-
-
-#include <stdio.h>
 
 int			main(int argc, char **argv)
 {
