@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/07/28 11:13:43 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/08/16 17:13:35 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRSC	=	ft_atoi.c		\
 			ft_printf.c		\
 			ft_strsplit_shell.c	\
 			free_2d.c		\
+			ft_split.c		\
 
 OSRC	=	ft_atoi.o		\
 			ft_bzero.o		\
@@ -137,6 +138,7 @@ OSRC	=	ft_atoi.o		\
 			ft_printf.o		\
 			ft_strsplit_shell.o	\
 			free_2d.o		\
+			ft_split.o		\
 
 FLAGS	=	-Wall -Werror -Wextra
 

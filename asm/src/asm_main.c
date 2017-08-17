@@ -6,11 +6,34 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/16 11:43:05 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/17 14:05:42 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
+
+
+void	ft_freelst(t_prog *lst)
+{
+	t_prog *temp;
+
+	while (lst)
+	{
+		temp = lst;
+		lst = lst->next;
+		free(temp);
+	}
+}
+
+size_t	ft_arrlen(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 /*
  **	Checks the line read from the file, and calls relevant function to process the line
@@ -26,16 +49,42 @@ void	swap_bytes(unsigned int i, int fd)
 	write(fd, buf, sizeof(i));
 }
 
+int		ft_chr_i(char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+
 void		parse_line(char *as_str, t_prog **head)
 {
 	char	*trim_str;
-//	char	**temp;
+	char	*tmp;
+	int		i;
 	t_prog	*lst;
+	t_prog	*temp;
+	char	**ref;
+	char	**ref2;
 
-	lst = (*head)->next;
-	while (lst)
-		lst = lst->next;
+	temp = *head;
+	while (temp && temp->next)
+		temp = temp->next;
+
 	trim_str = ft_strtrim(as_str);
+	if ((i = ft_chr_i(trim_str, '#')) > -1)
+	{
+		tmp = ft_strsub(trim_str, 0, i);
+		free(trim_str);
+		trim_str = tmp;
+	}
 	if (trim_str[0] == '.')
 	{
 		if (ft_strncmp(trim_str, ".name", 5) == 0)
@@ -43,14 +92,12 @@ void		parse_line(char *as_str, t_prog **head)
 			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 			lst->data = ft_strsplit(trim_str, '"');
 			lst->next = NULL;
-			free(trim_str);
 		}
 		else if (ft_strncmp(trim_str, ".comment", 8) == 0)
 		{
 			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 			lst->data = ft_strsplit(trim_str, '"');
 			lst->next = NULL;
-			free(trim_str);
 		}
 		else
 		{
@@ -62,14 +109,106 @@ void		parse_line(char *as_str, t_prog **head)
 		return ;
 	else if (trim_str[0])
 	{
+		int k = 0;
+		int len ;
+		int cnt = 0;
 		lst = (t_prog *)ft_memalloc(sizeof(t_prog));
-		lst->data = ft_strsplit(trim_str, ' ');
-		lst->next = NULL;
+		if ((i = ft_chr_i(trim_str, ':')) > -1)
+		{
+			if (i > 0 && trim_str[i - 1] != '%')
+			{
+				lst->label = ft_strsub(trim_str, 0, i);
+				if(*(trim_str + i + 1) != '\0')
+				{
+					ref = ft_strsplit(trim_str + i + 1, ',');
+					ref2 = ft_split(ref[0], ' ');
+					len = ft_arrlen(ref) + ft_arrlen(ref2);
+					lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+					while (ref2[cnt])
+					{
+						lst->data[k] = ft_strdup(ref2[cnt]);
+						k++;
+						cnt++;
+					}
+					cnt = 1;
+					while (ref[cnt])
+					{
+						lst->data[k] = ft_strdup(ref[cnt]);
+						k++;
+						cnt++;
+					}
+					lst->data[k] = NULL;
+					lst->next = NULL;
+					free_2d(&ref);
+					free_2d(&ref2);
+				}
+				else
+					lst->data = NULL;
+			}
+			else
+			{
+				lst->label = NULL;
+				ref = ft_strsplit(trim_str, ',');
+				ref2 = ft_split(ref[0], ' ');
+				len = ft_arrlen(ref) + ft_arrlen(ref2);
+				lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+				while (ref2[cnt])
+				{
+					lst->data[k] = ft_strdup(ref2[cnt]);
+					k++;
+					cnt++;
+				}
+				cnt = 1;
+				while (ref[cnt])
+				{
+					lst->data[k] = ft_strdup(ref[cnt]);
+					k++;
+					cnt++;
+				}
+				lst->data[k] = NULL;
+				lst->next = NULL;
+				free_2d(&ref);
+				free_2d(&ref2);
+			}
+		}
+		else
+		{
+			k = 0;
+			ref = ft_strsplit(trim_str, ',');
+			ref2 = ft_split(ref[0], ' ');
+			len = ft_arrlen(ref) + ft_arrlen(ref2);
+			lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+		while (ref2[cnt])
+			{
+				lst->data[k] = ft_strdup(ref2[cnt]);
+				k++;
+				cnt++;
+			}
+			cnt = 1;
+			while (ref[cnt])
+			{
+				lst->data[k] = ft_strdup(ref[cnt]);
+				k++;
+				cnt++;
+			}
+			lst->data[k] = NULL;
+			lst->next = NULL;
+			free_2d(&ref);
+			free_2d(&ref2);
+		}
 		ft_printf("Label or instruction\n");
 	}
 	else
+	{
+		free(trim_str);
 		return ;
+	}
+	if (*head)
+		temp->next = lst;
+	else
+		*head = lst;
 	ft_printf("%s\n\n", trim_str);
+	free(trim_str);
 }
 
 void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/)
@@ -82,7 +221,6 @@ void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/
 		if (ft_strncmp(trim_str, ".name", 5) == 0)
 		{
 			temp = ft_strsplit(trim_str, '"');
-			free(trim_str);
 			header->magic = COREWAR_EXEC_MAGIC;
 			swap_bytes(header->magic, fd2);
 			ft_strcpy(header->prog_name, temp[1]);
@@ -91,7 +229,6 @@ void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/
 		else if (ft_strncmp(trim_str, ".comment", 8) == 0)
 		{
 			temp = ft_strsplit(trim_str, '"');
-			free(trim_str);
 			ft_strcpy(header->comment, temp[1]);
 			swap_bytes(header->prog_size,fd2);
 			write(fd2, temp[1], (COMMENT_LENGTH + 4));
@@ -110,7 +247,7 @@ void		parse_list(char *as_str, int fd2, header_t *header/*, int fd, int offset*/
 
 /*
  **	Checks that the last two chars in the file name is '.s'.
-*/
+ */
 int			check_valid_file(char *file_name)
 {
 	int		fn_len;
@@ -148,6 +285,9 @@ int			check_arguments(int argc, char **argv)
 	return (fd);
 }
 
+
+
+
 #include <stdio.h>
 
 int			main(int argc, char **argv)
@@ -158,9 +298,8 @@ int			main(int argc, char **argv)
 	int 	offset;
 	header_t header;
 	t_prog	*head;
-	
-	head = (t_prog *)ft_memalloc(sizeof(t_prog));
-	head->next = NULL;
+
+	head = NULL;
 	fd2 = open("test.cor", O_WRONLY | O_TRUNC | O_CREAT , 0666);
 	fd = check_arguments(argc, argv);
 	header.prog_size = lseek(fd, 0, SEEK_END);
@@ -169,23 +308,41 @@ int			main(int argc, char **argv)
 	while ((offset = get_next_line(fd, &as_str)) > 0)
 	{
 		parse_line(as_str, &head);
-		printf("-->%s\n", head->data[0]);
 		if (as_str)
+		{
 			free(as_str);
+			as_str = NULL;
+		}
 	}
+	if (as_str)
+		{
+			free(as_str);
+			as_str = NULL;
+		}
+
 	int i = 0;
 	t_prog *lst;
 	lst = head;
 	while (lst)
 	{
 		i = 0;
-		while (lst->data[i])
+		ft_printf("-------------\n");
+		if (lst->label)
+		{
+			ft_printf("-->%s\n", lst->label);
+			free(lst->label);
+		}
+		while (lst->data && lst->data[i])
 		{
 			ft_printf("-->%s\n", lst->data[i]);
+			free(lst->data[i]);
 			i++;
 		}
+		if (lst->data)
+			free(lst->data);
 		lst = lst->next;
 	}
+	ft_freelst(head);
 	close(fd);
 	return (0);
 }
