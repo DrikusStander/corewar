@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/17 14:13:16 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/17 18:10:33 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,154 +72,154 @@ int		ft_chr_i(char *str, char c)
 }
 
 /*
+ * if a line starts with a '.' it checks if the line is the program name or the
+ * program comments, and saves it into a list item
+*/
+void	ft_nm_com(t_args *ag)
+{
+	if (ft_strncmp(ag->trim_str, ".name", 5) == 0)
+	{
+		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		ag->lst->data = ft_strsplit(ag->trim_str, '"');
+	}
+	else if (ft_strncmp(ag->trim_str, ".comment", 8) == 0)
+	{
+		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		ag->lst->data = ft_strsplit(ag->trim_str, '"');
+	}
+	else
+	{
+		ft_printf("Invalid command %s\n", ag->trim_str);
+		exit(-1);
+	}
+}
+
+
+/*
+ * if the line consists of a label the label and any commands that are on the
+ * same line is saved into a list item
+*/
+void	ft_lbl(t_args *ag, int i)
+{
+	int		cnt;
+	int		len;
+	int		k;
+
+	cnt = 0;
+	k = 0;
+	ag->lst->label = ft_strsub(ag->trim_str, 0, i);
+	if (*(ag->trim_str + i + 1) != '\0')
+	{
+		ag->ref = ft_strsplit(ag->trim_str + i + 1, ',');
+		ag->ref2 = ft_split(ag->ref[0], ' ');
+		len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
+		ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+		while (ag->ref2[cnt])
+			ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+		cnt = 1;
+		while (ag->ref[cnt])
+			ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+		ag->lst->data[k] = NULL;
+		free_2d(&ag->ref);
+		free_2d(&ag->ref2);
+	}
+	else
+		ag->lst->data = NULL;
+}
+
+/*
+ * gets the commands in the line, and save it in a list item
+*/ 
+void	ft_com(t_args *ag)
+{
+	int		len;
+	int		cnt;
+	int		k;
+
+	cnt = 0;
+	k = 0;
+	ag->lst->label = NULL;
+	ag->ref = ft_strsplit(ag->trim_str, ',');
+	ag->ref2 = ft_split(ag->ref[0], ' ');
+	len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
+	ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+	while (ag->ref2[cnt])
+		ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+	cnt = 1;
+	while (ag->ref[cnt])
+		ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+	ag->lst->data[k] = NULL;
+	free_2d(&ag->ref);
+	free_2d(&ag->ref2);
+}
+
+/*
+ * checks if a line contains a label and calls the correct function for parsing 
+ * the line.
+*/ 
+void	ft_lbl_com(t_args *ag)
+{
+	int 	i;
+
+	ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+	if ((i = ft_chr_i(ag->trim_str, ':')) > -1)
+	{
+		if (i > 0 && ag->trim_str[i - 1] != '%')
+			ft_lbl(ag, i);
+		else
+			ft_com(ag);
+	}
+	else
+		ft_com(ag);
+	ft_printf("Label or instruction\n");
+}
+
+/*
+ * sets the head of the linked list, and if the head is already set it links the
+ * next item of the list to the previous.
+*/
+void	ft_setlist(t_args *ag)
+{
+	t_prog	*temp;
+	
+	temp = ag->head;
+	while (temp && temp->next)
+		temp = temp->next;
+	if (ag->head)
+		temp->next = ag->lst;
+	else
+		ag->head = ag->lst;
+
+}
+
+/*
  * Checks the line read from the file, and creates a linked list based on
  * the data.
  */
-void		parse_line(char *as_str, t_prog **head)
+void		parse_line(t_args *ag)
 {
-	char	*trim_str;
 	char	*tmp;
 	int		i;
-	t_prog	*lst;
-	t_prog	*temp;
-	char	**ref;
-	char	**ref2;
-
-	temp = *head;
-	while (temp && temp->next)
-		temp = temp->next;
-
-	trim_str = ft_strtrim(as_str);
-	if ((i = ft_chr_i(trim_str, '#')) > -1)
+	
+	ag->trim_str = ft_strtrim(ag->line);
+	if ((i = ft_chr_i(ag->trim_str, '#')) > -1)
 	{
-		tmp = ft_strsub(trim_str, 0, i);
-		free(trim_str);
-		trim_str = tmp;
+		tmp = ft_strsub(ag->trim_str, 0, i);
+		free(ag->trim_str);
+		ag->trim_str = tmp;
 	}
-	if (trim_str[0] == '.')
-	{
-		if (ft_strncmp(trim_str, ".name", 5) == 0)
-		{
-			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
-			lst->data = ft_strsplit(trim_str, '"');
-			lst->next = NULL;
-		}
-		else if (ft_strncmp(trim_str, ".comment", 8) == 0)
-		{
-			lst = (t_prog *)ft_memalloc(sizeof(t_prog));
-			lst->data = ft_strsplit(trim_str, '"');
-			lst->next = NULL;
-		}
-		else
-		{
-			ft_printf("Invalid command %s\n", trim_str);
-			exit(-1);
-		}
-	}
-	else if (trim_str[0] == '#')
-		return ;
-	else if (trim_str[0])
-	{
-		int k = 0;
-		int len ;
-		int cnt = 0;
-		lst = (t_prog *)ft_memalloc(sizeof(t_prog));
-		if ((i = ft_chr_i(trim_str, ':')) > -1)
-		{
-			if (i > 0 && trim_str[i - 1] != '%')
-			{
-				lst->label = ft_strsub(trim_str, 0, i);
-				if(*(trim_str + i + 1) != '\0')
-				{
-					ref = ft_strsplit(trim_str + i + 1, ',');
-					ref2 = ft_split(ref[0], ' ');
-					len = ft_arrlen(ref) + ft_arrlen(ref2);
-					lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
-					while (ref2[cnt])
-					{
-						lst->data[k] = ft_strdup(ref2[cnt]);
-						k++;
-						cnt++;
-					}
-					cnt = 1;
-					while (ref[cnt])
-					{
-						lst->data[k] = ft_strdup(ref[cnt]);
-						k++;
-						cnt++;
-					}
-					lst->data[k] = NULL;
-					lst->next = NULL;
-					free_2d(&ref);
-					free_2d(&ref2);
-				}
-				else
-					lst->data = NULL;
-			}
-			else
-			{
-				lst->label = NULL;
-				ref = ft_strsplit(trim_str, ',');
-				ref2 = ft_split(ref[0], ' ');
-				len = ft_arrlen(ref) + ft_arrlen(ref2);
-				lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
-				while (ref2[cnt])
-				{
-					lst->data[k] = ft_strdup(ref2[cnt]);
-					k++;
-					cnt++;
-				}
-				cnt = 1;
-				while (ref[cnt])
-				{
-					lst->data[k] = ft_strdup(ref[cnt]);
-					k++;
-					cnt++;
-				}
-				lst->data[k] = NULL;
-				lst->next = NULL;
-				free_2d(&ref);
-				free_2d(&ref2);
-			}
-		}
-		else
-		{
-			k = 0;
-			ref = ft_strsplit(trim_str, ',');
-			ref2 = ft_split(ref[0], ' ');
-			len = ft_arrlen(ref) + ft_arrlen(ref2);
-			lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
-		while (ref2[cnt])
-			{
-				lst->data[k] = ft_strdup(ref2[cnt]);
-				k++;
-				cnt++;
-			}
-			cnt = 1;
-			while (ref[cnt])
-			{
-				lst->data[k] = ft_strdup(ref[cnt]);
-				k++;
-				cnt++;
-			}
-			lst->data[k] = NULL;
-			lst->next = NULL;
-			free_2d(&ref);
-			free_2d(&ref2);
-		}
-		ft_printf("Label or instruction\n");
-	}
+	if (ag->trim_str[0] == '.')
+		ft_nm_com(ag);
+	else if (ag->trim_str[0])
+		ft_lbl_com(ag);
 	else
 	{
-		free(trim_str);
+		free(ag->trim_str);
 		return ;
 	}
-	if (*head)
-		temp->next = lst;
-	else
-		*head = lst;
-	ft_printf("%s\n\n", trim_str);
-	free(trim_str);
+	ft_setlist(ag);
+	ft_printf("%s\n", ag->trim_str);
+	free(ag->trim_str);
 }
 
 /*
@@ -304,36 +304,36 @@ int			check_arguments(int argc, char **argv)
 int			main(int argc, char **argv)
 {
 	int		fd;
-	char	*as_str;
 	int		fd2;
 	int 	offset;
 	header_t header;
 	t_prog	*head;
+	t_args	ag;
 
+	ft_bzero(&ag, sizeof(t_args));
 	head = NULL;
 	fd2 = open("test.cor", O_WRONLY | O_TRUNC | O_CREAT , 0666);
 	fd = check_arguments(argc, argv);
 	header.prog_size = lseek(fd, 0, SEEK_END);
 	lseek(fd, 0, SEEK_SET);
-	as_str = NULL;
-	while ((offset = get_next_line(fd, &as_str)) > 0)
+	while ((offset = get_next_line(fd, &ag.line)) > 0)
 	{
-		parse_line(as_str, &head);
-		if (as_str)
+		parse_line(&ag);
+		if (ag.line)
 		{
-			free(as_str);
-			as_str = NULL;
+			free(ag.line);
+			ag.line = NULL;
 		}
 	}
-	if (as_str)
+	if (ag.line)
 		{
-			free(as_str);
-			as_str = NULL;
+			free(ag.line);
+			ag.line	= NULL;
 		}
 
 	int i = 0;
 	t_prog *lst;
-	lst = head;
+	lst = ag.head;
 	while (lst)
 	{
 		i = 0;
@@ -353,7 +353,8 @@ int			main(int argc, char **argv)
 			free(lst->data);
 		lst = lst->next;
 	}
-	ft_freelst(head);
+	ft_printf("-------------\n");
+	ft_freelst(ag.head);
 	close(fd);
 	return (0);
 }
