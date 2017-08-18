@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/18 10:43:47 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/18 14:59:09 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 
 typedef struct s_prog	t_prog;
 typedef struct s_args	t_args;
+typedef struct s_func	t_func;
 
 struct					s_prog
 {
 	char				*label;
 	char				**data;
+	int					bytes;
 	t_prog				*next;
 };
 
@@ -32,10 +34,18 @@ struct					s_args
 {
 	t_prog				*head;
 	t_prog				*lst;
+	header_t			*header;
+	char				**f_str;
 	char				*line;
 	char				*trim_str;
 	char				**ref;
 	char				**ref2;
+	int					fd;
+};
+
+struct					s_func
+{
+	void				(*func[16])(t_args *, t_prog *);
 };
 
 int						check_arguments(int argc, char **argv);
@@ -47,8 +57,25 @@ void					ft_com(t_args *ag);
 void					ft_lbl(t_args *ag, int i);
 void					ft_nm_com(t_args *ag);
 int						ft_chr_i(char *str, char c);
+int						ft_chrn_i(char *str, char c);
 void					swap_bytes(unsigned int i, int fd);
 size_t					ft_arrlen(char **arr);
 void					ft_freelst(t_prog *lst);
+void					ft_lfork(t_args *ag, t_prog *lst);
+void					ft_sti(t_args *ag, t_prog *lst);
+void					ft_fork(t_args *ag, t_prog *lst);
+void					ft_lld(t_args *ag, t_prog *lst);
+void					ft_ld(t_args *ag, t_prog *lst);
+void					ft_add(t_args *ag, t_prog *lst);
+void					ft_zjmp(t_args *ag, t_prog *lst);
+void					ft_sub(t_args *ag, t_prog *lst);
+void					ft_ldi(t_args *ag, t_prog *lst);
+void					ft_or(t_args *ag, t_prog *lst);
+void					ft_st(t_args *ag, t_prog *lst);
+void					ft_aff(t_args *ag, t_prog *lst);
+void					ft_live(t_args *ag, t_prog *lst);
+void					ft_xor(t_args *ag, t_prog *lst);
+void					ft_lldi(t_args *ag, t_prog *lst);
+void					ft_and(t_args *ag, t_prog *lst);
 
 #endif

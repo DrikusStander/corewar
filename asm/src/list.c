@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:55:53 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/18 11:01:09 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/18 15:39:01 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_lbl_com(t_args *ag)
 	}
 	else
 		ft_com(ag);
-	ft_printf("Label or instruction\n");
 }
 
 /*
@@ -83,16 +82,71 @@ void	ft_com(t_args *ag)
  */
 void	ft_nm_com(t_args *ag)
 {
+	int		i;
+	int		j;
+	char	*temp;
+
 	if (ft_strncmp(ag->trim_str, ".name", 5) == 0)
 	{
-		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		if ((i = ft_chr_i(ag->trim_str, '"')) > -1)
+		{
+			if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
+			{
+				temp = ft_strsub(ag->trim_str, (i + 1), (j - 1));
+				if (ft_strlen(temp) > PROG_NAME_LENGTH)
+				{
+					ft_printf("Name to big:\n%s\n", ag->header->prog_name);
+					free(temp);
+					exit(-1);
+				}
+				ft_strcpy(ag->header->prog_name, temp);
+				free(temp);
+			}
+			else
+			{
+				ft_printf("Non terminated string:\n%s\n", ag->trim_str);
+				exit(-1);
+			}
+		}
+		else
+		{
+			ft_printf("Invalid name:\n%s\n", ag->trim_str);
+			exit(-1);
+		}
+/*		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 		ag->lst->data = ft_strsplit(ag->trim_str, '"');
-	}
+*/	}
 	else if (ft_strncmp(ag->trim_str, ".comment", 8) == 0)
 	{
-		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		if ((i = ft_chr_i(ag->trim_str, '"')) > -1)
+		{
+			if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
+			{
+				temp = ft_strsub(ag->trim_str, (i + 1), (j - 1));
+				ft_printf("\n{{{{{{{{{{{{{{{\n%d\n%d\n}}}}}}}}}}}}}}}\n", ft_strlen(temp), COMMENT_LENGTH);
+				if (ft_strlen(temp) > COMMENT_LENGTH)
+				{
+					ft_printf("comment to big:\n%s\n", ag->header->comment);
+					free(temp);
+					exit(-1);
+				}
+				ft_strcpy(ag->header->comment, temp);
+				free(temp);
+			}
+			else
+			{
+				ft_printf("Non terminated string:\n%s\n", ag->trim_str);
+				exit(-1);
+			}
+		}
+		else
+		{
+			ft_printf("Invalid name:\n%s\n", ag->trim_str);
+			exit(-1);
+		}
+/*		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
 		ag->lst->data = ft_strsplit(ag->trim_str, '"');
-	}
+*/	}
 	else
 	{
 		ft_printf("Invalid command %s\n", ag->trim_str);

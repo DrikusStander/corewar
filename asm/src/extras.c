@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:04:39 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/18 11:06:22 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/18 14:33:21 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,24 @@ int		ft_chr_i(char *str, char c)
 		if (str[i] == c)
 			return (i);
 		i++;
+	}
+	return (-1);
+}
+
+/*
+ * finds the last occurence of c in str and returns the index of where it was
+ * found, else it returns -1
+ */
+int		ft_chrn_i(char *str, char c)
+{
+	int		i;
+
+	i = ft_strlen(str);
+	while (i > -1)
+	{
+		if (str[i] == c)
+			return (i);
+		i--;
 	}
 	return (-1);
 }

@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/18 11:09:23 by hstander         ###   ########.fr        #
+#    Updated: 2017/08/18 12:41:19 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,14 @@ SRC			=	$(PATH_SRC)asm_main.c\
 				$(PATH_SRC)list.c\
 				$(PATH_SRC)extras.c\
 				$(PATH_SRC)parse_line.c\
+				$(PATH_SRC)test.c\
 
 OSC			=	asm_main.o\
 				check.o\
 				list.o\
 				extras.o\
 				parse_line.o\
+				test.o\
 
 FLAGS		=	-Wall -Werror -Wextra
 
