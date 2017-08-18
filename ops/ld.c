@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/18 15:21:50 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/18 15:45:38 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,18 @@ static void			create_acb(int fd, char *arg1, char *reg)
 	unsigned char	hex;
 	int				write_ret;
 
-	hex = 0x00;
-	if (arg1[0] == '%')
-		hex = hex | 0x80;
-	else if (arg1[0] == 'r')
-		hex = hex | 0x40;
-	else
-		hex = hex | 0xC0;
-	if (reg[0] == 'r')
-		hex = hex | 0x01;
-	else
+	if (reg[0] != 'r')
 	{
-		ft_printf("Invalid parameter (2) for ld - exiting\n");
-		exit (1);
-	}
+		ft_printf("Invalid parameter 2 for ld, should be a register - exiting\n");
+		exit (0);
+	}	
+	hex = 0b00010000;
+	if (arg1[0] == '%')
+		hex = hex | 0b10000000;
+	else if (arg1[0] == 'r')
+		hex = hex | 0b01000000;
+	else
+		hex = hex | 0b11000000;
 	write_ret = write(fd, (void *)&hex, 1);
 	if (write_ret < 0)
 	{
@@ -130,7 +128,7 @@ int			main(void)
 	int		ret;
 
 	ret = open("test.s", O_APPEND | O_CREAT | O_TRUNC | O_RDWR, 0755);
-	handle_ld(ret, "%1234", "r1");
+	handle_ld(ret, "1234", "r1");
 	close(ret);
 	return (0);
 }
