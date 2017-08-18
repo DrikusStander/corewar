@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/17 16:48:34 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/18 15:21:50 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,30 @@
 
 /*
 **	Swops the bits of an int from little endian to big endian
+**	and prints to file the correct number of bytes
 */
-static int			swop_int_bits(int i)
+static int			swop_int_bits(int fd, int i, char c)
 {
-	i = (i >> 24 & 0xFF) | (i >> 8 & 0xFF00) |
-		(i << 8 & 0xFF0000) | (i << 24 & 0xFF000000);
+	unsigned char	byte_swop;
+
+	if (c == '%')
+	{
+		byte_swop = (i >> 8) & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
+		byte_swop = i & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
+	}
+	else if (c == 'r')
+	{
+		byte_swop = i & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
+	}
+	else
+	{
+		i = (i >> 24 & 0xFF) | (i >> 8 & 0xFF00) |
+			(i << 8 & 0xFF0000) | (i << 24 & 0xFF000000);
+		write(fd, (void *)&i, 4);
+	}
 	return (i);
 }
 
@@ -46,16 +65,16 @@ static void			create_param(int fd, char *arg1, char *reg)
 	}
 	else
 		arg_param = ft_atoi(arg1);
-	arg_param = swop_int_bits(arg_param);
-	write(fd, (void *)&arg_param, 4);
+	arg_param = swop_int_bits(fd, arg_param, arg1[0]);
 	sub = ft_strsub(reg, 1, (ft_strlen(reg) - 1));
 	arg_param = ft_atoi(sub);
 	write(fd, (void *)&arg_param, 1);
+	free(sub);
 }
 
 /*	
 **	Function receives file descriptor and ld's parameters as arguments.
-**	Porcesses the parameters into an argument code byte, and writes the
+**	Processes the parameters into an argument code byte, and writes the
 **	acb to the file indicated by fd.
 */
 static void			create_acb(int fd, char *arg1, char *reg)
@@ -111,7 +130,7 @@ int			main(void)
 	int		ret;
 
 	ret = open("test.s", O_APPEND | O_CREAT | O_TRUNC | O_RDWR, 0755);
-	handle_ld(ret, "1", "r5");
+	handle_ld(ret, "%1234", "r1");
 	close(ret);
 	return (0);
 }
