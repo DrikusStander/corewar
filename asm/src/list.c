@@ -1,0 +1,134 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/08/18 10:55:53 by hstander          #+#    #+#             */
+/*   Updated: 2017/08/18 11:01:09 by hstander         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../headers/asm.h"
+
+/*
+ * checks if a line contains a label and calls the correct function for parsing
+ * the line.
+ */
+void	ft_lbl_com(t_args *ag)
+{
+	int		i;
+
+	ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+	if ((i = ft_chr_i(ag->trim_str, ':')) > -1)
+	{
+		if (i > 0 && ag->trim_str[i - 1] != '%')
+			ft_lbl(ag, i);
+		else
+			ft_com(ag);
+	}
+	else
+		ft_com(ag);
+	ft_printf("Label or instruction\n");
+}
+
+/*
+ * sets the head of the linked list, and if the head is already set it links the
+ * next item of the list to the previous.
+ */
+void	ft_setlist(t_args *ag)
+{
+	t_prog	*temp;
+
+	temp = ag->head;
+	while (temp && temp->next)
+		temp = temp->next;
+	if (ag->head)
+		temp->next = ag->lst;
+	else
+		ag->head = ag->lst;
+
+}
+
+/*
+ * gets the commands in the line, and save it in a list item
+ */
+void	ft_com(t_args *ag)
+{
+	int		len;
+	int		cnt;
+	int		k;
+
+	cnt = 0;
+	k = 0;
+	ag->lst->label = NULL;
+	ag->ref = ft_strsplit(ag->trim_str, ',');
+	ag->ref2 = ft_split(ag->ref[0], ' ');
+	len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
+	ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+	while (ag->ref2[cnt])
+		ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+	cnt = 1;
+	while (ag->ref[cnt])
+		ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+	ag->lst->data[k] = NULL;
+	free_2d(&ag->ref);
+	free_2d(&ag->ref2);
+}
+
+/*
+ * if a line starts with a '.' it checks if the line is the program name or the
+ * program comments, and saves it into a list item
+ */
+void	ft_nm_com(t_args *ag)
+{
+	if (ft_strncmp(ag->trim_str, ".name", 5) == 0)
+	{
+		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		ag->lst->data = ft_strsplit(ag->trim_str, '"');
+	}
+	else if (ft_strncmp(ag->trim_str, ".comment", 8) == 0)
+	{
+		ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+		ag->lst->data = ft_strsplit(ag->trim_str, '"');
+	}
+	else
+	{
+		ft_printf("Invalid command %s\n", ag->trim_str);
+		exit(-1);
+	}
+}
+
+
+/*
+ * if the line consists of a label the label and any commands that are on the
+ * same line is saved into a list item
+ */
+void	ft_lbl(t_args *ag, int i)
+{
+	int		cnt;
+	int		len;
+	int		k;
+
+	cnt = 0;
+	k = 0;
+	ag->lst->label = ft_strsub(ag->trim_str, 0, i);
+	if (*(ag->trim_str + i + 1) != '\0')
+	{
+		ag->ref = ft_strsplit(ag->trim_str + i + 1, ',');
+		ag->ref2 = ft_split(ag->ref[0], ' ');
+		len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
+		ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
+		while (ag->ref2[cnt])
+			ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+		cnt = 1;
+		while (ag->ref[cnt])
+			ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+		ag->lst->data[k] = NULL;
+		free_2d(&ag->ref);
+		free_2d(&ag->ref2);
+	}
+	else
+		ag->lst->data = NULL;
+}

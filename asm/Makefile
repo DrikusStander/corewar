@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/13 11:13:05 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/08/18 11:09:23 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,17 @@ PATH_OSC	=	./orc/
 
 HEADERS		=	asm.h
 
-SRC			=	$(PATH_SRC)asm_main.c
+SRC			=	$(PATH_SRC)asm_main.c\
+				$(PATH_SRC)check.c\
+				$(PATH_SRC)list.c\
+				$(PATH_SRC)extras.c\
+				$(PATH_SRC)parse_line.c\
 
-OSC			=	asm_main.o		\
+OSC			=	asm_main.o\
+				check.o\
+				list.o\
+				extras.o\
+				parse_line.o\
 
 FLAGS		=	-Wall -Werror -Wextra
 
