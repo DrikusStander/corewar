@@ -6,23 +6,21 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/20 11:43:47 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/20 15:29:42 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
+#include <stdio.h>
 
 void		check_cor_header(int fd, void *head_buf, char *file_name)
 {
 	int		m_n;
 	void	*magic_nbr;
+	int i = 0;
 
-	m_n = COREWAR_EXEC_MAGIC;
-	magic_nbr = &m_n;
-
-	head_buf++;
 	ft_printf("fd :%i\n", fd);
-	if (ft_memcmp(head_buf, magic_nbr, 3) != 0)
+	if (ft_memcmp(head_buf, magic_nbr, 4) != 0)
 	{
 		ft_printf("Invalid magic number in header of %s - exiting\n", file_name);
 		//free(head_buf);
