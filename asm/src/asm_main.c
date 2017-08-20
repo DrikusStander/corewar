@@ -54,7 +54,6 @@ void		ft_init(t_args *ag, t_func *fc)
 int			main(int argc, char **argv)
 {
 	int		fd;
-	int 	offset;
 	t_prog	*head;
 	t_args	ag;
 	t_func	fc;
@@ -63,7 +62,7 @@ int			main(int argc, char **argv)
 	ag.header = (header_t *)ft_memalloc(sizeof(header_t));
 	head = NULL;
 	fd = check_arguments(argc, argv);
-	while ((offset = get_next_line(fd, &ag.line)) > 0)
+	while (get_next_line(fd, &ag.line) > 0)
 	{
 		parse_line(&ag);
 		if (ag.line)
