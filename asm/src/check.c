@@ -6,19 +6,20 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:43:59 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 09:51:11 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 15:07:18 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
 /*
- * Checks that the last two chars in the file name is '.s'.
- */
+** Checks that the last two chars in the file name is '.s'.
+*/
+
 int		check_valid_file(t_args *ag, char *file_name)
 {
 	int		fn_len;
-	char 	*temp;
+	char	*temp;
 
 	fn_len = ft_strlen(file_name);
 	if (file_name[fn_len - 1] != 's' || file_name[fn_len - 2] != '.')
@@ -33,11 +34,12 @@ int		check_valid_file(t_args *ag, char *file_name)
 }
 
 /*
- * Checks that correct number of arguments received, and that the passed
- * argument ends with '.s'.
- * If arguments are correct, tries to open the file and return fd
- * if successfull.
- */
+** Checks that correct number of arguments received, and that the passed
+** argument ends with '.s'.
+** If arguments are correct, tries to open the file and return fd
+** if successfull.
+*/
+
 int		check_arguments(t_args *ag, int argc, char **argv)
 {
 	int		fd;

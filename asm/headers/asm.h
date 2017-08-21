@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 13:26:40 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 15:21:21 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 typedef struct s_prog	t_prog;
 typedef struct s_args	t_args;
-typedef struct s_func	t_func;
 typedef struct s_size	t_size;
 
 struct					s_prog
@@ -40,6 +39,7 @@ struct					s_size
 
 struct					s_args
 {
+	void				(*func[17])(t_args *, t_prog *);
 	t_prog				*head;
 	t_prog				*lst;
 	header_t			*header;
@@ -52,14 +52,10 @@ struct					s_args
 	int					fd;
 };
 
-struct					s_func
-{
-	void				(*func[16])(t_args *, t_prog *);
-};
-
 int						check_arguments(t_args *ag, int argc, char **argv);
 int						check_valid_file(t_args *ag, char *file_name);
 void					parse_line(t_args *ag);
+void					ft_readfile(t_args *ag);
 void					ft_setlist(t_args *ag);
 void					ft_lbl_com(t_args *ag);
 void					ft_com(t_args *ag);
@@ -69,7 +65,6 @@ int						ft_chr_i(char *str, char c);
 int						ft_chrn_i(char *str, char c);
 void					swap_bytes(unsigned int i, int fd);
 size_t					ft_arrlen(char **arr);
-void					ft_freelst(t_prog *lst);
 void					ft_lfork(t_args *ag, t_prog *lst);
 void					ft_sti(t_args *ag, t_prog *lst);
 void					ft_fork(t_args *ag, t_prog *lst);
@@ -87,5 +82,10 @@ void					ft_xor(t_args *ag, t_prog *lst);
 void					ft_lldi(t_args *ag, t_prog *lst);
 void					ft_and(t_args *ag, t_prog *lst);
 int						label_offset(t_prog *lst, t_size *size_head);
+void					ft_free_all(t_args *ag);
+void					ft_freelst(t_prog *lst);
+void					ft_freelst_items(t_prog *lst);
+void					ft_initstr(t_args *ag);
+void					ft_init(t_args *ag);
 
 #endif
