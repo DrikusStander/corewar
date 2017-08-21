@@ -6,13 +6,31 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/18 15:25:24 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 10:05:18 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
-
+void		ft_initstr(t_args *ag)
+{
+	ag->f_str[0] = ft_strdup("lfork");
+	ag->f_str[1] = ft_strdup("sti");
+	ag->f_str[2] = ft_strdup("fork");
+	ag->f_str[3] = ft_strdup("lld");
+	ag->f_str[4] = ft_strdup("ld");
+	ag->f_str[5] = ft_strdup("add");
+	ag->f_str[6] = ft_strdup("zjmp");
+	ag->f_str[7] = ft_strdup("sub");
+	ag->f_str[8] = ft_strdup("ldi");
+	ag->f_str[9] = ft_strdup("or");
+	ag->f_str[10] = ft_strdup("st");
+	ag->f_str[11] = ft_strdup("aff");
+	ag->f_str[12] = ft_strdup("live");
+	ag->f_str[13] = ft_strdup("xor");
+	ag->f_str[14] = ft_strdup("lldi");
+	ag->f_str[15] = ft_strdup("and");
+}
 
 void		ft_init(t_args *ag, t_func *fc)
 {
@@ -33,23 +51,17 @@ void		ft_init(t_args *ag, t_func *fc)
 	fc->func[13] = &ft_xor;
 	fc->func[14] = &ft_lldi;
 	fc->func[15] = &ft_and;
-	ag->f_str[0] = ft_strdup("lfork");
-	ag->f_str[1] = ft_strdup("sti");
-	ag->f_str[2] = ft_strdup("fork");
-	ag->f_str[3] = ft_strdup("lld");
-	ag->f_str[4] = ft_strdup("ld");
-	ag->f_str[5] = ft_strdup("add");
-	ag->f_str[6] = ft_strdup("zjmp");
-	ag->f_str[7] = ft_strdup("sub");
-	ag->f_str[8] = ft_strdup("ldi");
-	ag->f_str[9] = ft_strdup("or");
-	ag->f_str[10] = ft_strdup("st");
-	ag->f_str[11] = ft_strdup("aff");
-	ag->f_str[12] = ft_strdup("live");
-	ag->f_str[13] = ft_strdup("xor");
-	ag->f_str[14] = ft_strdup("lldi");
-	ag->f_str[15] = ft_strdup("and");
+	ft_initstr(ag);
 }
+
+void		ft_writename(t_args *ag, int bytes)
+{
+	swap_bytes(COREWAR_EXEC_MAGIC, ag->fd);
+	write(ag->fd, &ag->header->prog_name, (PROG_NAME_LENGTH + 4));
+	swap_bytes(bytes, ag->fd);
+	write(ag->fd, &ag->header->comment, (COMMENT_LENGTH + 4));
+}
+
 
 int			main(int argc, char **argv)
 {
@@ -61,7 +73,7 @@ int			main(int argc, char **argv)
 	ft_bzero(&ag, sizeof(t_args));
 	ag.header = (header_t *)ft_memalloc(sizeof(header_t));
 	head = NULL;
-	fd = check_arguments(argc, argv);
+	fd = check_arguments(&ag, argc, argv);
 	while (get_next_line(fd, &ag.line) > 0)
 	{
 		parse_line(&ag);
@@ -77,23 +89,26 @@ int			main(int argc, char **argv)
 		ag.line	= NULL;
 	}
 	close(fd);
-	ag.fd = open("test.cor", O_WRONLY | O_TRUNC | O_CREAT , 0666);
+	
+	ag.fd = open(ag.file_name, O_WRONLY | O_TRUNC | O_CREAT , 0666);
 	ft_init(&ag, &fc);
 
 
 	
 	int i = 0;
 	int j = 0;
+	int bytes;
 	t_prog *lst;
 	lst = ag.head;
+	bytes = label_offset(lst);
+	ft_writename(&ag, bytes);
 
 	while (lst)
 	{
 		i = 0;
-		ft_printf("-------------\n");
 		if (lst->label)
 		{
-			ft_printf("-->%s\n", lst->label);
+			ft_printf("%s\n", lst->label);
 			free(lst->label);
 		}
 		j = 0;
@@ -113,7 +128,7 @@ int			main(int argc, char **argv)
 		}
 		while (lst->data && lst->data[i])
 		{
-			ft_printf("-->%s\n", lst->data[i]);
+			ft_printf("%s\n", lst->data[i]);
 			free(lst->data[i]);
 			i++;
 		}
@@ -121,10 +136,6 @@ int			main(int argc, char **argv)
 			free(lst->data);
 		lst = lst->next;
 	}
-	ft_printf("-------------\n");
-	ft_printf("name:\n%s\n", ag.header->prog_name);
-	ft_printf("comment:\n%s\n", ag.header->comment);
-
 	ft_freelst(ag.head);
 	close(ag.fd);
 	return (0);

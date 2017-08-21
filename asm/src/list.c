@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:55:53 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/18 16:21:35 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 10:05:14 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void	ft_com(t_args *ag)
 	len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
 	ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
 	while (ag->ref2[cnt])
-		ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+		ag->lst->data[k++] = ft_strtrim(ag->ref2[cnt++])/*ft_strdup(ag->ref2[cnt++])*/;
 	cnt = 1;
 	while (ag->ref[cnt])
-		ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+		ag->lst->data[k++] = ft_strtrim(ag->ref[cnt++]) /*ft_strdup(ag->ref[cnt++])*/;
 	ag->lst->data[k] = NULL;
 	free_2d(&ag->ref);
 	free_2d(&ag->ref2);
@@ -87,7 +87,7 @@ void	ft_name(t_args *ag, int i)
 
 	if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
 	{
-		temp = ft_strsub(ag->trim_str, (i + 1), (j - 1));
+		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > PROG_NAME_LENGTH)
 		{
 			ft_printf("Name to big:\n%s\n", ag->trim_str);
@@ -115,7 +115,7 @@ void	ft_comment(t_args *ag, int i)
 
 	if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
 	{
-		temp = ft_strsub(ag->trim_str, (i + 1), (j - 1));
+		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > COMMENT_LENGTH)
 		{
 			ft_printf("comment to big:\n%s\n", ag->trim_str);
@@ -194,10 +194,10 @@ void	ft_lbl(t_args *ag, int i)
 		len = ft_arrlen(ag->ref) + ft_arrlen(ag->ref2);
 		ag->lst->data = (char **)ft_memalloc(sizeof(char *) * (len));
 		while (ag->ref2[cnt])
-			ag->lst->data[k++] = ft_strdup(ag->ref2[cnt++]);
+			ag->lst->data[k++] = ft_strtrim(ag->ref2[cnt++])/*ft_strdup(ag->ref2[cnt++])*/;
 		cnt = 1;
 		while (ag->ref[cnt])
-			ag->lst->data[k++] = ft_strdup(ag->ref[cnt++]);
+			ag->lst->data[k++] = ft_strtrim(ag->ref[cnt++]) /*ft_strdup(ag->ref[cnt++])*/;
 		ag->lst->data[k] = NULL;
 		free_2d(&ag->ref);
 		free_2d(&ag->ref2);

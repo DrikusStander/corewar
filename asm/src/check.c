@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:43:59 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/18 10:46:59 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 09:51:11 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 /*
  * Checks that the last two chars in the file name is '.s'.
  */
-int		check_valid_file(char *file_name)
+int		check_valid_file(t_args *ag, char *file_name)
 {
 	int		fn_len;
+	char 	*temp;
 
 	fn_len = ft_strlen(file_name);
 	if (file_name[fn_len - 1] != 's' || file_name[fn_len - 2] != '.')
 		return (1);
 	else
+	{
+		temp = ft_strsub(file_name, 0, (fn_len - 2));
+		ag->file_name = ft_strjoin(temp, ".cor");
+		free(temp);
 		return (0);
+	}
 }
 
 /*
@@ -32,7 +38,7 @@ int		check_valid_file(char *file_name)
  * If arguments are correct, tries to open the file and return fd
  * if successfull.
  */
-int		check_arguments(int argc, char **argv)
+int		check_arguments(t_args *ag, int argc, char **argv)
 {
 	int		fd;
 
@@ -41,7 +47,7 @@ int		check_arguments(int argc, char **argv)
 		ft_printf("Invalid number of arguments. Usage: ./asm mychampion.s\n");
 		exit(0);
 	}
-	if (check_valid_file(argv[1]) != 0)
+	if (check_valid_file(ag, argv[1]) != 0)
 	{
 		ft_printf("Invalid file - file must end with .s extension\n");
 		exit(0);
