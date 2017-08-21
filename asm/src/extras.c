@@ -6,14 +6,42 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:04:39 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 09:23:38 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 13:10:53 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
 /*
- * frees the linked list
+ * a call to free all allocated memory.
+ */
+void	ft_free_all(t_args *ag)
+{
+	ft_freelst(ag->head);
+	free_2d(&ag->f_str);
+	free(ag->file_name);
+	free(ag->header);
+}
+
+
+/*
+ * frees the items inside the list.
+ */
+void	ft_freelst_items(t_prog *lst)
+{
+	int i;
+
+	i = 0;
+	if (lst->label)
+		free(lst->label);
+	while (lst->data && lst->data[i])
+		free(lst->data[i++]);
+	if (lst->data)
+		free(lst->data);
+}
+
+/*
+ * frees the linked list.
  */
 void	ft_freelst(t_prog *lst)
 {
@@ -22,13 +50,14 @@ void	ft_freelst(t_prog *lst)
 	while (lst)
 	{
 		temp = lst;
+		ft_freelst_items(lst);
 		lst = lst->next;
 		free(temp);
 	}
 }
 
 /*
- * gets the length 2D array
+ * gets the length 2D array.
  */
 size_t	ft_arrlen(char **arr)
 {
@@ -41,7 +70,7 @@ size_t	ft_arrlen(char **arr)
 }
 
 /*
- * swaps bytes for BIG ENDIAN
+ * swaps bytes for BIG ENDIAN.
  */
 void	swap_bytes(unsigned int i, int fd)
 {

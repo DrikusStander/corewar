@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 10:05:18 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 13:10:50 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,28 @@ void		ft_writename(t_args *ag, int bytes)
 	write(ag->fd, &ag->header->comment, (COMMENT_LENGTH + 4));
 }
 
+void		ft_readfile(t_args *ag)
+{
+	while (get_next_line(ag->fd, &ag->line) > 0)
+	{
+		parse_line(ag);
+		if (ag->line)
+		{
+			free(ag->line);
+			ag->line = NULL;
+		}
+	}
+	if (ag->line)
+	{
+		free(ag->line);
+		ag->line	= NULL;
+	}
+	close(ag->fd);
+}
+
 
 int			main(int argc, char **argv)
 {
-	int		fd;
 	t_prog	*head;
 	t_args	ag;
 	t_func	fc;
@@ -73,22 +91,8 @@ int			main(int argc, char **argv)
 	ft_bzero(&ag, sizeof(t_args));
 	ag.header = (header_t *)ft_memalloc(sizeof(header_t));
 	head = NULL;
-	fd = check_arguments(&ag, argc, argv);
-	while (get_next_line(fd, &ag.line) > 0)
-	{
-		parse_line(&ag);
-		if (ag.line)
-		{
-			free(ag.line);
-			ag.line = NULL;
-		}
-	}
-	if (ag.line)
-	{
-		free(ag.line);
-		ag.line	= NULL;
-	}
-	close(fd);
+	ag.fd = check_arguments(&ag, argc, argv);
+	ft_readfile(&ag);
 	
 	ag.fd = open(ag.file_name, O_WRONLY | O_TRUNC | O_CREAT , 0666);
 	ft_init(&ag, &fc);
@@ -107,14 +111,11 @@ int			main(int argc, char **argv)
 	{
 		i = 0;
 		if (lst->label)
-		{
 			ft_printf("%s\n", lst->label);
-			free(lst->label);
-		}
 		j = 0;
 		if (lst->data)
 		{
-			while (j < 15)
+			while (j < 16)
 			{
 				if (ft_strcmp(ag.f_str[j], lst->data[0]) == 0)
 				{
@@ -129,14 +130,11 @@ int			main(int argc, char **argv)
 		while (lst->data && lst->data[i])
 		{
 			ft_printf("%s\n", lst->data[i]);
-			free(lst->data[i]);
 			i++;
 		}
-		if (lst->data)
-			free(lst->data);
 		lst = lst->next;
 	}
-	ft_freelst(ag.head);
+	ft_free_all(&ag);
 	close(ag.fd);
 	return (0);
 }
