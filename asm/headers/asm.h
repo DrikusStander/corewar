@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 09:51:52 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 10:50:08 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 typedef struct s_prog	t_prog;
 typedef struct s_args	t_args;
 typedef struct s_func	t_func;
+typedef struct s_size	t_size;
 
 struct					s_prog
 {
@@ -28,6 +29,13 @@ struct					s_prog
 	char				**data;
 	int					bytes;
 	t_prog				*next;
+};
+
+struct					s_size
+{
+	char				*label;
+	int					offset;
+	t_size				*next;
 };
 
 struct					s_args
@@ -79,6 +87,6 @@ void					ft_xor(t_args *ag, t_prog *lst);
 void					ft_lldi(t_args *ag, t_prog *lst);
 void					ft_and(t_args *ag, t_prog *lst);
 
-int         label_offset(t_prog *lst);
+int  	      			 label_offset(t_prog *lst, t_size *size_head);
 
 #endif

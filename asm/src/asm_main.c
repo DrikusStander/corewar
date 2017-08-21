@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 10:05:18 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 10:56:31 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ int			main(int argc, char **argv)
 	int bytes;
 	t_prog *lst;
 	lst = ag.head;
-	bytes = label_offset(lst);
+	t_size *size_head = NULL;
+	bytes = label_offset(lst, size_head);
+	ft_printf("bytes :%i\n", bytes);
 	ft_writename(&ag, bytes);
 
 	while (lst)
@@ -108,7 +110,7 @@ int			main(int argc, char **argv)
 		i = 0;
 		if (lst->label)
 		{
-			ft_printf("%s\n", lst->label);
+		//	ft_printf("%s\n", lst->label);
 			free(lst->label);
 		}
 		j = 0;
@@ -118,9 +120,9 @@ int			main(int argc, char **argv)
 			{
 				if (ft_strcmp(ag.f_str[j], lst->data[0]) == 0)
 				{
-					ft_printf("===============\n");
-					fc.func[j](&ag, lst);
-					ft_printf("===============\n");
+		//			ft_printf("===============\n");
+		//			fc.func[j](&ag, lst);
+		//			ft_printf("===============\n");
 					break ;
 				}
 				j++;
@@ -128,7 +130,7 @@ int			main(int argc, char **argv)
 		}
 		while (lst->data && lst->data[i])
 		{
-			ft_printf("%s\n", lst->data[i]);
+		//	ft_printf("%s\n", lst->data[i]);
 			free(lst->data[i]);
 			i++;
 		}
