@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 13:10:50 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/21 13:28:23 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,9 @@ int			main(int argc, char **argv)
 	int bytes;
 	t_prog *lst;
 	lst = ag.head;
-	bytes = label_offset(lst);
+	t_size *size_head = NULL;
+	bytes = label_offset(lst, size_head);
+	ft_printf("bytes :%i\n", bytes);
 	ft_writename(&ag, bytes);
 
 	while (lst)
