@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/18 15:45:38 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/21 08:33:21 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int			swop_int_bits(int fd, int i, char c)
 	{
 		byte_swop = (i >> 8) & 0xFF;
 		write(fd, (void *)&byte_swop, 1);
+		byte_swop = 0x00;
 		byte_swop = i & 0xFF;
 		write(fd, (void *)&byte_swop, 1);
 	}
