@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 15:21:21 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/22 17:18:51 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,13 @@ struct					s_prog
 	t_prog				*next;
 };
 
-struct					s_size
-{
-	char				*label;
-	int					offset;
-	t_size				*next;
-};
-
 struct					s_args
 {
 	void				(*func[17])(t_args *, t_prog *);
 	t_prog				*head;
 	t_prog				*lst;
 	header_t			*header;
+	char				*cur_label;
 	char				*file_name;
 	char				**f_str;
 	char				*line;
@@ -81,7 +75,7 @@ void					ft_live(t_args *ag, t_prog *lst);
 void					ft_xor(t_args *ag, t_prog *lst);
 void					ft_lldi(t_args *ag, t_prog *lst);
 void					ft_and(t_args *ag, t_prog *lst);
-int						label_offset(t_prog *lst, t_size *size_head);
+int						label_offset(t_prog *lst);
 void					ft_free_all(t_args *ag);
 void					ft_freelst(t_prog *lst);
 void					ft_freelst_items(t_prog *lst);

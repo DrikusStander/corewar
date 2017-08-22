@@ -1,13 +1,14 @@
 .name        "ToT"
-.comment        "Just a basic Winner Program   ksndksn lmsdlmknakjnjndajs nsknaksndknsc sndaknksan s aknksnakcn nsckna scanksncaknkcsnann  acnslmcknc smsknc lmcslmlamsldmlmasldmdlmsdl asdmlmsdl asdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmm sdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd a dlmmdalmmmmmsdlldlsmlmdsa sadmmsdlamlas amslmdalmlasmdlms lmalsdmasld , dlamldmsa alsmdlamslma s,dmlqmdsamlmsd mlq sadmms   " 
+.comment	"Just a basic winner program"
+
+test:
+	st r1, 23
 
 entree:	
-	live	%42		# entree
-	ld	%0,r5
-   
+  or r1, %:test, r3
+
+
 # these are 
 # test
 # comments
      
-test:	ld	%0,r5  #test hearder
-	zjmp	%:bite
