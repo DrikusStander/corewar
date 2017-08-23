@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/23 10:31:05 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 15:59:47 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ static int			swop_int_bits(int fd, int i, char c)
 }
 
 /*
+** checks if the current argument is a label and returns correct value if true.
+*/
+static int			check_if_label(t_prog *lst, int arg, t_args *ag)
+{
+	char	*sub;
+	int		arg_param;
+
+	sub = NULL;
+	if (lst->data[arg][1] == ':')
+	{
+		sub = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
+		arg_param = get_label_offset(sub, ag);
+	}
+	else
+	{
+		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
+		arg_param = ft_atoi(sub);
+	}
+	free(sub);
+	return (arg_param);
+}
+
+/*
 **	Receives the file descriptor and ld's parameters as arguments.
 **	Processes the parameters to get the int value of them, and
 **	prints the first parameter's 4 bytes to file, and the second's
@@ -49,79 +72,16 @@ static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
-	char			*temp;
-	int 			offset;
-	int 			flag;
-	t_prog			*head;
 
 	sub = NULL;
-	head = ag->head;
-	flag = 0;
 	arg_param = 0;
-	offset = 0;
 	if (lst->data[1][0] == 'r' || lst->data[1][0] == '%')
-	{
-		if (lst->data[1][1] == ':')
-		{
-			temp = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1]) - 1));
-			sub = ft_strjoin(temp, ":");
-			free(temp);
-			while (head)
-			{
-				if (head->label)
-				{
-					if (ft_strncmp(head->label, ag->cur_label, ft_strlen(ag->cur_label)) == 0)
-						flag = 1;
-					if (ft_strncmp(head->label, sub, ft_strlen(sub)) == 0)
-						break ;
-				}
-				head = head->next;
-			}
-			if (flag == 1)
-			{
-				while (lst)
-				{
-					if (lst->label)
-					{
-						if (ft_strncmp(lst->label, sub, ft_strlen(sub)) == 0)
-							break;
-					}
-					offset += lst->bytes;
-					lst = lst->next;
-				}
-			}
-			else
-			{
-				while (head)
-				{
-					if (head->label)
-					{
-						if (ft_strncmp(head->label, ag->cur_label, ft_strlen(ag->cur_label)) == 0)
-							break;
-					}
-					offset += head->bytes;
-					head = head->next;
-				}
-			}
-
-		}
-		else
-		{
-			sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
-			arg_param = ft_atoi(sub);
-		}
-		ft_printf("---------->>%d\n", offset);
-		free(sub);
-	}
+		arg_param = check_if_label(lst, 1, ag);
 	else
 		arg_param = ft_atoi(lst->data[1]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
-	{
-		sub = ft_strsub(lst->data[2], 1, (ft_strlen(lst->data[2]) - 1));
-		arg_param = ft_atoi(sub);
-		free(sub);
-	}
+		arg_param = check_if_label(lst, 2, ag);
 	else
 		arg_param = ft_atoi(lst->data[2]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);

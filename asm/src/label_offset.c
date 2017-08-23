@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/22 17:36:06 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/23 13:40:21 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int		calc_bytes(int op_ctr, char **list_data)
 				ctr += 2;
 		}
 		else
-			ctr += 4;
+			ctr += 2;
 		index++;
 	}
 	return (ctr);

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/22 17:18:51 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 15:33:12 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void					ft_freelst(t_prog *lst);
 void					ft_freelst_items(t_prog *lst);
 void					ft_initstr(t_args *ag);
 void					ft_init(t_args *ag);
+int						get_label_offset(char *sub, t_args *ag);
 
 #endif
