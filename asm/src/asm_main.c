@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/22 16:11:11 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 10:26:07 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,15 @@ int			main(int argc, char **argv)
 {
 	t_args	ag;
 	t_prog	*lst;
-	t_size	*size_head;
 
 	ft_bzero(&ag, sizeof(t_args));
 	ag.header = (header_t *)ft_memalloc(sizeof(header_t));
-	size_head = NULL;
 	ag.fd = check_arguments(&ag, argc, argv);
 	ft_readfile(&ag);
 	ag.fd = open(ag.file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	ft_init(&ag);
 	lst = ag.head;
-	ag.header->prog_size = label_offset(lst, size_head);
+	ag.header->prog_size = label_offset(lst);
 	ft_writename(&ag);
 	ft_list_iter(&ag);
 

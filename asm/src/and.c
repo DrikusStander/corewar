@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/22 17:26:53 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 10:31:05 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,14 @@ static void			create_param(t_args *ag, t_prog *lst)
 	char			*sub;
 	char			*temp;
 	int 			offset;
+	int 			flag;
 	t_prog			*head;
 
 	sub = NULL;
 	head = ag->head;
+	flag = 0;
+	arg_param = 0;
+	offset = 0;
 	if (lst->data[1][0] == 'r' || lst->data[1][0] == '%')
 	{
 		if (lst->data[1][1] == ':')
@@ -66,12 +70,38 @@ static void			create_param(t_args *ag, t_prog *lst)
 			{
 				if (head->label)
 				{
+					if (ft_strncmp(head->label, ag->cur_label, ft_strlen(ag->cur_label)) == 0)
+						flag = 1;
 					if (ft_strncmp(head->label, sub, ft_strlen(sub)) == 0)
-					{
 						break ;
-					}
 				}
 				head = head->next;
+			}
+			if (flag == 1)
+			{
+				while (lst)
+				{
+					if (lst->label)
+					{
+						if (ft_strncmp(lst->label, sub, ft_strlen(sub)) == 0)
+							break;
+					}
+					offset += lst->bytes;
+					lst = lst->next;
+				}
+			}
+			else
+			{
+				while (head)
+				{
+					if (head->label)
+					{
+						if (ft_strncmp(head->label, ag->cur_label, ft_strlen(ag->cur_label)) == 0)
+							break;
+					}
+					offset += head->bytes;
+					head = head->next;
+				}
 			}
 
 		}
@@ -80,11 +110,12 @@ static void			create_param(t_args *ag, t_prog *lst)
 			sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
 			arg_param = ft_atoi(sub);
 		}
+		ft_printf("---------->>%d\n", offset);
 		free(sub);
 	}
 	else
 		arg_param = ft_atoi(lst->data[1]);
-	arg_param = swop_int_bits(fd, arg_param, lst->data[1][0]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
 	{
 		sub = ft_strsub(lst->data[2], 1, (ft_strlen(lst->data[2]) - 1));
@@ -93,10 +124,10 @@ static void			create_param(t_args *ag, t_prog *lst)
 	}
 	else
 		arg_param = ft_atoi(lst->data[2]);
-	arg_param = swop_int_bits(fd, arg_param, lst->data[2][0]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
 	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
 	arg_param = ft_atoi(sub);
-	arg_param = swop_int_bits(fd, arg_param, lst->data[3][0]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
 	free(sub);
 }
 
@@ -154,5 +185,5 @@ void				ft_and(t_args *ag, t_prog *lst)
 		exit(1);
 	}
 	create_acb(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
-	create_param(ag, lst->data[1], lst->data[2], lst->data[3]);
+	create_param(ag, lst);
 }
