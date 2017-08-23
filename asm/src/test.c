@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 12:34:07 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/23 17:08:12 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/23 17:19:13 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,28 @@ void	ft_add(t_args *ag, t_prog *lst)
 	(void)lst;
 	ft_printf("in funct add\n");
 }
-
+/*
 void	ft_zjmp(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct zjmp\n");
 }
-
+*/
 void	ft_sub(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct sub\n");
 }
-
+/*
 void	ft_ldi(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct ldi\n");
 }
-/*
+
 void	ft_or(t_args *ag, t_prog *lst)
 {
 	(void)ag;
@@ -102,14 +102,14 @@ void	ft_live(t_args *ag, t_prog *lst)
 	(void)lst;
 	ft_printf("in funct live\n");
 }
-
+/*
 void	ft_xor(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct xor\n");
 }
-
+*/
 void	ft_lldi(t_args *ag, t_prog *lst)
 {
 	(void)ag;

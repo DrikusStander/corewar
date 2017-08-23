@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/23 17:08:45 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/08/23 17:20:30 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,11 @@ SRC			=	$(PATH_SRC)asm_main.c\
 				$(PATH_SRC)st.c\
 				$(PATH_SRC)and.c\
 				$(PATH_SRC)or.c\
+				$(PATH_SRC)xor.c\
 				$(PATH_SRC)find_offset.c\
 				$(PATH_SRC)ld.c\
+				$(PATH_SRC)zjmp.c\
+				$(PATH_SRC)ldi.c\
 
 OSC			=	asm_main.o\
 				check.o\
@@ -50,8 +53,11 @@ OSC			=	asm_main.o\
 				st.o\
 				and.o\
 				or.o\
+				xor.o\
 				find_offset.o\
 				ld.o
+				zjmp.o\
+				ldi.o\
 
 FLAGS		=	-Wall -Werror -Wextra
 

@@ -2,11 +2,13 @@
 .comment	"Just a basic winner program"
 
 test:
-	st r1, 23
+	ld 42, r2
 
 entree:	
-  ldi %:test, %34, r1
+  ld %:test2, r3
 
+test2:
+	ld %:test, r4
 
 # these are 
 # test
