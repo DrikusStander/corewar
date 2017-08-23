@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/23 16:52:19 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/23 17:42:50 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void			create_param(int fd, char *arg1, char *reg)
 	{
 /*		if (sub[0] == ':')
 		{
-			sub = ft_strsub(arg1, 2, (ft_strlen(arg1) - 1));
+			sub = ft_strsub(arg1, 2, (ft_strlen(arg1) - 2));
 			arg_param = get_label_offset(sub, ag);
 		}
 		else
