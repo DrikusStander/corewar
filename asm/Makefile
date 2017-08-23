@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/23 17:20:30 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/08/23 17:31:49 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ OSC			=	asm_main.o\
 				or.o\
 				xor.o\
 				find_offset.o\
-				ld.o
+				ld.o\
 				zjmp.o\
 				ldi.o\
 
