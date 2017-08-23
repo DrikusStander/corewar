@@ -6,54 +6,96 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/19 17:15:15 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/23 13:35:44 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
 /*
-**	Counts the number of bytes each argument takes, and modifies the bytes
-**	variable inside the struct to the total. This value will be used to
-**	calculate the offset between different labels.
-**
-**	Variable ctr starts at 1, as lst-data[0] will always be an opcode which
-**	takes 1 byte.
+**	Takes a 2d array containing an opcode and its arguments
+**	and calculates the number of bytes the opcode, argument
+**	coding byte and arguments will require, and returns the
+**	total.
 */
-void			label_offset(t_prog *lst)
+static int		calc_bytes(int op_ctr, char **list_data)
 {
 	int			ctr;
+	int			index;
+
+	ctr = 1;
+	index = 1;
+	if (g_op_tab[op_ctr].id == 1)
+		return (5);
+	if (g_op_tab[op_ctr].has_acb == 1)
+		ctr++;
+	while (list_data[index])
+	{
+		if (list_data[index][0] == 'r')
+			ctr++;
+		else if (list_data[index][0] == '%')
+		{
+			if (g_op_tab[op_ctr].is_index == 0)
+				ctr += 4;
+			else
+				ctr += 2;
+		}
+		else
+			ctr += 2;
+		index++;
+	}
+	return (ctr);
+}
+
+/*
+**	Takes a list element which contain opcodes, looks up the opcode
+**	in the optab, and calls calc_bytes function to calc the number
+**	of bytes the specific opcode requires. Error check if the opcode
+**	was not found. Returns the count received from calc_bytes.
+*/
+static int		if_data(t_prog *lst)
+{
+	int			ctr;
+	int			byte_count;
+
+	ctr = 0;
+	byte_count = 0;
+	while (ctr <= 17)
+	{
+		if (ft_strcmp(lst->data[0], g_op_tab[ctr].name) == 0)
+		{
+			byte_count += calc_bytes(ctr, lst->data);
+			break ;
+		}
+		ctr++;
+	}
+	if (ctr == 17)
+	{
+		ft_printf("Invalid op code %s - exiting\n", lst->data[0]);
+		exit (0);
+	}
+	return (byte_count);
+}
+
+/*
+**	Function iterates through the list of lines from read program
+**	and if there is data which needs to be converted to bytecode
+**	it call if_data function to calculate the number of bytes for
+**	that line. The total number of bytes in the file to that point 
+**	is added to that list element, and the grand total number of
+**	bytes the bytecode will require is returned.
+*/
+int				label_offset(t_prog *lst)
+{
 	int			tot_bytes;
 
 	tot_bytes = 0;
 	while (lst)
 	{
-		ctr = 0;
 		if (lst->data)
-		{
-			while (lst->data[ctr])
-			{
-				if (ft_strcmp(lst->data[ctr], "live") == 0)
-				{
-					tot_bytes += 5;
-					ctr += 2;
-					continue ;
-				}
-				else if (ctr == 0)
-				{
-					ctr++;
-					tot_bytes++;
-				}
-				if (lst->data[ctr][0] == 'r')
-					tot_bytes += 1;
-				else if (lst->data[ctr][0] == '%')
-					tot_bytes += 2;
-				else
-					tot_bytes += 4;
-				ctr++;
-			}
-		}
+			tot_bytes += if_data(lst);
 		lst->bytes = tot_bytes;
 		lst = lst->next;
 	}
+	return (tot_bytes);
 }
