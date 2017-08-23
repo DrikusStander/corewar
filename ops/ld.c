@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/21 08:33:21 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/23 14:31:08 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 **	Swops the bits of an int from little endian to big endian
 **	and prints to file the correct number of bytes
-*/
+
 static int			swop_int_bits(int fd, int i, char c)
 {
 	unsigned char	byte_swop;
@@ -41,13 +41,13 @@ static int			swop_int_bits(int fd, int i, char c)
 	}
 	return (i);
 }
-
+*/
 /*
 **	Receives the file descriptor and ld's parameters as arguments.
 **	Processes the parameters to get the int value of them, and
 **	prints the first parameter's 4 bytes to file, and the second's
 **	parameter's (a register) last byte to the file
-*/
+
 static void			create_param(int fd, char *arg1, char *reg)
 {
 	int				arg_param;
@@ -72,7 +72,7 @@ static void			create_param(int fd, char *arg1, char *reg)
 	write(fd, (void *)&arg_param, 1);
 	free(sub);
 }
-
+*/
 /*	
 **	Function receives file descriptor and ld's parameters as arguments.
 **	Processes the parameters into an argument code byte, and writes the
@@ -108,10 +108,12 @@ static void			create_acb(int fd, char *arg1, char *reg)
 **	the file indicated by fd, and call relevant functions to 
 **	write the argument coding byte and parameter values to file.
 */
-void				handle_ld(int fd, char *arg1, char *reg)
+void				fd_ld(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
 	int				write_ret;
+	char			*arg1;
+	char			*reg;
 
 	hex = 0x02;
 	write_ret = write(fd, (void *)&hex, 1);
@@ -120,8 +122,8 @@ void				handle_ld(int fd, char *arg1, char *reg)
 		ft_printf("Unable to write opcode to file\n");
 		exit(1);
 	}
-	create_acb(fd, arg1, reg);
-	create_param(fd, arg1, reg);
+	create_acb(ag->fd, lst->data[1], lst->data[2]);
+//	create_param(fd, arg1, reg);
 }
 
 int			main(void)
@@ -129,7 +131,7 @@ int			main(void)
 	int		ret;
 
 	ret = open("test.s", O_APPEND | O_CREAT | O_TRUNC | O_RDWR, 0755);
-	handle_ld(ret, "1234", "r1");
+	ft_ld(ret, "1234", "r1");
 	close(ret);
 	return (0);
 }
