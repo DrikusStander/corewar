@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xor.c                                              :+:      :+:    :+:   */
+/*   ldi.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/23 16:26:50 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 17:12:22 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static int			swop_int_bits(int fd, int i, char c)
 
 	if (c == '%')
 	{
-		i = (i >> 24 & 0xFF) | (i >> 8 & 0xFF00) |
-			(i << 8 & 0xFF0000) | (i << 24 & 0xFF000000);
-		write(fd, (void *)&i, 4);
+		byte_swop = (i >> 8) & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
+		byte_swop = 0x00;
+		byte_swop = i & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
 	}
 	else if (c == 'r')
 	{
@@ -82,8 +84,6 @@ static void			create_param(t_args *ag, t_prog *lst)
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
 		arg_param = check_if_label(lst, 2, ag);
-	else
-		arg_param = ft_atoi(lst->data[2]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
 	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
 	arg_param = ft_atoi(sub);
@@ -102,7 +102,7 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 
 	if (arg3[0] != 'r')
 	{
-		ft_printf("Invalid parameter 3 for or, should be a register\n");
+		ft_printf("Invalid parameter 3 for ldi, should be a register\n");
 		exit (0);
 	}	
 	if (arg1[0] == '%')
@@ -116,11 +116,14 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 	else if (arg2[0] == '%')
 		hex = hex | 0b00100000;
 	else
-		hex = hex | 0b00110000;
+	{
+		ft_printf("Invalid parameter 2 for ldi, should be a T_DIR | T_REG\n");
+		exit (0);
+	}
 	hex = hex | 0b00000100;
 	if (write(fd, (void *)&hex, 1) < 0)
 	{
-		ft_printf("Unable to write or's argument coding byte to file - exiting\n");
+		ft_printf("Unable to write ldi's argument coding byte to file - exiting\n");
 		exit(1);
 	}
 }
@@ -130,10 +133,10 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 **	the file indicated by fd, and call relevant functions to 
 **	write the argument coding byte and parameter values to file.
 */
-void				ft_xor(t_args *ag, t_prog *lst)
+void				ft_ldi(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
-	hex = 0x08;
+	hex = 0x0a;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
 	{
 		ft_printf("Unable to write opcode to file\n");

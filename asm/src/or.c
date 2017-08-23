@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/22 15:14:17 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/23 16:26:36 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,54 @@ static int			swop_int_bits(int fd, int i, char c)
 }
 
 /*
+** checks if the current argument is a label and returns correct value if true.
+*/
+static int			check_if_label(t_prog *lst, int arg, t_args *ag)
+{
+	char	*sub;
+	int		arg_param;
+
+	sub = NULL;
+	if (lst->data[arg][1] == ':')
+	{
+		sub = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
+		arg_param = get_label_offset(sub, ag);
+	}
+	else
+	{
+		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
+		arg_param = ft_atoi(sub);
+	}
+	free(sub);
+	return (arg_param);
+}
+
+/*
 **	Receives the file descriptor and ld's parameters as arguments.
 **	Processes the parameters to get the int value of them, and
 **	prints the first parameter's 4 bytes to file, and the second's
 **	parameter's (a register) last byte to the file
 */
-static void			create_param(int fd, char *arg1, char *arg2, char *arg3)
+static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
 
 	sub = NULL;
-	if (arg1[0] == 'r' || arg1[0] == '%')
-	{
-		sub = ft_strsub(arg1, 1, (ft_strlen(arg1) - 1));
-		arg_param = ft_atoi(sub);
-		free(sub);
-	}
+	arg_param = 0;
+	if (lst->data[1][0] == 'r' || lst->data[1][0] == '%')
+		arg_param = check_if_label(lst, 1, ag);
 	else
-		arg_param = ft_atoi(arg1);
-	arg_param = swop_int_bits(fd, arg_param, arg1[0]);
-	if (arg2[0] == 'r' || arg2[0] == '%')
-	{
-		sub = ft_strsub(arg2, 1, (ft_strlen(arg2) - 1));
-		arg_param = ft_atoi(sub);
-		free(sub);
-	}
+		arg_param = ft_atoi(lst->data[1]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
+	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
+		arg_param = check_if_label(lst, 2, ag);
 	else
-		arg_param = ft_atoi(arg2);
-	arg_param = swop_int_bits(fd, arg_param, arg2[0]);
-	sub = ft_strsub(arg3, 1, (ft_strlen(arg3) - 1));
+		arg_param = ft_atoi(lst->data[2]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
+	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
 	arg_param = ft_atoi(sub);
-	arg_param = swop_int_bits(fd, arg_param, arg3[0]);
+	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
 	free(sub);
 }
 
@@ -129,5 +145,5 @@ void				ft_or(t_args *ag, t_prog *lst)
 		exit(1);
 	}
 	create_acb(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
-	create_param(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
+	create_param(ag, lst);
 }

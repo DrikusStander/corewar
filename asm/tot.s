@@ -5,10 +5,8 @@ test:
 	st r1, 23
 
 entree:	
-  and r1, %:test2, r3
+  ldi %:test, %34, r1
 
-test2:
-	live %1
 
 # these are 
 # test
