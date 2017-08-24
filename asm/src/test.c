@@ -6,19 +6,19 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 12:34:07 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 09:58:23 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:04:12 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
-
+/*
 void	ft_lfork(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct lfork\n");
 }
-/*
+
 void	ft_sti(t_args *ag, t_prog *lst)
 {
 	(void)ag;
