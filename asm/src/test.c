@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 12:34:07 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 10:04:12 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:27:36 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,28 @@ void	ft_ld(t_args *ag, t_prog *lst)
 	(void)lst;
 	ft_printf("in funct ld\n");
 }
-*/
+
 void	ft_add(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct add\n");
 }
-/*
+
 void	ft_zjmp(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct zjmp\n");
 }
-*/
+
 void	ft_sub(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct sub\n");
 }
-/*
+
 void	ft_ldi(t_args *ag, t_prog *lst)
 {
 	(void)ag;

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 10:03:35 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:22:44 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,11 @@ void				ft_lld(t_args *ag, t_prog *lst)
 		ft_printf("Unable to write opcode to file\n");
 		exit(1);
 	}
+	if (ft_arrlen(lst->data) != 3)
+    {
+		ft_printf("not the right amount of args\n");
+		exit(1);
+	}	
 	create_acb(ag->fd, lst->data[1], lst->data[2]);
 	create_param(ag->fd, lst->data[1], lst->data[2], ag);
 }

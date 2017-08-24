@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*  lldi.c                                              :+:      :+:    :+:   */
+/*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 10:23:02 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:27:09 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ static int			swop_int_bits(int fd, int i, char c)
 
 	if (c == '%')
 	{
-		byte_swop = (i >> 8) & 0xFF;
-		write(fd, (void *)&byte_swop, 1);
-		byte_swop = 0x00;
-		byte_swop = i & 0xFF;
-		write(fd, (void *)&byte_swop, 1);
+		i = (i >> 24 & 0xFF) | (i >> 8 & 0xFF00) |
+			(i << 8 & 0xFF0000) | (i << 24 & 0xFF000000);
+		write(fd, (void *)&i, 4);
 	}
 	else if (c == 'r')
 	{
@@ -73,22 +71,17 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
-	char			*sub;
 
-	sub = NULL;
 	arg_param = 0;
-	if (lst->data[1][0] == 'r' || lst->data[1][0] == '%')
+	if (lst->data[1][0] == 'r' )
 		arg_param = check_if_label(lst, 1, ag);
-	else
-		arg_param = ft_atoi(lst->data[1]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
-	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
+	if (lst->data[2][0] == 'r')
 		arg_param = check_if_label(lst, 2, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
-	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
-	arg_param = ft_atoi(sub);
+	if (lst->data[3][0] == 'r')
+		arg_param = check_if_label(lst, 3, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
-	free(sub);
 }
 
 /*	
@@ -100,30 +93,20 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 {
 	unsigned char	hex;
 
-	if (arg3[0] != 'r')
+	if (arg1[0] != 'r' ||  arg2[0] != 'r' || arg3[0] != 'r')
 	{
-		ft_printf("Invalid parameter 3 for lldi, should be a register\n");
-		exit (0);
-	}	
-	if (arg1[0] == '%')
-		hex = 0b10000000;
-	else if (arg1[0] == 'r')
-		hex = 0b01000000;
-	else
-		hex = 0b11000000;
-	if (arg2[0] == 'r')
-		hex = hex | 0b00010000;
-	else if (arg2[0] == '%')
-		hex = hex | 0b00100000;
-	else
-	{
-		ft_printf("Invalid parameter 2 for lldi, should be a T_DIR | T_REG\n");
+		ft_printf("Invalid parameters for add, should be a register\n");
 		exit (0);
 	}
-	hex = hex | 0b00000100;
+	else
+	{
+		hex = 0b01000000;
+		hex = hex | 0b00010000;
+		hex = hex | 0b00000100;
+	}
 	if (write(fd, (void *)&hex, 1) < 0)
 	{
-		ft_printf("Unable to write lldi's argument coding byte to file - exiting\n");
+		ft_printf("Unable to write add's argument coding byte to file - exiting\n");
 		exit(1);
 	}
 }
@@ -133,10 +116,10 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 **	the file indicated by fd, and call relevant functions to 
 **	write the argument coding byte and parameter values to file.
 */
-void				ft_lldi(t_args *ag, t_prog *lst)
+void				ft_add(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
-	hex = 0x0e;
+	hex = 0x04;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
 	{
 		ft_printf("Unable to write opcode to file\n");
