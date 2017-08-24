@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/24 09:40:30 by hstander         ###   ########.fr        #
+#    Updated: 2017/08/24 09:58:45 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC			=	$(PATH_SRC)asm_main.c\
 				$(PATH_SRC)ldi.c\
 				$(PATH_SRC)sti.c\
 				$(PATH_SRC)lld.c\
+				$(PATH_SRC)lldi.c\
 
 OSC			=	asm_main.o\
 				check.o\
@@ -62,6 +63,7 @@ OSC			=	asm_main.o\
 				ldi.o\
 				sti.o\
 				lld.o\
+				lldi.o\
 
 FLAGS		=	-Wall -Werror -Wextra
 
