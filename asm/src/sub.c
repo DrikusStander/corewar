@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 10:26:57 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:36:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 {
 	char	*sub;
 	int		arg_param;
+	char	*temp;
 
 	sub = NULL;
 	if (lst->data[arg][1] == ':')
 	{
-		sub = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = get_label_offset(sub, ag);
+		temp = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
+		sub = ft_strjoin(temp, ":");
+		free(temp);
+		arg_param = get_label_offset(sub, ag, lst);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 16:15:44 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/23 17:12:08 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:34:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,16 @@ static int			swop_int_bits(int fd, int i, char c)
 static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 {
 	char	*sub;
+	char	*temp;
 	int		arg_param;
 
 	sub = NULL;
 	if (lst->data[arg][1] == ':')
 	{
-		sub = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = get_label_offset(sub, ag);
+		temp = ft_strsub(lst->data[arg], 2, (ft_strlen(lst->data[arg]) - 1));
+		sub = ft_strjoin(temp, ":");
+		free(temp);
+		arg_param = get_label_offset(sub, ag, lst);
 	}
 	else
 	{

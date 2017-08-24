@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 08:19:21 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 12:44:42 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:48:46 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			ft_fork(t_args *ag, t_prog *lst)
 {
 	char		*sub;
 	int			arg_param;
+	char		*temp;
 
 	sub = NULL;
 	arg_param = 0x0c;
@@ -46,8 +47,10 @@ void			ft_fork(t_args *ag, t_prog *lst)
 	}
 	if (lst->data[1][1] == ':')
 	{
-		sub = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1]) - 2));
-		arg_param = get_label_offset(sub, ag);
+		temp = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1]) - 2));
+		sub = ft_strjoin(temp, ":");
+		free(temp);
+		arg_param = get_label_offset(sub, ag, lst);
 	}
 	else
 	{

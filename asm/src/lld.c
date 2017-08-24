@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 10:22:44 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:47:40 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ static int			swop_int_bits(int fd, int i, char c)
 **	is a register or a direct value
 */
 
-static int			create_param_sub(char *arg1, t_args *ag)
+static int			create_param_sub(char *arg1, t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
+	char			*temp;
 
 	sub = NULL;
 	arg_param = 0;
@@ -56,8 +57,10 @@ static int			create_param_sub(char *arg1, t_args *ag)
 	{
 		if (arg1[1] == ':')
 		{
-			sub = ft_strsub(arg1, 2, (ft_strlen(arg1) - 2));
-			arg_param = get_label_offset(sub, ag);
+			temp = ft_strsub(arg1, 2, (ft_strlen(arg1) - 2));
+			sub = ft_strjoin(temp, ":");
+			free(temp);
+			arg_param = get_label_offset(sub, ag, lst);
 		}
 		else
 		{
@@ -80,20 +83,20 @@ static int			create_param_sub(char *arg1, t_args *ag)
 **	parameter's (a register) last byte to the file
 */
 
-static void			create_param(int fd, char *arg1, char *reg, t_args *ag)
+static void			create_param(char *arg1, char *reg, t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
 
 	sub = NULL;
 	if (arg1[0] == '%' || arg1[0] == 'r')
-		arg_param = create_param_sub(arg1, ag);
+		arg_param = create_param_sub(arg1, ag, lst);
 	else
 		arg_param = ft_atoi(arg1);
-	arg_param = swop_int_bits(fd, arg_param, arg1[0]);
+	arg_param = swop_int_bits(ag->fd, arg_param, arg1[0]);
 	sub = ft_strsub(reg, 1, (ft_strlen(reg) - 1));
 	arg_param = ft_atoi(sub);
-	write(fd, (void *)&arg_param, 1);
+	write(ag->fd, (void *)&arg_param, 1);
 	free(sub);
 }
 
@@ -155,5 +158,5 @@ void				ft_lld(t_args *ag, t_prog *lst)
 		exit(1);
 	}	
 	create_acb(ag->fd, lst->data[1], lst->data[2]);
-	create_param(ag->fd, lst->data[1], lst->data[2], ag);
+	create_param(lst->data[1], lst->data[2], ag, lst);
 }
