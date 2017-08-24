@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/23 13:40:21 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 13:51:18 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 **	coding byte and arguments will require, and returns the
 **	total.
 */
+
 static int		calc_bytes(int op_ctr, char **list_data)
 {
 	int			ctr;
@@ -53,6 +54,7 @@ static int		calc_bytes(int op_ctr, char **list_data)
 **	of bytes the specific opcode requires. Error check if the opcode
 **	was not found. Returns the count received from calc_bytes.
 */
+
 static int		if_data(t_prog *lst)
 {
 	int			ctr;
@@ -85,6 +87,7 @@ static int		if_data(t_prog *lst)
 **	is added to that list element, and the grand total number of
 **	bytes the bytecode will require is returned.
 */
+
 int				label_offset(t_prog *lst)
 {
 	int			tot_bytes;
@@ -92,9 +95,9 @@ int				label_offset(t_prog *lst)
 	tot_bytes = 0;
 	while (lst)
 	{
+		lst->bytes = tot_bytes;
 		if (lst->data)
 			tot_bytes += if_data(lst);
-		lst->bytes = tot_bytes;
 		lst = lst->next;
 	}
 	return (tot_bytes);
