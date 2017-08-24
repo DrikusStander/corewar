@@ -6,7 +6,11 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2017/08/24 09:50:55 by gvan-roo         ###   ########.fr        #
+=======
+#    Updated: 2017/08/24 10:28:12 by hstander         ###   ########.fr        #
+>>>>>>> d6d6244f042e7401702daf3dc20a3d6f3dc472f5
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +43,15 @@ SRC			=	$(PATH_SRC)asm_main.c\
 				$(PATH_SRC)zjmp.c\
 				$(PATH_SRC)ldi.c\
 				$(PATH_SRC)sti.c\
+<<<<<<< HEAD
 				$(PATH_SRC)ft_fork.c\
+=======
+				$(PATH_SRC)lld.c\
+				$(PATH_SRC)lldi.c\
+				$(PATH_SRC)lfork.c\
+				$(PATH_SRC)add.c\
+				$(PATH_SRC)sub.c\
+>>>>>>> d6d6244f042e7401702daf3dc20a3d6f3dc472f5
 
 OSC			=	asm_main.o\
 				check.o\
@@ -61,7 +73,15 @@ OSC			=	asm_main.o\
 				zjmp.o\
 				ldi.o\
 				sti.o\
+<<<<<<< HEAD
 				ft_fork.o\
+=======
+				lld.o\
+				lldi.o\
+				lfork.o\
+				add.o\
+				sub.o\
+>>>>>>> d6d6244f042e7401702daf3dc20a3d6f3dc472f5
 
 FLAGS		=	-Wall -Werror -Wextra
 
