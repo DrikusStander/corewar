@@ -6,18 +6,21 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 08:19:21 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 08:59:49 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:31:06 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../headers/asm.h"
+
 
 /*
 **	Swops the bits of an int from little endian to big endian
 **	and prints to file the correct number of bytes
 */
 
-static int			swop_int_bits(int fd, int i)
+static void		swop_int_bits(int fd, int i)
 {
-	i = ((i >> 8) && 0xFF) | ((i << 8) && 0xFF00);
+	i = (i >> 8 & 0xFF) | (i << 8 & 0xFF00);
 	write(fd, (void *)&i, 2);
 }
 
@@ -33,23 +36,26 @@ void			ft_fork(t_args *ag, t_prog *lst)
 	char		*sub;
 	int			arg_param;
 
+	ft_printf("data[1] :%s<-------------\n", lst->data[1]);
 	sub = NULL;
-	arg_param = 0;
-	if (lst->data[1][0] != '%' || lst->data[2])
+	arg_param = 0x0c;
+	write(ag->fd, (void *)&arg_param, 1);
+	if (lst->data[1][0] != '%' || lst->data[2] != NULL)
 	{
 		ft_printf("Invalid arguments for fork - exiting fork function\n");
-		return ;
+		exit(0);
 	}
 	if (lst->data[1][1] == ':')
 	{
-		sub = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1] - 2)));
+		sub = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1]) - 2));
+		ft_printf("sub :%s<----------------------\n", sub);
 		arg_param = get_label_offset(sub, ag);
 	}
 	else
 	{
-		sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1] - 1)));
+		sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
 		arg_param = ft_atoi(sub);
+		ft_printf("arg_param :%i<--------------\n", arg_param);
 	}
-	write(ag->fd, 12, 1);
 	swop_int_bits(ag->fd, arg_param);
 }
