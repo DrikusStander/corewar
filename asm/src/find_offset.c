@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 15:21:05 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/23 15:59:51 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:05:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int		get_label_offset(char *sub, t_args *ag)
 		{
 			if (ft_strncmp(head->label, ag->cur_label,
 						ft_strlen(ag->cur_label)) == 0)
+			{
+				ft_printf("head->label =%s cur->label =%s\n", head->label, ag->cur_label);
 				arg_param += head->bytes;
+			}
 		}
 		head = head->next;
 	}
@@ -44,5 +47,6 @@ int		get_label_offset(char *sub, t_args *ag)
 		head = head->next;
 	}
 	arg_param = (arg_param - head->bytes) * -1;
+	ft_printf("%d\n", arg_param);
 	return (arg_param);
 }

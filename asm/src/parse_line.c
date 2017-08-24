@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:07:51 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 14:57:32 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 12:42:46 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	parse_line(t_args *ag)
 		return ;
 	}
 	ft_setlist(ag);
-	ft_printf("%s\n", ag->trim_str);
+//	ft_printf("%s\n", ag->trim_str);
 	free(ag->trim_str);
 }

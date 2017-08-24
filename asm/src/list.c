@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:55:53 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 15:17:54 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 12:40:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_lbl(t_args *ag, int i)
 
 	cnt = 0;
 	k = 0;
-	ag->lst->label = ft_strsub(ag->trim_str, 0, i);
+	ag->lst->label = ft_strsub(ag->trim_str, 0, (i + 1));
 	if (*(ag->trim_str + i + 1) != '\0')
 	{
 		ag->ref = ft_strsplit(ag->trim_str + i + 1, ',');

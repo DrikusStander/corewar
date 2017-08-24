@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:43:59 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 15:07:18 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 11:03:24 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		check_valid_file(t_args *ag, char *file_name)
 	else
 	{
 		temp = ft_strsub(file_name, 0, (fn_len - 2));
-		ag->file_name = ft_strjoin(temp, ".cor");
+		ag->file_name = ft_strjoin(temp, ".cor2");
 		free(temp);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/23 10:26:07 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 14:05:32 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void		temp_print(t_args *ag)
 	while (lst)
 	{
 		i = 0;
+		ft_printf("---------------------\n");
+		ft_printf("%d\n", lst->bytes);
 		if (lst->label)
 			ft_printf("%s\n", lst->label);
 		while (lst->data && lst->data[i])
@@ -75,6 +77,8 @@ void		temp_print(t_args *ag)
 			i++;
 		}
 		lst = lst->next;
+		ft_printf("---------------------\n");
+
 	}
 	ft_printf("bytes :%i\n", ag->header->prog_size);
 }
@@ -94,9 +98,7 @@ int			main(int argc, char **argv)
 	ag.header->prog_size = label_offset(lst);
 	ft_writename(&ag);
 	ft_list_iter(&ag);
-
 	temp_print(&ag);
-
 	ft_free_all(&ag);
 	close(ag.fd);
 	return (0);
