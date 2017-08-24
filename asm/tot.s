@@ -5,7 +5,7 @@ test:
 	st r1, 23
 
 entree:	
-  sti r1,%:test, %34
+  lld %:test, r3
 
 
 # these are 
