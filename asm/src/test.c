@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 12:34:07 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 10:43:53 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/24 10:49:40 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void	ft_sti(t_args *ag, t_prog *lst)
 	(void)lst;
 	ft_printf("in funct sti\n");
 }
-*/
+
 void	ft_fork(t_args *ag, t_prog *lst)
 {
 	(void)ag;
 	(void)lst;
 	ft_printf("in funct fork\n");
 }
+*/
 /*
 void	ft_lld(t_args *ag, t_prog *lst)
 {

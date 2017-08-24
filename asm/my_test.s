@@ -5,10 +5,13 @@ test:
 	ld 42, r2
 
 entree:	
-  ld %:test2, r3
+  	fork %:test2
 
 test2:
-	ld %:test, r4
+	fork %1
+
+final:
+	fork %:test2
 
 # these are 
 # test
