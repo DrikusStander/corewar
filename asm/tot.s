@@ -4,9 +4,9 @@
 test:
 	live %23
 
-entree:	
-  add r1,r2,r3
-  sub r1,r2,r3
+entree:
+	aff r6
+	sub r1,r2,r3
 
 
 # these are 
