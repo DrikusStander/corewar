@@ -6,53 +6,72 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 13:43:32 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/25 15:11:12 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
 #include <stdio.h>
 
-void		check_cor_header(int fd, void *head_buf, char *file_name)
+void				print_hex(int n)
 {
-	int		m_n;
-	void	*magic_nbr;
-	int i = 0;
+	unsigned char	c;
+	unsigned char	temp;
 
-	ft_printf("fd :%i\n", fd);
-	if (ft_memcmp(head_buf, magic_nbr, 4) != 0)
+	temp = n;
+	temp /= 16;
+	if (temp % 16 >= 10)
 	{
-		ft_printf("Invalid magic number in header of %s - exiting\n", file_name);
-		//free(head_buf);
-		close(fd);
-		return (0);
+		temp = (temp % 16) % 10 + 'a';
+		write(1, &temp, 1);
+	}
+	else
+	{
+		temp = (temp % 16) + '0';
+		write(1, &temp, 1);
+	}
+	if (n % 16 >= 10)
+	{
+		c = (n % 16) % 10 + 'a';
+		write(1, &c, 1);
+	}
+	else
+	{
+		c = (n % 16) + '0';
+		write(1, &c, 1);
 	}
 }
 
-void		check_cor_files(int ac, char **av)
+void				check_cor_files(int ac, char **av)
 {
-	int		ctr;
-	int		fd;
-	int		read_ret;
-	void	*head_buf;
+	int				ctr;
+	int				fd;
+	int				read_ret;
+	unsigned char	buf[sizeof(header_t)];
 
 	ctr = 1;
-	head_buf = malloc(sizeof(header_t));
-	while (ctr <= ac)
+	while (ctr < ac)
 	{
 		fd = open(av[ctr], O_RDONLY);
 		if (fd < 0)
 		{
 			ft_printf("Unable to open file %s - exiting\n", av[ctr]);
-			free(head_buf);
 			exit (0);
 		}
-		read_ret = read(fd, head_buf, sizeof(head_buf));
-		check_cor_header(fd, head_buf, av[ctr]);
+		read_ret = read(fd, buf, sizeof(header_t));
+		int i = 0;
+		while (i < 4)
+		{
+			print_hex(buf[i]);
+			i++;
+		}
+		ft_printf("\n");
+		if (1) //	Insert func :check_cor_header(fd)\n	
+			ft_printf("Insert func :check_cor_header(fd)\n");
+
 		ctr++;
 	}
 }
-
 
 int			main(int argc, char **argv)
 {

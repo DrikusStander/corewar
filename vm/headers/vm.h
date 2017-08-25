@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/20 15:29:44 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/25 14:10:58 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
+/*
+typedef struct					s_champion
+{
+	int							player_num;
+	unsigned char				prog[CHAMP_MAX_SIZE];
+*/
 
 #define IND_SIZE				2
 #define REG_SIZE				4
