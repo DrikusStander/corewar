@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 15:11:12 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/25 16:45:39 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ void				check_cor_files(int ac, char **av)
 			exit (0);
 		}
 		read_ret = read(fd, buf, sizeof(header_t));
-		int i = 0;
-		while (i < 4)
+//		print_hex(buf[4 + PROG_NAME_LENGTH + 1]);
+
+		size_t i = 120;
+		while (i < 140)
 		{
+			ft_printf("%i  :",i); 
 			print_hex(buf[i]);
+			ft_printf("  ");
 			i++;
 		}
 		ft_printf("\n");
