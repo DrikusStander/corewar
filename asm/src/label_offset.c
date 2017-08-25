@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 13:51:18 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/25 16:40:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ static int		if_data(t_prog *lst)
 
 	ctr = 0;
 	byte_count = 0;
-	while (ctr <= 17)
+	while (ctr < 16)
 	{
+		ft_printf("---> op_tab%s\n", g_op_tab[ctr].name);
 		if (ft_strcmp(lst->data[0], g_op_tab[ctr].name) == 0)
 		{
 			byte_count += calc_bytes(ctr, lst->data);
@@ -71,7 +72,7 @@ static int		if_data(t_prog *lst)
 		}
 		ctr++;
 	}
-	if (ctr == 17)
+	if (ctr == 16)
 	{
 		ft_printf("Invalid op code %s - exiting\n", lst->data[0]);
 		exit (0);
@@ -96,7 +97,7 @@ int				label_offset(t_prog *lst)
 	while (lst)
 	{
 		lst->bytes = tot_bytes;
-		if (lst->data)
+		if (lst->data != NULL && lst->data[0])
 			tot_bytes += if_data(lst);
 		lst = lst->next;
 	}

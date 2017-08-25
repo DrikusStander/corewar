@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 15:21:05 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 16:54:13 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 17:37:54 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,25 @@ int		get_label_offset(char *sub, t_args *ag, t_prog *lst)
 
 	head = ag->head;
 	arg_param = 0;
-	arg_param += lst->bytes; 
+	arg_param += lst->bytes;
 	while (head)
 	{
 	
 		if (head->label)
+		{
 			if (ft_strncmp(head->label, sub, ft_strlen(sub)) == 0)
 				break ;
+		}
 		head = head->next;
 	}
-	arg_param = (arg_param - head->bytes) * -1;
-	ft_printf("<<<<<<<<<< arg_param = %d\n", arg_param);
+	if (head)
+	{
+		arg_param = (arg_param - head->bytes) * -1;
+	}
+	else
+	{
+		ft_printf("label not found : %s\n", sub);
+		exit(0);
+	}
 	return (arg_param);
 }

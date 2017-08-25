@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:07:51 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 12:42:46 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 14:57:46 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	parse_line(t_args *ag)
 
 	ag->trim_str = ft_strtrim(ag->line);
 	if ((i = ft_chr_i(ag->trim_str, '#')) > -1)
+	{
+		tmp = ft_strsub(ag->trim_str, 0, i);
+		free(ag->trim_str);
+		ag->trim_str = tmp;
+	}
+	else if ((i = ft_chr_i(ag->trim_str, ';')) > -1)
 	{
 		tmp = ft_strsub(ag->trim_str, 0, i);
 		free(ag->trim_str);

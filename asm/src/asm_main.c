@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 14:05:32 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 17:44:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		ft_list_iter(t_args *ag)
 		i = 0;
 		if (lst->label)
 			ag->cur_label = lst->label;
-		if (lst->data != NULL)
+		if (lst->data && lst->data[0])
 		{
 			while (i < 16)
 			{
@@ -70,17 +70,17 @@ void		temp_print(t_args *ag)
 		ft_printf("---------------------\n");
 		ft_printf("%d\n", lst->bytes);
 		if (lst->label)
-			ft_printf("%s\n", lst->label);
+			ft_printf("label: %s\n", lst->label);
 		while (lst->data && lst->data[i])
 		{
-			ft_printf("%s\n", lst->data[i]);
+			ft_printf("data %d: %s\n", i, lst->data[i]);
 			i++;
 		}
 		lst = lst->next;
 		ft_printf("---------------------\n");
 
 	}
-	ft_printf("bytes :%i\n", ag->header->prog_size);
+	//ft_printf("bytes :%i\n", ag->header->prog_size);
 }
 
 int			main(int argc, char **argv)
@@ -96,9 +96,9 @@ int			main(int argc, char **argv)
 	ft_init(&ag);
 	lst = ag.head;
 	ag.header->prog_size = label_offset(lst);
+	temp_print(&ag);
 	ft_writename(&ag);
 	ft_list_iter(&ag);
-	temp_print(&ag);
 	ft_free_all(&ag);
 	close(ag.fd);
 	return (0);

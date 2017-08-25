@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 14:58:30 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 14:26:15 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,19 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 		sub = ft_strjoin(temp, ":");
 		free(temp);
 		arg_param = get_label_offset(sub, ag, lst);
+		free(sub);
 	}
 	else
 	{
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = ft_atoi(sub);
+		arg_param = ft_checknum(sub);
+		free(sub);
+		if (lst->data[arg][0] == 'r' && (arg_param < 1 || arg_param > 16))
+		{
+			ft_printf("Invalid register\n");
+			exit(0);
+		}
 	}
-	free(sub);
 	return (arg_param);
 }
 
@@ -75,21 +81,43 @@ static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
+	char			*temp;
 
 	sub = NULL;
 	arg_param = 0;
 	if (lst->data[1][0] == 'r' || lst->data[1][0] == '%')
 		arg_param = check_if_label(lst, 1, ag);
+	else if (lst->data[1][0] == ':')
+	{
+		temp = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
+		sub = ft_strjoin(temp, ":");
+		free(temp);
+		arg_param = get_label_offset(sub, ag, lst);
+		free(sub);
+	}
 	else
-		arg_param = ft_atoi(lst->data[1]);
+		arg_param = ft_checknum(lst->data[1]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
 		arg_param = check_if_label(lst, 2, ag);
+	else if (lst->data[2][0] == ':')
+	{
+		temp = ft_strsub(lst->data[2], 1, (ft_strlen(lst->data[2]) - 1));
+		sub = ft_strjoin(temp, ":");
+		free(temp);
+		arg_param = get_label_offset(sub, ag, lst);
+		free(sub);
+	}
 	else
-		arg_param = ft_atoi(lst->data[2]);
+		arg_param = ft_checknum(lst->data[2]);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
 	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
-	arg_param = ft_atoi(sub);
+	arg_param = ft_checknum(sub);
+	if (arg_param < 1 || arg_param > 16)
+	{
+		ft_printf("Invalid register\n");
+		exit(0);
+	}
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
 	free(sub);
 }

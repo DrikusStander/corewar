@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:04:39 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 15:03:07 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 09:30:50 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,24 @@ int		ft_chrn_i(char *str, char c)
 		i--;
 	}
 	return (-1);
+}
+
+int		ft_checknum(char *sub)
+{
+	int		i;
+
+	i = 0;
+	while (sub[i])
+	{
+		if(ft_isdigit(sub[i]) == 0)
+		{
+			if (sub[i] != '-')
+			{	
+				ft_printf("illigal arguement\n");
+				exit(0);
+			}
+		}
+		i++;
+	}
+	return (ft_atoi(sub));
 }

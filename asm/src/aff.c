@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/24 14:38:43 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/25 12:19:28 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 	else
 	{
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = ft_atoi(sub);
+		arg_param = ft_checknum(sub);
 	}
 	free(sub);
 	return (arg_param);
@@ -78,6 +78,11 @@ static void			create_param(t_args *ag, t_prog *lst)
 	arg_param = 0;
 	if (lst->data[1][0] == 'r' )
 		arg_param = check_if_label(lst, 1, ag);
+	if (arg_param < 1 || arg_param > 16)
+	{
+		ft_printf("Invalid register\n");
+		exit(0);
+	}
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 }
 
