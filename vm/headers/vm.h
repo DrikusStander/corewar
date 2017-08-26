@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/26 09:38:11 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/26 11:16:34 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,13 @@ typedef struct			header_s
 typedef struct			s_champ
 {
 	int					player_num;
-	unsigned char		prog[CHAMP_MAX_SIZE];
 	header_t			head;
+	unsigned char		prog[CHAMP_MAX_SIZE];
+	int					carry;
+	int					pc;
+	unsigned int		reg[17];
+	int					exec_cycle;
+	struct s_champ		*next;
 }						t_champ;
-
 
 #endif
