@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/26 17:16:34 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/26 17:38:56 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void	ft_print_hex(int c)
 	write(1, "  ", 2);
 }
 
-void				read_champ(int fd, t_champ *champ_ptr)
+
+void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 {
 	int				ctr;
 
 	ctr = 0;
+//	if (!check_magic(fd, champ_ptr))
+//		ft_printf("Incorrect magic number for champion :\n");
+	champ_ptr->player_num = prog_num;
 	lseek(fd, 4, SEEK_SET);
 	read(fd, champ_ptr->head.prog_name, PROG_NAME_LENGTH);
 	lseek(fd, 136, SEEK_SET);
@@ -53,13 +57,8 @@ void				read_champ(int fd, t_champ *champ_ptr)
 }
 
 
-void				read_prog_info(int fd, int prog_num, t_champ *champ_ptr)
+void				print_champ(t_champ *champ_ptr)
 {
-	champ_ptr->player_num = prog_num;
-//	read_prog(fd, champ_ptr);
-	read_champ(fd, champ_ptr);
-//	if (!check_magic(fd, champ_ptr))
-//		ft_printf("Incorrect magic number for champion :\n");
 	ft_printf("Player num :%i\n", champ_ptr->player_num);
 	ft_printf("Program name :%s\n", champ_ptr->head.prog_name);
 	ft_printf("Prog size :%i\n", champ_ptr->head.prog_size);
@@ -67,19 +66,19 @@ void				read_prog_info(int fd, int prog_num, t_champ *champ_ptr)
 	ft_printf("Prog carry :%i\n", champ_ptr->carry);
 	ft_printf("Prog pc :%i\n", champ_ptr->pc);
 	ft_printf("Prog next cycle :%i\n", champ_ptr->exec_cycle);
+	ft_printf("Program binary:\n");
 	for (unsigned int i = 0; i < champ_ptr->head.prog_size; i++)
 	{	
 		ft_print_hex(champ_ptr->prog[i]);
 	}
+	ft_printf("\n");
 }
 
-void				open_files(int ac, char **av, t_champ *champ_head)
+void				open_files(int ac, char **av, t_champ *champ_ptr)
 {
 	int				ctr;
 	int				fd;
-	t_champ			*champ_ptr;
 
-	champ_ptr = champ_head;
 	ctr = 1;
 	while (ctr < ac)
 	{
@@ -97,7 +96,8 @@ void				open_files(int ac, char **av, t_champ *champ_head)
 			champ_ptr = champ_ptr->next;
 		}
 		champ_ptr->next = NULL;
-		read_prog_info(fd, ctr, champ_ptr);
+		read_champ(fd, ctr, champ_ptr);
+		print_champ(champ_ptr);
 		ft_printf("\n");
 		close(fd);
 		ctr++;
