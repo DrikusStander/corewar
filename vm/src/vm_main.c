@@ -6,18 +6,40 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/26 16:20:47 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/26 17:16:34 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
 
-void				read_prog(int fd, t_champ *champ_ptr)
+void	ft_print_hex(int c)
 {
-	int 			ctr;
+	char *map = "0123456789abcdef";
+	
+	write(1, map + (c / 16), 1);
+	write(1, map + (c % 16), 1);
+	write(1, "  ", 2);
+}
+
+void				read_champ(int fd, t_champ *champ_ptr)
+{
+	int				ctr;
 
 	ctr = 0;
-	ft_bzero(champ_ptr->prog, CHAMP_MAX_SIZE);
+	lseek(fd, 4, SEEK_SET);
+	read(fd, champ_ptr->head.prog_name, PROG_NAME_LENGTH);
+	lseek(fd, 136, SEEK_SET);
+	read(fd, (void *)&champ_ptr->head.prog_size, 4);
+	champ_ptr->head.prog_size = ((champ_ptr->head.prog_size>> 24) & 0xFF)
+		| ((champ_ptr->head.prog_size >> 8) & 0xFF00)
+		| ((champ_ptr->head.prog_size < 8) & 0xFF0000)
+		| ((champ_ptr->head.prog_size << 24) & 0xFF0000);
+	if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE)
+	{
+		ft_printf("\n**** Program size too big for champion %s ****\n\n",
+				champ_ptr->head.prog_name);
+	}
+	read(fd, champ_ptr->head.comment, COMMENT_LENGTH);
 	lseek(fd, 2192, SEEK_SET);
 	read(fd, champ_ptr->prog, champ_ptr->head.prog_size);
 	champ_ptr->carry = 0;
@@ -30,45 +52,28 @@ void				read_prog(int fd, t_champ *champ_ptr)
 	champ_ptr->exec_cycle = 1;
 }
 
-void				read_prog_name_comment(int fd, t_champ *champ_ptr)
-{
-	unsigned char	*int_buf;
-
-	int_buf = ft_memalloc(sizeof(int));
-	ft_bzero(int_buf, sizeof(int));
-	ft_bzero(champ_ptr->head.prog_name, (PROG_NAME_LENGTH + 1));
-	lseek(fd, 4, SEEK_SET);
-	read(fd, champ_ptr->head.prog_name, PROG_NAME_LENGTH);
-	lseek(fd, 136, SEEK_SET);
-	read(fd, (void *)&champ_ptr->head.prog_size, 4);
-	champ_ptr->head.prog_size = ((champ_ptr->head.prog_size>> 24) & 0xFF)
-		| ((champ_ptr->head.prog_size >> 8) & 0xFF00)
-		| ((champ_ptr->head.prog_size < 8) & 0xFF0000)
-		| ((champ_ptr->head.prog_size << 24) & 0xFF0000);
-	if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE)
-	{
-		ft_printf("\n**** Program size to big for champion %s ****\n\n",
-				champ_ptr->head.prog_name);
-	}
-	read(fd, champ_ptr->head.comment, COMMENT_LENGTH);
-}
-
 
 void				read_prog_info(int fd, int prog_num, t_champ *champ_ptr)
 {
 	champ_ptr->player_num = prog_num;
-	read_prog(fd, champ_ptr);
-	read_prog_name_comment(fd, champ_ptr);
+//	read_prog(fd, champ_ptr);
+	read_champ(fd, champ_ptr);
 //	if (!check_magic(fd, champ_ptr))
 //		ft_printf("Incorrect magic number for champion :\n");
 	ft_printf("Player num :%i\n", champ_ptr->player_num);
 	ft_printf("Program name :%s\n", champ_ptr->head.prog_name);
 	ft_printf("Prog size :%i\n", champ_ptr->head.prog_size);
 	ft_printf("Prog comment :%s\n", champ_ptr->head.comment);
-
+	ft_printf("Prog carry :%i\n", champ_ptr->carry);
+	ft_printf("Prog pc :%i\n", champ_ptr->pc);
+	ft_printf("Prog next cycle :%i\n", champ_ptr->exec_cycle);
+	for (unsigned int i = 0; i < champ_ptr->head.prog_size; i++)
+	{	
+		ft_print_hex(champ_ptr->prog[i]);
+	}
 }
 
-void				read_files(int ac, char **av, t_champ *champ_head)
+void				open_files(int ac, char **av, t_champ *champ_head)
 {
 	int				ctr;
 	int				fd;
@@ -110,7 +115,7 @@ int				main(int argc, char **argv)
 		return (0);
 	}
 	champ_head = NULL;	
-	read_files(argc, argv, champ_head);
+	open_files(argc, argv, champ_head);
 //	free_champs;
 	return (0);
 }
