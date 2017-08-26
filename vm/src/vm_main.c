@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 16:45:39 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/26 09:39:42 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,19 @@ void				print_hex(int n)
 	}
 }
 
-void				check_cor_files(int ac, char **av)
+void				read_prog_info(int fd, int prog_num, t_champ champ_head);
+{
+	t_champ			*champ_ptr;
+
+	champ_ptr = champ_head;
+	if (!check_magic(fd, champ_ptr))
+		ft_printf("Incorrect magic number for champion :\n");
+
+
+void				check_cor_files(int ac, char **av, t_champ champ_head)
 {
 	int				ctr;
 	int				fd;
-	int				read_ret;
-	unsigned char	buf[sizeof(header_t)];
 
 	ctr = 1;
 	while (ctr < ac)
@@ -58,10 +65,14 @@ void				check_cor_files(int ac, char **av)
 			ft_printf("Unable to open file %s - exiting\n", av[ctr]);
 			exit (0);
 		}
-		read_ret = read(fd, buf, sizeof(header_t));
-//		print_hex(buf[4 + PROG_NAME_LENGTH + 1]);
+		read_prog_info(fd, (ctr - 1), champ_head);
+/*		lseek(fd, 134, SEEK_SET);
+		read(fd, int_buf, sizeof(int));
+		file_size = (int)int_buf;
+		ft_printf("File size :%i\n", file_size);
+		print_hex(buf[4 + PROG_NAME_LENGTH + 1]);
 
-		size_t i = 120;
+		size_t i = 135;
 		while (i < 140)
 		{
 			ft_printf("%i  :",i); 
@@ -70,20 +81,19 @@ void				check_cor_files(int ac, char **av)
 			i++;
 		}
 		ft_printf("\n");
-		if (1) //	Insert func :check_cor_header(fd)\n	
-			ft_printf("Insert func :check_cor_header(fd)\n");
-
-		ctr++;
+*/		ctr++;
 	}
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
+	t_champion	*champ_head;
 	if (argc < 2 || argc > 5)
 	{
 		ft_printf("Usage: ./corewar <champ1.cor> <...>\n");
 		return (0);
 	}
-	check_cor_files(argc, argv);
+	champ_head = ft_memalloc(sizeof(t_champion));
+	check_cor_files(argc, argv, champ_head);
 	return (0);
 }
