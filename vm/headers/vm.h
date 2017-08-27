@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/26 15:40:59 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/27 10:18:26 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,12 @@
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
 
-/*
- * **
- * */
-
 typedef char	t_arg_type;
 
 #define T_REG					1
 #define T_DIR					2
 #define T_IND					4
 #define T_LAB					8
-
-/*
- * **
- * */
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
@@ -86,11 +78,20 @@ typedef struct			s_champ
 	int					player_num;
 	header_t			head;
 	unsigned char		prog[CHAMP_MAX_SIZE];
+	int					alive;
 	int					carry;
 	int					pc;
 	unsigned int		reg[17];
 	int					exec_cycle;
 	struct s_champ		*next;
 }						t_champ;
+
+typedef struct			s_vm
+{
+	unsigned char		mem[MEM_SIZE];
+	unsigned int		cur_cycle;
+	unsigned int		cycle_to_die;
+	unsigned int		cycle_delta;
+}						t_vm;
 
 #endif
