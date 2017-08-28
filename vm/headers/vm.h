@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 10:05:34 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/28 16:33:53 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,43 @@ typedef struct			s_vm
 	unsigned int		cycle_to_die;
 	unsigned int		cycle_delta;
 }						t_vm;
+
+/*
+**	check_key_swop_bytes.c
+*/
+
+char					*add_byte(unsigned char *mem_c, char *key);
+int						check_key(const void *mem, size_t size);
+int						swop_bytes(int i, int no_bytes);
+
+/*
+**	open_files.c
+*/
+
+void					read_champ(int fd, int prog_num, t_champ *champ_ptr);
+void					open_files(int ac, char **av, t_champ *champ_ptr);
+
+/*
+**	print_mem.c
+*/
+
+void					ft_print_hex(int c);
+unsigned char			*print_line(unsigned char *mem, size_t size);
+void					print_memory(const void *addr, size_t size);
+
+/*
+**	init_vm.c
+*/
+
+void					alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset);
+void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
+
+/*
+**	print_champ_mem.c
+*/
+
+void					print_vm(t_vm vm);
+void					print_champ(t_champ *champ_ptr);
+
 
 #endif
