@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 08:19:21 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 06:33:19 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 11:40:51 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void			ft_fork(t_args *ag, t_prog *lst)
 	arg_param = 0x0c;
 	write(ag->fd, (void *)&arg_param, 1);
 	if (lst->data[1][0] != '%' || lst->data[2] != NULL)
-	{
-		ft_printf("Invalid arguments for fork - exiting fork function\n");
-		exit(0);
-	}
+		my_error(2, ag);
+	if (ft_arrlen(lst->data) != 2)
+		my_error(4, ag);
 	if (lst->data[1][1] == ':')
 	{
 		temp = ft_strsub(lst->data[1], 2, (ft_strlen(lst->data[1]) - 1));
@@ -56,5 +55,6 @@ void			ft_fork(t_args *ag, t_prog *lst)
 		sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
 		arg_param = ft_checknum(sub);
 	}
+	free(sub);
 	swop_int_bits(ag->fd, arg_param);
 }

@@ -6,16 +6,17 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 16:15:44 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/25 12:19:12 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 13:30:57 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
 /*
- **  Swops the bits of an int from little endian to big endian
- **  and prints to file the correct number of bytes
- */
+**  Swops the bits of an int from little endian to big endian
+**  and prints to file the correct number of bytes
+*/
+
 static int			swop_int_bits(int fd, int i, char c)
 {
 	unsigned char	byte_swop;
@@ -23,10 +24,10 @@ static int			swop_int_bits(int fd, int i, char c)
 	if (c == '%')
 	{
 		byte_swop = (i >> 8) & 0xFF;
-        write(fd, (void *)&byte_swop, 1);
-        byte_swop = 0x00;
-        byte_swop = i & 0xFF;
-        write(fd, (void *)&byte_swop, 1);
+		write(fd, (void *)&byte_swop, 1);
+		byte_swop = 0x00;
+		byte_swop = i & 0xFF;
+		write(fd, (void *)&byte_swop, 1);
 	}
 	else if (c == 'r')
 	{
@@ -42,8 +43,9 @@ static int			swop_int_bits(int fd, int i, char c)
 }
 
 /*
- ** checks if the current argument is a label and returns correct value if true.
- */
+** checks if the current argument is a label and returns correct value if true.
+*/
+
 static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 {
 	char	*sub;
@@ -67,13 +69,13 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 	return (arg_param);
 }
 
-
 /*
- **  Receives the file descriptor and ld's parameters as arguments.
- **  Processes the parameters to get the int value of them, and
- **  prints the first parameter's 4 bytes to file, and the second's
- **  parameter's (a register) last byte to the file
- */
+**  Receives the file descriptor and ld's parameters as arguments.
+**  Processes the parameters to get the int value of them, and
+**  prints the first parameter's 4 bytes to file, and the second's
+**  parameter's (a register) last byte to the file
+*/
+
 static void			create_param(t_args *ag, t_prog *lst)
 {
 	int			arg_param;
@@ -84,29 +86,24 @@ static void			create_param(t_args *ag, t_prog *lst)
 	if (lst->data[1][0] == '%')
 		arg_param = check_if_label(lst, 1, ag);
 	else
-		ft_printf("incorect argument for lfork\n");
+		my_error(2, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 }
 
 /*
- **  Main function handling st opcode. Writes st's opcode to
- **  the file indicated by fd, and call relevant functions to
- **  write the argument coding byte and parameter values to file.
- */
-void			ft_lfork(t_args *ag, t_prog *lst)
+**  Main function handling st opcode. Writes st's opcode to
+**  the file indicated by fd, and call relevant functions to
+**  write the argument coding byte and parameter values to file.
+*/
+
+void				ft_lfork(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
 
 	hex = 0x0f;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 2)
-	{
-		ft_printf("not the right amount of args\n");
-		exit(1);
-	}
+		my_error(4, ag);
 	create_param(ag, lst);
 }

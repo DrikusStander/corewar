@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 12:13:27 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 13:25:00 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 **	Swops the bits of an int from little endian to big endian
 **	and prints to file the correct number of bytes
 */
+
 static int			swop_int_bits(int fd, int i, char c)
 {
 	unsigned char	byte_swop;
@@ -42,6 +43,7 @@ static int			swop_int_bits(int fd, int i, char c)
 /*
 ** checks if the current argument is a label and returns correct value if true.
 */
+
 static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 {
 	char	*sub;
@@ -61,10 +63,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
 		arg_param = ft_checknum(sub);
 		if (arg_param < 1 || arg_param > 16)
-		{
-			ft_printf("Invalid register\n");
-			exit(0);
-		}
+			my_error(1, ag);
 	}
 	free(sub);
 	return (arg_param);
@@ -76,12 +75,13 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 **	prints the first parameter's 4 bytes to file, and the second's
 **	parameter's (a register) last byte to the file
 */
+
 static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 
 	arg_param = 0;
-	if (lst->data[1][0] == 'r' )
+	if (lst->data[1][0] == 'r')
 		arg_param = check_if_label(lst, 1, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r')
@@ -92,52 +92,43 @@ static void			create_param(t_args *ag, t_prog *lst)
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
 }
 
-/*	
+/*
 **	Function receives file descriptor and ld's parameters as arguments.
 **	Processes the parameters into an argument code byte, and writes the
 **	acb to the file indicated by fd.
 */
-static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
+
+static void			create_acb(t_args *ag, char *arg1, char *arg2, char *arg3)
 {
 	unsigned char	hex;
 
-	if (arg1[0] != 'r' ||  arg2[0] != 'r' || arg3[0] != 'r')
-	{
-		ft_printf("Invalid parameters for sub, should be a register\n");
-		exit (0);
-	}
+	if (arg1[0] != 'r' || arg2[0] != 'r' || arg3[0] != 'r')
+		my_error(2, ag);
 	else
 	{
 		hex = 0b01000000;
 		hex = hex | 0b00010000;
 		hex = hex | 0b00000100;
 	}
-	if (write(fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write sub's argument coding byte to file - exiting\n");
-		exit(1);
-	}
+	if (write(ag->fd, (void *)&hex, 1) < 0)
+		my_error(3, ag);
 }
 
 /*
-**	Main function handling st opcode. Writes st's opcode to 
-**	the file indicated by fd, and call relevant functions to 
+**	Main function handling st opcode. Writes st's opcode to
+**	the file indicated by fd, and call relevant functions to
 **	write the argument coding byte and parameter values to file.
 */
+
 void				ft_sub(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
+
 	hex = 0x05;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 4)
-	{
-		ft_printf("not the right amount of args\n");
-		exit(1);
-	}
-	create_acb(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
+		my_error(4, ag);
+	create_acb(ag, lst->data[1], lst->data[2], lst->data[3]);
 	create_param(ag, lst);
 }

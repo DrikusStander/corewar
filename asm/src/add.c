@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/27 13:54:32 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 10:27:16 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 		arg_param = ft_atoi(sub);
 		free(sub);
 		if (arg_param < 1 || arg_param > 16)
-		{
-			ft_printf("Invalid register\n");
-			exit(0);
-		}
+			my_error(1, ag);
 	}
 	return (arg_param);
 }
@@ -102,27 +99,20 @@ static void			create_param(t_args *ag, t_prog *lst)
 **	acb to the file indicated by fd.
 */
 
-static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
+static void			create_acb(t_args *ag, char *arg1, char *arg2, char *arg3)
 {
 	unsigned char	hex;
 
 	if (arg1[0] != 'r' || arg2[0] != 'r' || arg3[0] != 'r')
-	{
-		ft_printf("Invalid parameters for add, should be a register\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	else
 	{
 		hex = 0b01000000;
 		hex = hex | 0b00010000;
 		hex = hex | 0b00000100;
 	}
-	if (write(fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write add's argument coding byte to file - ");
-		ft_printf("exiting\n");
-		exit(1);
-	}
+	if (write(ag->fd, (void *)&hex, 1) < 0)
+		my_error(3, ag);
 }
 
 /*
@@ -137,15 +127,9 @@ void				ft_add(t_args *ag, t_prog *lst)
 
 	hex = 0x04;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 4)
-	{
-		ft_printf("not the right amount of args\n");
-		exit(1);
-	}
-	create_acb(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
+		my_error(4, ag);
+	create_acb(ag, lst->data[1], lst->data[2], lst->data[3]);
 	create_param(ag, lst);
 }

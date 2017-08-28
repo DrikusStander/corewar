@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 15:13:23 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/21 15:16:31 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 15:39:09 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,15 @@ void	ft_name(t_args *ag, int i)
 		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > PROG_NAME_LENGTH)
 		{
-			ft_printf("Name to big:\n%s\n", ag->trim_str);
+			ft_printf_fd(2, "Name to big:\n%s\n", ag->trim_str);
 			free(temp);
-			exit(-1);
+			exit(6);
 		}
 		ft_strcpy(ag->header->prog_name, temp);
 		free(temp);
 	}
 	else
-	{
-		ft_printf("Non terminated string:\n%s\n", ag->trim_str);
-		exit(-1);
-	}
+		my_error(5, ag);
 }
 
 /*
@@ -56,18 +53,15 @@ void	ft_comment(t_args *ag, int i)
 		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > COMMENT_LENGTH)
 		{
-			ft_printf("comment to big:\n%s\n", ag->trim_str);
+			ft_printf_fd(2, "comment to big:\n%s\n", ag->trim_str);
 			free(temp);
-			exit(-1);
+			exit(6);
 		}
 		ft_strcpy(ag->header->comment, temp);
 		free(temp);
 	}
 	else
-	{
-		ft_printf("Non terminated string:\n%s\n", ag->trim_str);
-		exit(-1);
-	}
+		my_error(5, ag);
 }
 
 /*
@@ -77,11 +71,11 @@ void	ft_comment(t_args *ag, int i)
 int		ft_exit_nmcm(t_args *ag, int i)
 {
 	if (i == -1)
-		ft_printf("Invalid name:\n%s\n", ag->trim_str);
+		ft_printf_fd(2, "Invalid name:\n%s\n", ag->trim_str);
 	if (i == -2)
-		ft_printf("Invalid comment:\n%s\n", ag->trim_str);
+		ft_printf_fd(2, "Invalid comment:\n%s\n", ag->trim_str);
 	if (i == -3)
-		ft_printf("Invalid command %s\n", ag->trim_str);
+		ft_printf_fd(2, "Invalid command %s\n", ag->trim_str);
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:07:51 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/25 14:57:46 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 13:41:55 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,13 @@ void	ft_readfile(t_args *ag)
 
 void	parse_line(t_args *ag)
 {
-	char	*tmp;
 	int		i;
 
 	ag->trim_str = ft_strtrim(ag->line);
 	if ((i = ft_chr_i(ag->trim_str, '#')) > -1)
-	{
-		tmp = ft_strsub(ag->trim_str, 0, i);
-		free(ag->trim_str);
-		ag->trim_str = tmp;
-	}
+		ag->trim_str = ft_substr(ag->trim_str, i);
 	else if ((i = ft_chr_i(ag->trim_str, ';')) > -1)
-	{
-		tmp = ft_strsub(ag->trim_str, 0, i);
-		free(ag->trim_str);
-		ag->trim_str = tmp;
-	}
+		ag->trim_str = ft_substr(ag->trim_str, i);
 	if (ag->trim_str[0] == '.')
 		ft_nm_com(ag);
 	else if (ag->trim_str[0])
@@ -71,6 +62,5 @@ void	parse_line(t_args *ag)
 		return ;
 	}
 	ft_setlist(ag);
-//	ft_printf("%s\n", ag->trim_str);
 	free(ag->trim_str);
 }

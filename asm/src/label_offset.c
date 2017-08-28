@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 06:34:32 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 15:53:45 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		calc_bytes(int op_ctr, char **list_data)
 **	was not found. Returns the count received from calc_bytes.
 */
 
-static int		if_data(t_prog *lst)
+static int		if_data(t_prog *lst, t_args *ag)
 {
 	int			ctr;
 	int			byte_count;
@@ -64,7 +64,6 @@ static int		if_data(t_prog *lst)
 	byte_count = 0;
 	while (ctr < 16)
 	{
-		ft_printf("---> op_tab%s\n", g_op_tab[ctr].name);
 		if (ft_strcmp(lst->data[0], g_op_tab[ctr].name) == 0)
 		{
 			byte_count += calc_bytes(ctr, lst->data);
@@ -73,10 +72,7 @@ static int		if_data(t_prog *lst)
 		ctr++;
 	}
 	if (ctr == 16)
-	{
-		ft_printf("Invalid op code %s - exiting\n", lst->data[0]);
-		exit(0);
-	}
+		my_error(7, ag);
 	return (byte_count);
 }
 
@@ -89,7 +85,7 @@ static int		if_data(t_prog *lst)
 **	bytes the bytecode will require is returned.
 */
 
-int				label_offset(t_prog *lst)
+int				label_offset(t_prog *lst, t_args *ag)
 {
 	int			tot_bytes;
 
@@ -98,7 +94,7 @@ int				label_offset(t_prog *lst)
 	{
 		lst->bytes = tot_bytes;
 		if (lst->data != NULL && lst->data[0])
-			tot_bytes += if_data(lst);
+			tot_bytes += if_data(lst, ag);
 		lst = lst->next;
 	}
 	return (tot_bytes);

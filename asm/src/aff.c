@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/27 14:17:16 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 11:41:47 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static void			create_param(t_args *ag, t_prog *lst)
 	if (lst->data[1][0] == 'r')
 		arg_param = check_if_label(lst, 1, ag);
 	if (arg_param < 1 || arg_param > 16)
-	{
-		ft_printf("Invalid register\n");
-		exit(0);
-	}
+		my_error(1, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 }
 
@@ -95,23 +92,16 @@ static void			create_param(t_args *ag, t_prog *lst)
 **	acb to the file indicated by fd.
 */
 
-static void			create_acb(int fd, char *arg1)
+static void			create_acb(t_args *ag, char *arg1)
 {
 	unsigned char	hex;
 
 	if (arg1[0] != 'r')
-	{
-		ft_printf("Invalid parameter for aff, should be a register\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	else
 		hex = 0b01000000;
-	if (write(fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write aff's argument coding byte to file - ");
-		ft_printf("exiting\n");
-		exit(1);
-	}
+	if (write(ag->fd, (void *)&hex, 1) < 0)
+		my_error(3, ag);
 }
 
 /*
@@ -126,15 +116,9 @@ void				ft_aff(t_args *ag, t_prog *lst)
 
 	hex = 0x10;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 2)
-	{
-		ft_printf("not the right amount of args\n");
-		exit(1);
-	}
-	create_acb(ag->fd, lst->data[1]);
+		my_error(4, ag);
+	create_acb(ag, lst->data[1]);
 	create_param(ag, lst);
 }

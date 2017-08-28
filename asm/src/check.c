@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:43:59 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/24 11:03:24 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 09:35:47 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ int		check_arguments(t_args *ag, int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Invalid number of arguments. Usage: ./asm mychampion.s\n");
+		ft_printf_fd(2, "Invalid num of args. Usage: ./asm mychampion.s\n");
 		exit(0);
 	}
+	ft_printf("Assembeling : %s\n", argv[1]);
 	if (check_valid_file(ag, argv[1]) != 0)
 	{
-		ft_printf("Invalid file - file must end with .s extension\n");
+		ft_printf_fd(2, "Invalid file - file must end with .s extension\n");
 		exit(0);
 	}
 	if ((fd = open(argv[1], O_RDONLY)) == -1)

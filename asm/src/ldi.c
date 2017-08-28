@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 07:30:41 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 11:52:35 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 		arg_param = ft_checknum(sub);
 		free(sub);
 		if (lst->data[arg][0] == 'r' && (arg_param < 1 || arg_param > 16))
-		{
-			ft_printf("Invalid register\n");
-			exit(0);
-		}
+			my_error(1, ag);
 	}
 	return (arg_param);
 }
@@ -86,7 +83,6 @@ static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 	char			*sub;
-	char			*temp;
 
 	sub = NULL;
 	arg_param = 0;
@@ -94,9 +90,7 @@ static void			create_param(t_args *ag, t_prog *lst)
 		arg_param = check_if_label(lst, 1, ag);
 	else if (lst->data[1][0] == ':')
 	{
-		temp = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
-		sub = ft_strjoin(temp, ":");
-		free(temp);
+		sub = ft_join(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
 		arg_param = get_label_offset(sub, ag, lst);
 		free(sub);
 	}
@@ -110,10 +104,7 @@ static void			create_param(t_args *ag, t_prog *lst)
 	arg_param = ft_checknum(sub);
 	free(sub);
 	if (arg_param < 1 || arg_param > 16)
-	{
-		ft_printf("Invalid register\n");
-		exit(0);
-	}
+		my_error(1, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);
 }
 
@@ -123,15 +114,12 @@ static void			create_param(t_args *ag, t_prog *lst)
 **	acb to the file indicated by fd.
 */
 
-static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
+static void			create_acb(t_args *ag, char *arg1, char *arg2, char *arg3)
 {
 	unsigned char	hex;
 
 	if (arg3[0] != 'r')
-	{
-		ft_printf("Invalid parameter 3 for ldi, should be a register\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	if (arg1[0] == '%')
 		hex = 0b10000000;
 	else if (arg1[0] == 'r')
@@ -143,16 +131,10 @@ static void			create_acb(int fd, char *arg1, char *arg2, char *arg3)
 	else if (arg2[0] == '%')
 		hex = hex | 0b00100000;
 	else
-	{
-		ft_printf("Invalid parameter 2 for ldi, should be a T_DIR | T_REG\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	hex = hex | 0b00000100;
-	if (write(fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write ldi's argument coding byte to file - exiting\n");
-		exit(1);
-	}
+	if (write(ag->fd, (void *)&hex, 1) < 0)
+		my_error(3, ag);
 }
 
 /*
@@ -167,15 +149,9 @@ void				ft_ldi(t_args *ag, t_prog *lst)
 
 	hex = 0x0a;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 4)
-	{
-		ft_printf("not the right amount of args\n");
-		exit(1);
-	}
-	create_acb(ag->fd, lst->data[1], lst->data[2], lst->data[3]);
+		my_error(4, ag);
+	create_acb(ag, lst->data[1], lst->data[2], lst->data[3]);
 	create_param(ag, lst);
 }

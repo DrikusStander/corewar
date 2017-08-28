@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 07:27:04 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/08/28 10:39:42 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ static int			create_param_sub(char *arg1, t_args *ag, t_prog *lst)
 		}
 	}
 	else
-	{
-		ft_printf("invalid arguement for ld should be T_IND | T_DIR\n");
-		ext(0);
-	}
+		my_error(2, ag);
 	free(sub);
 	return (arg_param);
 }
@@ -107,10 +104,7 @@ static void			create_param(char *arg1, char *reg, t_args *ag, t_prog *lst)
 	arg_param = ft_checknum(sub);
 	free(sub);
 	if (arg_param < 1 || arg_param > 16)
-	{
-		ft_printf("Invalid register\n");
-		exit(0);
-	}
+		my_error(1, ag);
 	write(ag->fd, (void *)&arg_param, 1);
 }
 
@@ -120,32 +114,23 @@ static void			create_param(char *arg1, char *reg, t_args *ag, t_prog *lst)
 **	acb to the file indicated by fd.
 */
 
-static void			create_acb(int fd, char *arg1, char *reg)
+static void			create_acb(t_args *ag, char *arg1, char *reg)
 {
 	unsigned char	hex;
 	int				write_ret;
 
 	if (reg[0] != 'r')
-	{
-		ft_printf("Invalid parameter 2 for ld, should be a reg - exiting\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	hex = 0b00010000;
 	if (arg1[0] == '%')
 		hex = hex | 0b10000000;
 	else if (arg1[0] == 'r')
-	{
-		ft_printf("Invalid agr for ld, should be T_DIR | T_IND\n");
-		exit(0);
-	}
+		my_error(2, ag);
 	else
 		hex = hex | 0b11000000;
-	write_ret = write(fd, (void *)&hex, 1);
+	write_ret = write(ag->fd, (void *)&hex, 1);
 	if (write_ret < 0)
-	{
-		ft_printf("Unable to write ld's acb to file - exiting\n");
-		exit(1);
-	}
+		my_error(3, ag);
 }
 
 /*
@@ -162,15 +147,9 @@ void				ft_ld(t_args *ag, t_prog *lst)
 	hex = 0x02;
 	write_ret = write(ag->fd, (void *)&hex, 1);
 	if (write_ret < 0)
-	{
-		ft_printf("Unable to write opcode to file\n");
-		exit(1);
-	}
+		my_error(3, ag);
 	if (ft_arrlen(lst->data) != 3)
-	{
-		ft_printf("Incorect amount of arguments for ld\n");
-		exit(0);
-	}
-	create_acb(ag->fd, lst->data[1], lst->data[2]);
+		my_error(4, ag);
+	create_acb(ag, lst->data[1], lst->data[2]);
 	create_param(lst->data[1], lst->data[2], ag, lst);
 }

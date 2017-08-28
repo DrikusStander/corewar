@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 09:10:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 15:52:01 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ struct					s_args
 	void				(*func[17])(t_args *, t_prog *);
 	t_prog				*head;
 	t_prog				*lst;
-	header_t			*header;
+	t_header			*header;
 	char				*cur_label;
 	char				*file_name;
 	char				**f_str;
@@ -75,7 +75,7 @@ void					ft_live(t_args *ag, t_prog *lst);
 void					ft_xor(t_args *ag, t_prog *lst);
 void					ft_lldi(t_args *ag, t_prog *lst);
 void					ft_and(t_args *ag, t_prog *lst);
-int						label_offset(t_prog *lst);
+int						label_offset(t_prog *lst, t_args *ag);
 void					ft_free_all(t_args *ag);
 void					ft_freelst(t_prog *lst);
 void					ft_freelst_items(t_prog *lst);
@@ -83,5 +83,10 @@ void					ft_initstr(t_args *ag);
 void					ft_init(t_args *ag);
 int						get_label_offset(char *sub, t_args *ag, t_prog *lst);
 int						ft_checknum(char *sub);
+void					my_error(int error, t_args *ag);
+void					delete_cor(int error, t_args *ag);
+char					*ft_join(char *str, int begin, int len);
+int						arg_label(int arg, t_args *ag, t_prog *lst);
+char					*ft_substr(char *str, int len);
 
 #endif
