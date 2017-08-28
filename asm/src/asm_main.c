@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 15:51:32 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 17:18:38 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		ft_list_iter(t_args *ag)
 	while (lst)
 	{
 		i = 0;
+		ag->lst = lst;
 		if (lst->label)
 			ag->cur_label = lst->label;
 		if (lst->data && lst->data[0])

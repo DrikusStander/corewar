@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 15:13:23 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 15:39:09 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 16:55:00 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_name(t_args *ag, int i)
 
 	if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
 	{
+		if (ag->trim_str[j + 1] != '\0')
+			my_error(8, ag);
 		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > PROG_NAME_LENGTH)
 		{
@@ -50,6 +52,8 @@ void	ft_comment(t_args *ag, int i)
 
 	if ((j = ft_chrn_i(ag->trim_str, '"')) > i)
 	{
+		if (ag->trim_str[j + 1] != '\0')
+			my_error(8, ag);
 		temp = ft_strsub(ag->trim_str, (i + 1), (j - i - 1));
 		if (ft_strlen(temp) > COMMENT_LENGTH)
 		{

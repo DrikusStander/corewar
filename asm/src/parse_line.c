@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:07:51 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 13:41:55 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 17:22:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_readfile(t_args *ag)
 {
 	while (get_next_line(ag->fd, &ag->line) > 0)
 	{
+		ag->line_no++;
 		parse_line(ag);
 		if (ag->line)
 		{

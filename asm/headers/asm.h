@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 15:52:01 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 17:02:33 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct					s_prog
 	char				*label;
 	char				**data;
 	int					bytes;
+	int					line_no;
 	t_prog				*next;
 };
 
@@ -40,6 +41,7 @@ struct					s_args
 	char				*file_name;
 	char				**f_str;
 	char				*line;
+	int					line_no;
 	char				*trim_str;
 	char				**ref;
 	char				**ref2;

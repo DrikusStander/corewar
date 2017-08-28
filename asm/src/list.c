@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 10:55:53 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/25 17:46:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 17:17:26 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_lbl_com(t_args *ag)
 	int		i;
 
 	ag->lst = (t_prog *)ft_memalloc(sizeof(t_prog));
+	ag->lst->line_no = ag->line_no;
 	if ((i = ft_chr_i(ag->trim_str, ':')) > -1)
 	{
 		if (i > 0 && (ag->trim_str[i + 1] == ' ' ||

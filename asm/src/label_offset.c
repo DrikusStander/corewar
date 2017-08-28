@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 15:53:45 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 16:59:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int				label_offset(t_prog *lst, t_args *ag)
 	while (lst)
 	{
 		lst->bytes = tot_bytes;
+		ag->lst = lst;
 		if (lst->data != NULL && lst->data[0])
 			tot_bytes += if_data(lst, ag);
 		lst = lst->next;
