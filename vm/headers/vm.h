@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/27 10:18:26 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/28 10:05:34 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,12 @@ typedef struct			s_champ
 	int					player_num;
 	header_t			head;
 	unsigned char		prog[CHAMP_MAX_SIZE];
+	int					nbr_live;
+	int					calls_without_live;
 	int					alive;
 	int					carry;
 	int					pc;
-	unsigned int		reg[17];
+	int					reg[17];
 	int					exec_cycle;
 	struct s_champ		*next;
 }						t_champ;
