@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 12:19:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/27 14:17:16 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 **	Swops the bits of an int from little endian to big endian
 **	and prints to file the correct number of bytes
 */
+
 static int			swop_int_bits(int fd, int i, char c)
 {
 	unsigned char	byte_swop;
@@ -42,6 +43,7 @@ static int			swop_int_bits(int fd, int i, char c)
 /*
 ** checks if the current argument is a label and returns correct value if true.
 */
+
 static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 {
 	char	*sub;
@@ -71,12 +73,13 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 **	prints the first parameter's 4 bytes to file, and the second's
 **	parameter's (a register) last byte to the file
 */
+
 static void			create_param(t_args *ag, t_prog *lst)
 {
 	int				arg_param;
 
 	arg_param = 0;
-	if (lst->data[1][0] == 'r' )
+	if (lst->data[1][0] == 'r')
 		arg_param = check_if_label(lst, 1, ag);
 	if (arg_param < 1 || arg_param > 16)
 	{
@@ -86,11 +89,12 @@ static void			create_param(t_args *ag, t_prog *lst)
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 }
 
-/*	
+/*
 **	Function receives file descriptor and ld's parameters as arguments.
 **	Processes the parameters into an argument code byte, and writes the
 **	acb to the file indicated by fd.
 */
+
 static void			create_acb(int fd, char *arg1)
 {
 	unsigned char	hex;
@@ -98,25 +102,28 @@ static void			create_acb(int fd, char *arg1)
 	if (arg1[0] != 'r')
 	{
 		ft_printf("Invalid parameter for aff, should be a register\n");
-		exit (0);
+		exit(0);
 	}
 	else
 		hex = 0b01000000;
 	if (write(fd, (void *)&hex, 1) < 0)
 	{
-		ft_printf("Unable to write aff's argument coding byte to file - exiting\n");
+		ft_printf("Unable to write aff's argument coding byte to file - ");
+		ft_printf("exiting\n");
 		exit(1);
 	}
 }
 
 /*
-**	Main function handling st opcode. Writes st's opcode to 
-**	the file indicated by fd, and call relevant functions to 
+**	Main function handling st opcode. Writes st's opcode to
+**	the file indicated by fd, and call relevant functions to
 **	write the argument coding byte and parameter values to file.
 */
+
 void				ft_aff(t_args *ag, t_prog *lst)
 {
 	unsigned char	hex;
+
 	hex = 0x10;
 	if (write(ag->fd, (void *)&hex, 1) < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/19 10:33:24 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 16:40:37 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 06:34:32 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int		if_data(t_prog *lst)
 	if (ctr == 16)
 	{
 		ft_printf("Invalid op code %s - exiting\n", lst->data[0]);
-		exit (0);
+		exit(0);
 	}
 	return (byte_count);
 }
@@ -84,7 +84,7 @@ static int		if_data(t_prog *lst)
 **	Function iterates through the list of lines from read program
 **	and if there is data which needs to be converted to bytecode
 **	it call if_data function to calculate the number of bytes for
-**	that line. The total number of bytes in the file to that point 
+**	that line. The total number of bytes in the file to that point
 **	is added to that list element, and the grand total number of
 **	bytes the bytecode will require is returned.
 */

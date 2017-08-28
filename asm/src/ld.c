@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 14:18:46 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 07:27:04 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int			create_param_sub(char *arg1, t_args *ag, t_prog *lst)
 	else
 	{
 		ft_printf("invalid arguement for ld should be T_IND | T_DIR\n");
-		exit (0);
+		ext(0);
 	}
 	free(sub);
 	return (arg_param);

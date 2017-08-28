@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 17:44:41 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 06:26:13 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void		ft_list_iter(t_args *ag)
 
 void		temp_print(t_args *ag)
 {
-	int		i; 
+	int		i;
 	t_prog	*lst;
 
-	lst = ag->head;	
+	lst = ag->head;
 	i = 0;
 	while (lst)
 	{
@@ -78,7 +78,6 @@ void		temp_print(t_args *ag)
 		}
 		lst = lst->next;
 		ft_printf("---------------------\n");
-
 	}
 	//ft_printf("bytes :%i\n", ag->header->prog_size);
 }

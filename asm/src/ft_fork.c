@@ -6,12 +6,11 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 08:19:21 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/25 17:36:24 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 06:33:19 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
-
 
 /*
 **	Swops the bits of an int from little endian to big endian

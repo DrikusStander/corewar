@@ -6,17 +6,18 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 15:21:05 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/25 17:37:54 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/28 06:28:37 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/asm.h"
 
 /*
-** loops through the list to find the offset of the current label, then loops 
+** loops through the list to find the offset of the current label, then loops
 ** through the list again to find the offset of the label that was called,
 ** then returns the result of the first minus the second.
 */
+
 int		get_label_offset(char *sub, t_args *ag, t_prog *lst)
 {
 	int		arg_param;
@@ -27,7 +28,6 @@ int		get_label_offset(char *sub, t_args *ag, t_prog *lst)
 	arg_param += lst->bytes;
 	while (head)
 	{
-	
 		if (head->label)
 		{
 			if (ft_strncmp(head->label, sub, ft_strlen(sub)) == 0)
