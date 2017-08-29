@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 17:52:20 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 11:34:01 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct			s_champ
 	int					player_num;
 	header_t			head;
 	unsigned char		prog[CHAMP_MAX_SIZE];
-	int					nbr_live;
-	int					calls_without_live;
 	int					alive;
 	int					carry;
 	int					pc;
@@ -94,6 +92,9 @@ typedef struct			s_vm
 	unsigned int		cur_cycle;
 	unsigned int		cycle_to_die;
 	unsigned int		cycle_delta;
+	unsigned int		live_calls;
+	unsigned int		checks;
+	unsigned int		last_live;
 }						t_vm;
 
 /*
@@ -133,5 +134,14 @@ void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
 void					print_vm(t_vm vm);
 void					print_champ(t_champ *champ_ptr);
 
+/*
+**	run_machine_run.c
+*/
+
+int						check_who_alive(t_champ *champ_head);
+void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
+void					call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm);
+void					exec_champ(t_champ *champ_ptr, t_vm *vm);
+void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 #endif

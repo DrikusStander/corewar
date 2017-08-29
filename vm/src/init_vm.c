@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 16:22:21 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 10:13:02 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,7 @@ void				init_vm(t_vm *vm, t_champ *champ_head, int argc)
 	vm->cur_cycle = 1;
 	vm->cycle_to_die = CYCLE_TO_DIE;
 	vm->cycle_delta = CYCLE_DELTA;
+	vm->live_calls = 0;
+	vm->checks = 0;
+	vm->last_live = 0;
 }

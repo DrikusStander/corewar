@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 16:19:10 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 10:09:52 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 		champ_ptr->reg[ctr] = 0;
 		ctr++;
 	}
-	champ_ptr->exec_cycle = 1;
+	champ_ptr->exec_cycle = 0;
 }
 
 /*
