@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 16:16:13 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 16:01:39 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void				print_champ(t_champ *champ_ptr)
 	ft_printf("Player num                 :%i\n", champ_ptr->player_num);
 	ft_printf("Program name               :%s\n", champ_ptr->head.prog_name);
 	ft_printf("Program size               :%i\n", champ_ptr->head.prog_size);
-	ft_printf("Current nbr live calls     :%i\n", champ_ptr->nbr_live);
-	ft_printf("Current calls without live :%i\n", champ_ptr->calls_without_live);
 	ft_printf("Program comment            :%s\n", champ_ptr->head.comment);
 	ft_printf("Program alive?             :%i\n", champ_ptr->alive);
 	ft_printf("Prog carry                 :%i\n", champ_ptr->carry);

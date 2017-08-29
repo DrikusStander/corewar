@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 15:48:27 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 15:57:33 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,19 @@ typedef char	t_arg_type;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct header_s 
+typedef struct header_s	header_t;
+typedef struct s_champ	t_champ;
+typedef struct s_vm		t_vm;
 
-typedef struct			header_s
+struct					header_s
 {
 	unsigned int		magic;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	unsigned int		prog_size;
 	char				comment[COMMENT_LENGTH + 1];
-}						header_t;
+};
 
-typedef struct			s_champ
+struct					s_champ
 {
 	int					player_num;
 	header_t			head;
@@ -86,9 +88,9 @@ typedef struct			s_champ
 	int					reg[17];
 	int					exec_cycle;
 	struct s_champ		*next;
-}						t_champ;
+};
 
-typedef struct			s_vm
+struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
 	unsigned int		cur_cycle;
@@ -98,7 +100,7 @@ typedef struct			s_vm
 	unsigned int		checks;
 	unsigned int		last_live;
 	void				(*func[17])(t_champ *, t_vm *);
-}						t_vm;
+};
 
 /*
 **	check_key_swop_bytes.c

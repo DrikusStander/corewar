@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 10:09:52 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 15:56:46 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 	read(fd, champ_ptr->head.comment, COMMENT_LENGTH);
 	lseek(fd, 2192, SEEK_SET);
 	read(fd, champ_ptr->prog, champ_ptr->head.prog_size);
-	champ_ptr->nbr_live = 0;
-	champ_ptr->calls_without_live = 0;
 	champ_ptr->alive = 1;
 	champ_ptr->carry = 0;
 	champ_ptr->pc = 0;

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 15:40:29 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 16:30:36 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@ void				alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset)
 
 void				init_vm_functions(t_vm *vm)
 {
-	vm->func[2] = ft_ld;
-	vm->func[3] = ft_st;
-	vm->func[4] = ft_add;
-	vm->func[5] = ft_sub;
-	vm->func[6] = ft_and;
-	vm->func[7] = ft_or;
-	vm->func[8] = ft_xor;
-	vm->func[9] = ft_zjmp;
-	vm->func[10] = ft_ldi;
-	vm->func[11] = ft_sti;
-	vm->func[12] = ft_fork;
-	vm->func[13] = ft_lld;
-	vm->func[14] = ft_lldi;
-	vm->func[15] = ft_lfork;
-	vm->func[16] = ft_aff;
+	vm->func[2] = &ft_ld;
+	vm->func[3] = &ft_st;
+	vm->func[4] = &ft_add;
+	vm->func[5] = &ft_sub;
+	vm->func[6] = &ft_and;
+	vm->func[7] = &ft_or;
+	vm->func[8] = &ft_xor;
+	vm->func[9] = &ft_zjmp;
+	vm->func[10] = &ft_ldi;
+	vm->func[11] = &ft_sti;
+	vm->func[12] = &ft_fork;
+	vm->func[13] = &ft_lld;
+	vm->func[14] = &ft_lldi;
+	vm->func[15] = &ft_lfork;
+	vm->func[16] = &ft_aff;
 }
 
 
