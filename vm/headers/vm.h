@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 11:34:01 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 15:48:27 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef char	t_arg_type;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
+typedef struct header_s 
+
 typedef struct			header_s
 {
 	unsigned int		magic;
@@ -95,6 +97,7 @@ typedef struct			s_vm
 	unsigned int		live_calls;
 	unsigned int		checks;
 	unsigned int		last_live;
+	void				(*func[17])(t_champ *, t_vm *);
 }						t_vm;
 
 /*
@@ -143,5 +146,26 @@ void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
 void					call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm);
 void					exec_champ(t_champ *champ_ptr, t_vm *vm);
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
+
+/*
+**	opcodes .c
+*/
+
+void					ft_ld(t_vm *vm, t_champ *champ);
+void					ft_st(t_vm *vm, t_champ *champ);
+void					ft_add(t_vm *vm, t_champ *champ);
+void					ft_sub(t_vm *vm, t_champ *champ);
+void					ft_and(t_vm *vm, t_champ *champ);
+void					ft_or(t_vm *vm, t_champ *champ);
+void					ft_xor(t_vm *vm, t_champ *champ);
+void					ft_zjmp(t_vm *vm, t_champ *champ);
+void					ft_ldi(t_vm *vm, t_champ *champ);
+void					ft_sti(t_vm *vm, t_champ *champ);
+void					ft_fork(t_vm *vm, t_champ *champ);
+void					ft_lld(t_vm *vm, t_champ *champ);
+void					ft_lldi(t_vm *vm, t_champ *champ);
+void					ft_lfork(t_vm *vm, t_champ *champ);
+void					ft_aff(t_vm *vm, t_champ *champ);
+
 
 #endif

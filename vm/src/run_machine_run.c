@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 11:34:03 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 15:42:36 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void			exec_champ(t_champ *champ_ptr, t_vm *vm)
 {
 	if (vm->mem[champ_ptr->pc] == 1)
 		call_live(champ_ptr, vm);
+	else if (vm->mem[champ_ptr->pc] >= 2 && vm->mem[champ_ptr->pc] <= 16)
+		func[vm->mem[champ_ptr->pc]](champ_ptr, vm);
 }
 
 void			run_machine_run(t_champ *champ_head, t_vm *vm)
