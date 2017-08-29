@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 15:57:33 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/29 16:41:38 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ struct					s_vm
 	unsigned int		live_calls;
 	unsigned int		checks;
 	unsigned int		last_live;
-	void				(*func[17])(t_champ *, t_vm *);
+	void				(*func[17])(t_vm *, t_champ *);
 };
 
 /*
