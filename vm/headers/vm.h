@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:41:38 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/29 17:12:25 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,18 @@ typedef char	t_arg_type;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
+typedef struct          s_op
+{
+	char                *name;
+	int                 no_args;
+	char                type[MAX_ARGS_NUMBER];
+	char                id;
+	int                 no_cyles;
+	char                *desc;
+	int                 has_acb;
+	int                 is_index;
+}                       t_op;
+
 typedef struct header_s	header_t;
 typedef struct s_champ	t_champ;
 typedef struct s_vm		t_vm;
@@ -103,45 +115,45 @@ struct					s_vm
 };
 
 /*
-**	check_key_swop_bytes.c
-*/
+ **	check_key_swop_bytes.c
+ */
 
 char					*add_byte(unsigned char *mem_c, char *key);
 int						check_key(const void *mem, size_t size);
 int						swop_bytes(int i, int no_bytes);
 
 /*
-**	open_files.c
-*/
+ **	open_files.c
+ */
 
 void					read_champ(int fd, int prog_num, t_champ *champ_ptr);
 void					open_files(int ac, char **av, t_champ *champ_ptr);
 
 /*
-**	print_mem.c
-*/
+ **	print_mem.c
+ */
 
 void					ft_print_hex(int c);
 unsigned char			*print_line(unsigned char *mem, size_t size);
 void					print_memory(const void *addr, size_t size);
 
 /*
-**	init_vm.c
-*/
+ **	init_vm.c
+ */
 
 void					alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset);
 void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
 
 /*
-**	print_champ_mem.c
-*/
+ **	print_champ_mem.c
+ */
 
 void					print_vm(t_vm vm);
 void					print_champ(t_champ *champ_ptr);
 
 /*
-**	run_machine_run.c
-*/
+ **	run_machine_run.c
+ */
 
 int						check_who_alive(t_champ *champ_head);
 void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
@@ -150,8 +162,8 @@ void					exec_champ(t_champ *champ_ptr, t_vm *vm);
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 /*
-**	opcodes .c
-*/
+ **	opcodes .c
+ */
 
 void					ft_ld(t_vm *vm, t_champ *champ);
 void					ft_st(t_vm *vm, t_champ *champ);
