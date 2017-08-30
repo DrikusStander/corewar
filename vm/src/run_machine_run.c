@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 09:49:09 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/30 10:12:31 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 
 	ctr = 0;
 	champ_ptr->pc++;
+	champ_ptr->exec_cycle += 10;
 	sub = ft_strsub((char *)vm->mem, champ_ptr->pc, 4);
+	ft_printf("substring :%s\n", sub);
 	p_num = ft_atoi(sub);
 	ft_printf("Call live - pnum = %i\n", p_num);
 	p_num = swop_bytes(p_num, 4);
@@ -97,13 +99,14 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	while (check_who_alive(champ_head))
 	{
 		ft_printf("Machine Alive loop\n");
-		while (vm->cur_cycle <= 10)//vm->cycle_to_die)
+		while (vm->cur_cycle <= 11)//vm->cycle_to_die)
 		{
-			ft_printf("machine cycle loop: %i\n", i++);
+			ft_printf("----------------->machine cycle loop: %i\n", i++);
 			champ_ptr = champ_head;
 			while (champ_ptr)
 			{
-				ft_printf("Champ loop alive? :%i exec? :%i\n", champ_ptr->alive, champ_ptr->exec_cycle);
+				ft_printf("Champ loop alive? :%i exec? :%i\n",
+						champ_ptr->alive, champ_ptr->exec_cycle);
 				if (champ_ptr->alive && !champ_ptr->exec_cycle)
 				{
 					ft_printf("call exec\n", i++);
