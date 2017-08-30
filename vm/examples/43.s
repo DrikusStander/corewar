@@ -3,5 +3,5 @@
 
 test: 
 	st r1, r2
-	sub r2, r1, r5
-	st r5, 1999
+	xor r1, r2, r5
+	#st r5, 1999

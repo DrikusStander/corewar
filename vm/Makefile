@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/30 12:34:09 by hstander         ###   ########.fr        #
+#    Updated: 2017/08/30 17:38:33 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,9 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)op.c\
 				../ops/add.c\
 				../ops/sub.c\
+				../ops/and.c\
+				../ops/or.c\
+				../ops/xor.c\
 
 OSC			=	vm_main.o\
 				check_key_swop_bytes.o\
@@ -44,6 +47,9 @@ OSC			=	vm_main.o\
 				op.o\
 				add.o\
 				sub.o\
+				and.o\
+				or.o\
+				xor.o\
 
 
 FLAGS		=	-Wall -Werror -Wextra

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 10:41:55 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/30 17:44:15 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,6 @@ void					ft_lld(t_vm *vm, t_champ *champ);
 void					ft_lldi(t_vm *vm, t_champ *champ);
 void					ft_lfork(t_vm *vm, t_champ *champ);
 void					ft_aff(t_vm *vm, t_champ *champ);
-
+void					ft_decode(unsigned int i, unsigned char *buf);
 
 #endif
