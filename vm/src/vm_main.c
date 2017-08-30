@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 11:59:58 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 17:54:26 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int					main(int argc, char **argv)
 	init_vm(vm, champ_head, argc);
 
 	print_vm(*vm);
-	t_champ			*champ_ptr = champ_head;
+/*	t_champ			*champ_ptr = champ_head;
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
@@ -37,8 +37,8 @@ int					main(int argc, char **argv)
 		champ_ptr = champ_ptr->next;
 	}
 
-	run_machine_run(champ_head, vm);
-	champ_ptr = champ_head;
+*/	run_machine_run(champ_head, vm);
+/*	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
@@ -47,5 +47,5 @@ int					main(int argc, char **argv)
 	}
 	print_vm(*vm);
 //	free_champs;
-	return (0);
+*/	return (0);
 }
