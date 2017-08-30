@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:20:28 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 10:11:31 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 12:35:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			ft_st(t_vm *vm, t_champ *champ)
 	(void)vm;
 	(void)champ;
 }
-*/
+
 void			ft_add(t_vm *vm, t_champ *champ)
 {
 	(void)vm;
@@ -38,7 +38,7 @@ void			ft_sub(t_vm *vm, t_champ *champ)
 	(void)champ;
 	champ->exec_cycle = g_op_tab[2].no_cycles;
 }
-
+*/
 void			ft_and(t_vm *vm, t_champ *champ)
 {
 	(void)vm;
