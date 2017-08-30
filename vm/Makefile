@@ -6,11 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2017/08/30 09:46:34 by hstander         ###   ########.fr        #
-=======
-#    Updated: 2017/08/30 08:50:57 by gvan-roo         ###   ########.fr        #
->>>>>>> 6a944dfe1a76484ab89f0b869cd9512e656127fb
+#    Updated: 2017/08/30 10:08:04 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +26,9 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)init_vm.c\
 				$(PATH_SRC)print_champ_mem.c\
 				$(PATH_SRC)opcodes.c\
-<<<<<<< HEAD
-				../ops/st.c
-=======
+				../ops/st.c\
 				$(PATH_SRC)run_machine_run.c\
->>>>>>> 6a944dfe1a76484ab89f0b869cd9512e656127fb
+				$(PATH_SRC)op.c\
 
 OSC			=	vm_main.o\
 				check_key_swop_bytes.o\
@@ -43,11 +37,9 @@ OSC			=	vm_main.o\
 				init_vm.o\
 				print_champ_mem.o\
 				opcodes.o\
-<<<<<<< HEAD
 				st.o\
-=======
 				run_machine_run.o\
->>>>>>> 6a944dfe1a76484ab89f0b869cd9512e656127fb
+				op.o\
 
 
 FLAGS		=	-Wall -Werror -Wextra

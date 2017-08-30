@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:20:28 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:41:32 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 10:06:22 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void			ft_ld(t_vm *vm, t_champ *champ)
 	(void)vm;
 	(void)champ;
 }
-
+/*
 void			ft_st(t_vm *vm, t_champ *champ)
 {
 	(void)vm;
 	(void)champ;
 }
-
+*/
 void			ft_add(t_vm *vm, t_champ *champ)
 {
 	(void)vm;
