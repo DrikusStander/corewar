@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:01:39 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/30 10:27:46 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void				print_champ(t_champ *champ_ptr)
 	ft_printf("Program size               :%i\n", champ_ptr->head.prog_size);
 	ft_printf("Program comment            :%s\n", champ_ptr->head.comment);
 	ft_printf("Program alive?             :%i\n", champ_ptr->alive);
+	ft_printf("Program called alive?      :%i\n", champ_ptr->called_alive);
 	ft_printf("Prog carry                 :%i\n", champ_ptr->carry);
 	ft_printf("Prog pc                    :%i\n", champ_ptr->pc);
 	ft_printf("Prog next cycle            :%i\n", champ_ptr->exec_cycle);

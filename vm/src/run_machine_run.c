@@ -6,12 +6,11 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 11:51:22 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 12:58:58 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
-
 
 int				check_who_alive(t_champ *champ_head)
 {
@@ -27,7 +26,6 @@ int				check_who_alive(t_champ *champ_head)
 	return (0);
 }
 
-
 void			new_cycle_to_die(t_champ *champ_head, t_vm *vm)
 {
 	t_champ		*champ_ptr;
@@ -35,7 +33,9 @@ void			new_cycle_to_die(t_champ *champ_head, t_vm *vm)
 	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
-		champ_ptr->alive = 0;
+		if (!champ_ptr->called_alive)
+			champ_ptr->alive = 0;
+		champ_ptr->called_alive = 0;
 		champ_ptr = champ_ptr->next;
 	}
 	if (vm->live_calls >= NBR_LIVE || vm->checks >= 10)
@@ -57,9 +57,11 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 
 	ctr = 0;
 	champ_ptr->pc++;
-	champ_ptr->exec_cycle += 10;
-	sub = ft_strsub((char *)vm->mem, champ_ptr->pc, 4);
-	ft_printf("substring :%s\n", sub);
+	ft_printf("pc :%i\n", champ_ptr->pc);
+	champ_ptr->exec_cycle += g_op_tab[0].no_cycles;
+	sub = ft_strsub((char *)&vm->mem[champ_ptr->pc], champ_ptr->pc, 100);
+	for (int i = 0; i < 100; i++)
+		ft_printf("substring[4] :%c\n", sub[i]);
 	p_num = ft_atoi(sub);
 	ft_printf("Call live - pnum = %i\n", p_num);
 	p_num = swop_bytes(p_num, 4);
@@ -69,7 +71,7 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	{
 		if (champ_ptr->player_num == p_num)
 		{
-			champ_ptr->alive = 1;
+			champ_ptr->called_alive = 1;
 			ft_printf("A process shows that player %i: (%s) is alive",
 					champ_ptr->player_num, champ_ptr->head.prog_name);
 		}
@@ -99,9 +101,9 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	while (check_who_alive(champ_head))
 	{
 		ft_printf("Machine Alive loop\n");
-		while (vm->cur_cycle <= 11)//vm->cycle_to_die)
+		while (vm->cur_cycle < vm->cycle_to_die)
 		{
-			ft_printf("----------------->machine cycle loop: %i\n", i++);
+			ft_printf("----------------->machine cycle: %i\n", i++);
 			champ_ptr = champ_head;
 			while (champ_ptr)
 			{

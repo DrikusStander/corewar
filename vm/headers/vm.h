@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 10:05:03 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 10:41:55 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 #define REG_NUMBER				16
 
-#define CYCLE_TO_DIE			1536
+#define CYCLE_TO_DIE			20//1536
 #define CYCLE_DELTA				50
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
@@ -97,6 +97,7 @@ struct					s_champ
 	header_t			head;
 	unsigned char		prog[CHAMP_MAX_SIZE];
 	int					alive;
+	int					called_alive;
 	int					carry;
 	int					pc;
 	int					reg[17];
