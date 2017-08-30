@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 17:12:25 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/29 17:38:53 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct          s_op
 	int                 has_acb;
 	int                 is_index;
 }                       t_op;
+
+extern  t_op            g_op_tab[];
 
 typedef struct header_s	header_t;
 typedef struct s_champ	t_champ;
