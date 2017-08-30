@@ -6,11 +6,11 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/29 17:38:50 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 09:46:49 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/vm.h"
+#include "../vm/headers/vm.h"
 
 char		*ft_decode(unsigned int chr)
 {
@@ -36,6 +36,7 @@ void		ft_st(t_vm *vm, t_champ *champ)
 	dec = ft_decode(acb);
 	while (i < 4)
 	{
-		printf("%d", dec[i]);
+		printf("---------->%d", dec[i]);
+		i++;
 	}
 }
