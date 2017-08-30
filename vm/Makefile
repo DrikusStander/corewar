@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/29 16:22:36 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/08/30 08:50:57 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)init_vm.c\
 				$(PATH_SRC)print_champ_mem.c\
 				$(PATH_SRC)opcodes.c\
+				$(PATH_SRC)run_machine_run.c\
 
 OSC			=	vm_main.o\
 				check_key_swop_bytes.o\
@@ -34,6 +35,7 @@ OSC			=	vm_main.o\
 				init_vm.o\
 				print_champ_mem.o\
 				opcodes.o\
+				run_machine_run.o\
 
 
 FLAGS		=	-Wall -Werror -Wextra
@@ -43,7 +45,7 @@ all	:	$(NAME)
 $(NAME)	:	$(OSRC)
 	make -C $(PATH_LIB) fclean && make -C $(PATH_LIB)
 	gcc $(FLAGS) -I $(PATH_HEAD)$(HEADERS) -c $(SRC)
-	gcc -o $(NAME) $(OSC) -L$(PATH_LIB) -lft -ltermcap
+	gcc -o $(NAME) $(OSC) -L$(PATH_LIB) -lft
 
 $(OSRC) :
 	

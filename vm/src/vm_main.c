@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:38:22 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 08:29:25 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int					main(int argc, char **argv)
 		champ_ptr = champ_ptr->next;
 	}
 
+	run_machine_run(champ_head, vm);
 //	free_champs;
 	return (0);
 }

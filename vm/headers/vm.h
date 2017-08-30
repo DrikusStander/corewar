@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 17:38:53 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/30 08:35:17 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,8 @@ void					print_champ(t_champ *champ_ptr);
 int						check_who_alive(t_champ *champ_head);
 void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
 void					call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm);
-void					exec_champ(t_champ *champ_ptr, t_vm *vm);
+void					exec_champ(t_champ *champ_head,
+							t_champ *champ_ptr, t_vm *vm);
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 /*
