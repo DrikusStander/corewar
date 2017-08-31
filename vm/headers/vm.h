@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 17:44:15 by hstander         ###   ########.fr       */
+/*   Updated: 2017/08/31 11:30:55 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 #define REG_NUMBER				16
 
-#define CYCLE_TO_DIE			20//1536
+#define CYCLE_TO_DIE			5//1536
 #define CYCLE_DELTA				50
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
@@ -139,6 +139,7 @@ void					open_files(int ac, char **av, t_champ *champ_ptr);
 void					ft_print_hex(int c);
 unsigned char			*print_line(unsigned char *mem, size_t size);
 void					print_memory(const void *addr, size_t size);
+int						get_int_from_mem(unsigned char *mem, int size);
 
 /*
  **	init_vm.c

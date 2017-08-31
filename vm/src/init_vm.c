@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:30:36 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 11:26:54 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ void				init_vm_functions(t_vm *vm)
 	vm->func[15] = &ft_lfork;
 	vm->func[16] = &ft_aff;
 }
-
-
-
 
 /*
 **	Function initialised the struct virtual machine. The memory

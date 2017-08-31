@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 17:54:26 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 11:28:31 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,14 @@ int					main(int argc, char **argv)
 	}
 	print_vm(*vm);
 //	free_champs;
-*/	return (0);
+*/	
+	if (vm->last_live != 0)
+	{
+		ft_printf("Player %i won\n", vm->last_live);
+	}
+	else
+	{
+		ft_printf("No live calls\n");
+	}
+	return (0);
 }
