@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 10:26:48 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 16:30:13 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,22 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 **	reads the file info into the champion struct.
 */
 
-void				open_files(int ac, char **av, t_champ *champ_ptr)
+void				open_files(int ac, char **av, t_champ *champ_ptr, t_vm *vm)
 {
 	int				ctr;
 	int				fd;
 
 	ctr = 1;
+	vm->dump_cycle = 0;
 	while (ctr < ac)
 	{
+		if (ft_strcmp(av[ctr], "-dump") == 0)
+		{
+			if ((ctr + 1) < ac)
+				vm->dump_cycle = ft_atoi(av[ctr + 1]);
+			ctr += 2;
+			continue;
+		}
 		fd = open(av[ctr], O_RDONLY);
 		if (fd < 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 11:31:54 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 15:45:04 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,14 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	{
 		while (vm->cur_cycle < vm->cycle_to_die)
 		{
+			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
+			{
+				print_memory((void *)&vm->mem, MEM_SIZE);
+//				free(champs);
+				exit(0);
+			}
 			ft_printf("----------------->machine cycle: %i\n", vm->cur_cycle);
+			ft_printf("----------------->total cycle: %i, dump_cycle :%i\n", vm->total_cycles, vm->dump_cycle);
 			champ_ptr = champ_head;
 			while (champ_ptr)
 			{
@@ -119,6 +126,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				champ_ptr = champ_ptr->next;
 			}
 			vm->cur_cycle++;
+			vm->total_cycles++;
 		}
 		new_cycle_to_die(champ_head, vm);
 	}

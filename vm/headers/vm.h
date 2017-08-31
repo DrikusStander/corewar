@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 11:30:55 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 15:42:53 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 #define REG_NUMBER				16
 
-#define CYCLE_TO_DIE			5//1536
+#define CYCLE_TO_DIE			20//1536
 #define CYCLE_DELTA				50
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
@@ -109,6 +109,8 @@ struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
 	unsigned int		cur_cycle;
+	unsigned int		dump_cycle;
+	unsigned int		total_cycles;
 	unsigned int		cycle_to_die;
 	unsigned int		cycle_delta;
 	unsigned int		live_calls;
@@ -130,7 +132,7 @@ int						swop_bytes(int i, int no_bytes);
  */
 
 void					read_champ(int fd, int prog_num, t_champ *champ_ptr);
-void					open_files(int ac, char **av, t_champ *champ_ptr);
+void					open_files(int ac, char **av, t_champ *champ_ptr, t_vm *vm);
 
 /*
  **	print_mem.c

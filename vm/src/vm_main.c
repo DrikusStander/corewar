@@ -6,18 +6,36 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 11:28:31 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 15:41:04 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
 
+int					count_flags(int argc, char **argv)
+{
+	int				ret;
+
+	ret = 0;
+	argc--;
+	while (argc > 0)
+	{
+		if (ft_strcmp(argv[argc], "-n") == 0)
+			ret += 2;
+		else if (ft_strcmp(argv[argc], "-dump") == 0)
+			ret += 2;
+		argc--;
+	}
+	return (ret);
+}
+
+
 int					main(int argc, char **argv)
 {
 	t_champ			*champ_head;
 	t_vm			*vm;
-	
-	if (argc < 2 || argc > 5)
+
+	if (argc < 2 || (argc - count_flags(argc, argv)) > 5)
 	{
 		ft_printf("Usage with max %i champs: ./corewar <champ1.cor> <...>\n",
 				MAX_PLAYERS);
@@ -25,7 +43,7 @@ int					main(int argc, char **argv)
 	}
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));
-	open_files(argc, argv, champ_head);
+	open_files(argc, argv, champ_head, vm);
 	init_vm(vm, champ_head, argc);
 
 	print_vm(*vm);
@@ -49,12 +67,8 @@ int					main(int argc, char **argv)
 //	free_champs;
 */	
 	if (vm->last_live != 0)
-	{
 		ft_printf("Player %i won\n", vm->last_live);
-	}
 	else
-	{
 		ft_printf("No live calls\n");
-	}
 	return (0);
 }
