@@ -6,12 +6,12 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/01 07:23:39 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/09/01 07:40:38 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../vm/headers/vm.h"
+#include "../headers/vm.h"
 
 /*
 **Fetches 2 bytes if indirect val
@@ -70,11 +70,9 @@ static int	direct(t_champ *champ, t_vm *vm)
 
 void		ft_ld(t_vm *vm, t_champ *champ)
 {
-	int				p1;
 	unsigned char	enc;
 	unsigned char	dec[4];
 	int				val;
-	unsigned char	bytes[4];
 
 	champ->pc++;
 	enc = vm->mem[champ->pc];
