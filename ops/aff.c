@@ -6,11 +6,24 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/01 14:32:23 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/01 15:39:55 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vm/headers/vm.h"
+
+int			ft_pow(int num, int power)
+{
+	int		pow;
+
+	pow = 1;
+	while (power > 0)
+	{
+		pow *= num;
+		power--;
+	}
+	return (pow);
+}
 
 int			oct_to_dec(int octet)
 {
@@ -18,10 +31,11 @@ int			oct_to_dec(int octet)
 	int		ret;
 
 	i = 0;
-	ret = 0;
+	ret = 0;	
 	while (octet > 0)
 	{
-		ret += (octet % 10) * (8 ^ i);
+		ret += (octet % 10) * ft_pow(8, i);
+		i++;
 		octet /= 10;
 	}
 	return (ret);
@@ -36,6 +50,6 @@ void		ft_aff(t_vm *vm, t_champ *champ)
 	c_pc = mem_check(c_pc);
 	champ->exec_cycle = g_op_tab[9].no_cycles;
 	arg1 = vm->mem[c_pc++];
-	ft_printf("---------->>>>>>%c\n", (oct_to_dec(champ->reg[arg1]) % 256));
+	ft_printf("%c\n", (oct_to_dec(champ->reg[arg1]) % 256));
 }
 
