@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/01 13:52:08 by chgreen          ###   ########.fr       */
+/*   Updated: 2017/09/01 15:51:47 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	direct(t_champ *champ, t_vm *vm)
 **sets exec_cycle
 */
 
-void		ft_ld(t_vm *vm, t_champ *champ)
+void		ft_lld(t_vm *vm, t_champ *champ)
 {
 	unsigned char	enc;
 	unsigned char	dec[4];
