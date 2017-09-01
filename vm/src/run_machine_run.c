@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 15:45:04 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 07:13:19 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 //				free(champs);
 				exit(0);
 			}
-			ft_printf("----------------->machine cycle: %i\n", vm->cur_cycle);
-			ft_printf("----------------->total cycle: %i, dump_cycle :%i\n", vm->total_cycles, vm->dump_cycle);
+//			ft_printf("----------------->machine cycle: %i\n", vm->cur_cycle);
+//			ft_printf("----------------->total cycle: %i, dump_cycle :%i\n", vm->total_cycles, vm->dump_cycle);
 			champ_ptr = champ_head;
 			while (champ_ptr)
 			{
-				ft_printf("Champ number :%i\n", champ_ptr->player_num);
-				ft_printf("Alive? :%i\nTime till next exec? :%i\nCalled alive? :%i\n", champ_ptr->alive, champ_ptr->exec_cycle, champ_ptr->called_alive);
+//				ft_printf("Champ number :%i\n", champ_ptr->player_num);
+//				ft_printf("Alive? :%i\nTime till next exec? :%i\nCalled alive? :%i\n", champ_ptr->alive, champ_ptr->exec_cycle, champ_ptr->called_alive);
 				if (champ_ptr->alive && !champ_ptr->exec_cycle)
 				{
 					exec_champ(champ_head, champ_ptr, vm);

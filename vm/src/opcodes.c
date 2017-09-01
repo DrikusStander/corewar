@@ -6,19 +6,18 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:20:28 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 17:38:56 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/01 07:32:02 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
-
+/*
 void			ft_ld(t_vm *vm, t_champ *champ)
 {
 	(void)vm;
 	(void)champ;
 	champ->exec_cycle = g_op_tab[2].no_cycles;
 }
-/*
 void			ft_st(t_vm *vm, t_champ *champ)
 {
 	(void)vm;

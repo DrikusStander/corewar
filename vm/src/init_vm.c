@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 16:29:39 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 07:14:52 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void				alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset)
 		ctr++;
 	}
 }
+
+/*
+**	Initialises function pointers
+*/
 
 void				init_vm_functions(t_vm *vm)
 {

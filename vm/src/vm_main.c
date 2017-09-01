@@ -6,11 +6,25 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 15:41:04 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 07:31:10 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
+
+void				free_structs(t_champ **head, t_vm **vm)
+{
+	t_champ			*champ_temp;
+
+	while (*head)
+	{
+		champ_temp = (*head)->next;
+		free(*head);
+		*head = champ_temp;
+	}
+	free(*vm);
+}
+
 
 int					count_flags(int argc, char **argv)
 {
@@ -46,8 +60,8 @@ int					main(int argc, char **argv)
 	open_files(argc, argv, champ_head, vm);
 	init_vm(vm, champ_head, argc);
 
-	print_vm(*vm);
-/*	t_champ			*champ_ptr = champ_head;
+/*	print_vm(*vm);
+	t_champ			*champ_ptr = champ_head;
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
@@ -64,8 +78,7 @@ int					main(int argc, char **argv)
 		champ_ptr = champ_ptr->next;
 	}
 	print_vm(*vm);
-//	free_champs;
-*/	
+*/	free_structs(&champ_head, &vm);	
 	if (vm->last_live != 0)
 		ft_printf("Player %i won\n", vm->last_live);
 	else
