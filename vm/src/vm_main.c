@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/01 07:31:10 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 11:40:33 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,18 @@ int					main(int argc, char **argv)
 	t_champ			*champ_head;
 	t_vm			*vm;
 
-	if (argc < 2 || (argc - count_flags(argc, argv)) > 5)
+	if (argc < 2 || (argc - count_flags(argc, argv)) > MAX_PLAYERS + 1)
 	{
 		ft_printf("Usage with max %i champs: ./corewar <champ1.cor> <...>\n",
 				MAX_PLAYERS);
+		ft_printf("    -dump <nbr_cycles> - dumps memory after nbr_cycles\n");
+		ft_printf("    -n <player_nbr> - assigns the next player player_nbr\n");
 		return (0);
 	}
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));
 	open_files(argc, argv, champ_head, vm);
-	init_vm(vm, champ_head, argc);
+	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 
 /*	print_vm(*vm);
 	t_champ			*champ_ptr = champ_head;

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 16:30:13 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 10:17:46 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 **	carry, pc, registers and next executable cycle.
 */
 
-void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
+void				read_champ(int fd, int prog_num, t_champ *champ_ptr,
+		t_vm *vm, t_champ *champ_head)
 {
 	int				ctr;
 
@@ -35,8 +36,10 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 	champ_ptr->head.prog_size = swop_bytes(champ_ptr->head.prog_size, 4);
 	if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE)
 	{
-		ft_printf("\n**** Program size too big for champion %s ****\n\n",
+		ft_printf("\n**** Program size too big for champion %s - exiting ****\n\n",
 				champ_ptr->head.prog_name);
+		free_structs(&champ_head, &vm);
+		exit (0);
 	}
 	read(fd, champ_ptr->head.comment, COMMENT_LENGTH);
 	lseek(fd, 2192, SEEK_SET);
@@ -54,19 +57,25 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr)
 	champ_ptr->exec_cycle = 0;
 }
 
+
 /*
 **	Tries to open files passed as arguments to main. If successfull
 **	mallocs space for a new champion, and call read function which
 **	reads the file info into the champion struct.
 */
 
-void				open_files(int ac, char **av, t_champ *champ_ptr, t_vm *vm)
+void				open_files(int ac, char **av, t_champ *champ_head, t_vm *vm)
 {
 	int				ctr;
 	int				fd;
+	t_champ			*champ_ptr;
+	int				p_num;
 
 	ctr = 1;
 	vm->dump_cycle = 0;
+	ft_memset(vm->player_nbrs, 0, MAX_PLAYERS * sizeof(int));
+	champ_ptr = champ_head;
+	p_num = 1;
 	while (ctr < ac)
 	{
 		if (ft_strcmp(av[ctr], "-dump") == 0)
@@ -76,13 +85,21 @@ void				open_files(int ac, char **av, t_champ *champ_ptr, t_vm *vm)
 			ctr += 2;
 			continue;
 		}
+		if (ft_strcmp(av[ctr], "-n") == 0)
+		{
+			if ((ctr + 1) < ac)
+				p_num = ft_atoi(av[ctr + 1]);
+			ctr += 2;
+			continue ;
+		}
 		fd = open(av[ctr], O_RDONLY);
 		if (fd < 0)
 		{
 			ft_printf("Unable to open file %s - exiting\n", av[ctr]);
+			free_structs(&champ_head, &vm);
 			exit (0);
 		}
-		read_champ(fd, ctr, champ_ptr);
+		read_champ(fd, p_num, champ_ptr, vm, champ_head);
 		close(fd);
 		ctr++;
 		if (ctr < ac)
@@ -91,5 +108,6 @@ void				open_files(int ac, char **av, t_champ *champ_ptr, t_vm *vm)
 			champ_ptr = champ_ptr->next;
 		}
 		champ_ptr->next = NULL;
+		p_num++;
 	}
 }
