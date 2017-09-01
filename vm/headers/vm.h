@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/01 11:32:44 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/01 14:35:55 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ struct					s_champ
 struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
+	int					player_nbrs[MAX_PLAYERS];
 	unsigned int		cur_cycle;
+	unsigned int		dump_cycle;
+	unsigned int		total_cycles;
 	unsigned int		cycle_to_die;
 	unsigned int		cycle_delta;
 	unsigned int		live_calls;
@@ -118,45 +121,47 @@ struct					s_vm
 };
 
 /*
- **	check_key_swop_bytes.c
- */
+**	check_key_swop_bytes.c
+*/
 
 char					*add_byte(unsigned char *mem_c, char *key);
 int						check_key(const void *mem, size_t size);
 int						swop_bytes(int i, int no_bytes);
 
 /*
- **	open_files.c
- */
+**	open_files.c
+*/
 
-void					read_champ(int fd, int prog_num, t_champ *champ_ptr);
-void					open_files(int ac, char **av, t_champ *champ_ptr);
+void					read_champ(int fd, int prog_num, t_champ *champ_ptr,
+							t_vm *vm, t_champ *champ_head);
+void					open_files(int ac, char **av, t_champ *champ_head, t_vm *vm);
 
 /*
- **	print_mem.c
- */
+**	print_mem.c
+*/
 
 void					ft_print_hex(int c);
 unsigned char			*print_line(unsigned char *mem, size_t size);
 void					print_memory(const void *addr, size_t size);
+int						get_int_from_mem(unsigned char *mem, int size);
 
 /*
- **	init_vm.c
- */
+**	init_vm.c
+*/
 
 void					alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset);
 void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
 
 /*
- **	print_champ_mem.c
- */
+**	print_champ_mem.c
+*/
 
 void					print_vm(t_vm vm);
 void					print_champ(t_champ *champ_ptr);
 
 /*
- **	run_machine_run.c
- */
+**	run_machine_run.c
+*/
 
 int						check_who_alive(t_champ *champ_head);
 void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
@@ -166,8 +171,8 @@ void					exec_champ(t_champ *champ_head,
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 /*
- **	opcodes .c
- */
+**	opcodes .c
+*/
 
 void					ft_ld(t_vm *vm, t_champ *champ);
 void					ft_st(t_vm *vm, t_champ *champ);
@@ -188,5 +193,15 @@ void					ft_decode(unsigned int i, unsigned char *buf);
 int						to_signed_int(unsigned int value, int bitLength);
 int						mem_check(int pc);
 void					init_champ(t_champ *champ, t_champ *new_champ);
+
+/*
+**	vm_main.c
+*/
+
+void					free_structs(t_champ **head, t_vm **vm);
+int						count_flags(int argc, char **argv);
+
+
+
 
 #endif

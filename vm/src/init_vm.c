@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/29 16:30:36 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/01 11:39:50 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void				alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset)
 	}
 }
 
+/*
+**	Initialises function pointers
+*/
+
 void				init_vm_functions(t_vm *vm)
 {
 	vm->func[2] = &ft_ld;
@@ -48,9 +52,6 @@ void				init_vm_functions(t_vm *vm)
 	vm->func[15] = &ft_lfork;
 	vm->func[16] = &ft_aff;
 }
-
-
-
 
 /*
 **	Function initialised the struct virtual machine. The memory
@@ -76,6 +77,7 @@ void				init_vm(t_vm *vm, t_champ *champ_head, int argc)
 		champ_ptr = champ_ptr->next;
 	}
 	vm->cur_cycle = 1;
+	vm->total_cycles = 1;
 	vm->cycle_to_die = CYCLE_TO_DIE;
 	vm->cycle_delta = CYCLE_DELTA;
 	vm->live_calls = 0;

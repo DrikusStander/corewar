@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 17:54:01 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/31 15:39:58 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,26 @@ void	print_memory(const void *addr, size_t size)
 		mem = print_line(mem, size);
 		size -= 16;
 	}
+}
+
+/*
+**	Utitlity function that convert the value of unsigned char in memory
+**	to the integer value.
+*/
+
+int			get_int_from_mem(unsigned char *mem, int size)
+{
+	int		ret;
+	int		mul;
+
+	mul = 1;
+	ret = 0;
+	size--;
+	while (size)
+	{
+		ret = ret + (mem[size] * mul);
+		mul *= 256;
+		size--;
+	}
+	return (ret);
 }

@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ld.c                                               :+:      :+:    :+:   */
+/*   lld.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/01 14:00:51 by chgreen          ###   ########.fr       */
+/*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
+/*   Updated: 2017/09/01 13:52:08 by chgreen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vm/headers/vm.h"
-
-static void	inc_pc(t_champ *champ)
-{
-	champ->pc = mem_check(champ->pc);
-	champ->pc++;
-	champ->pc = mem_check(champ->pc);
-}
 
 /*
 **Fetches 2 bytes if indirect val
@@ -34,11 +27,19 @@ static int	indirect(t_champ *champ, t_vm *vm)
 	{
 		bytes[i] = vm->mem[champ->pc];
 		i++;
-		inc_pc(champ);
+		champ->pc++;
+		champ->pc = mem_check(champ->pc);
 	}
 	tmp = ((0x00ff & bytes[0]) * 256);
 	tmp += ((0x00ff & bytes[1]));
 	return (tmp);
+}
+
+static void	inc_pc(t_champ *champ)
+{
+	champ->pc = mem_check(champ->pc);
+	champ->pc++;
+	champ->pc = mem_check(champ->pc);
 }
 
 /*
@@ -81,6 +82,7 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	enc = vm->mem[champ->pc];
 	inc_pc(champ);
 	ft_decode(enc, dec);
+	inc_pc(champ);
 	if (dec[0] == 2)
 	{
 		val = direct(champ, vm);
@@ -90,8 +92,9 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		champ->reg[vm->mem[champ->pc]] = vm->mem[champ->pc + (val % IDX_MOD)];
+		champ->reg[vm->mem[champ->pc]] = vm->mem[champ->pc + val];
 	}
 	champ->exec_cycle += 5;
 	inc_pc(champ);
+	champ->carry = (champ->carry == 0 ? 1 : 0);
 }
