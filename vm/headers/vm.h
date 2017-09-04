@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:31:01 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:20:02 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int						swop_bytes(int i, int no_bytes);
 void					read_champ(int fd, int prog_num, t_champ *champ_ptr,
 							t_vm *vm, t_champ *champ_head);
 void					open_files(int ac, char **av, t_champ *champ_head, t_vm *vm);
+int						get_next_player_number(t_champ *champ_head);
+int						check_availible_num(t_champ *champ_head, int nbr);
 
 /*
 **	print_mem.c
@@ -199,6 +201,8 @@ void					init_champ(t_champ *champ, t_champ *new_champ);
 
 void					free_structs(t_champ **head, t_vm **vm);
 int						count_flags(int argc, char **argv);
+void					find_winner_struct(t_champ *champ_head, int ll);
+void					reverse_list(t_champ **champ_head);
 
 
 

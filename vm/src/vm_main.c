@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 15:12:23 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:17:08 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void				find_winner_struct(t_champ *champ_head, int ll)
 			champ_ptr->head.prog_name);
 }
 
+/*
+**	Reverses the champion list as last player plays first
+*/
 
 void				reverse_list(t_champ **champ_head)
 {
@@ -132,8 +135,8 @@ int					main(int argc, char **argv)
 	open_files(argc, argv, champ_head, vm);
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 
-	t_champ			*champ_ptr = champ_head;
-/*	print_vm(*vm);
+/*	t_champ			*champ_ptr = champ_head;
+	print_vm(*vm);
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
