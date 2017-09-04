@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:20:24 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:42:39 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_print_hex(int c)
 
 	write(1, map + (c / 16), 1);
 	write(1, map + (c % 16), 1);
-	write(1, " ", 1);
 }
 
 /*
@@ -34,22 +33,19 @@ unsigned char 	*print_line(unsigned char *mem, size_t size)
 	unsigned char *mem_c;
 
 	mem_c = mem;
-	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 16)
+	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 32)
 	{
 		ft_print_hex(*mem_c);
-		if ((size_t)(mem_c + 1) % 2 == 0)
-			write(1, " ", 1);
+		write(1, " ", 1);
 		++mem_c;
 	}
-	while((mem_c - mem) < 16)
+	while((mem_c - mem) < 32)
 	{
-		write(1, "  ", 2);
-		if ((size_t)(mem_c + 1) % 2 == 0)
-			write(1, " ", 1);
+		write(1, "   ", 3);
 		++mem_c;
 	}
 	mem_c = mem;
-	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 16)
+	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 32)
 	{
 		if (*mem_c >= 32 && *mem_c <= 126)
 			write(1, &(*mem_c), 1);
@@ -74,7 +70,7 @@ void	print_memory(const void *addr, size_t size)
 	while ((long int)size > 0)
 	{
 		mem = print_line(mem, size);
-		size -= 16;
+		size -= 32;
 	}
 }
 

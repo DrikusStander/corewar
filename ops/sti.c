@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/01 10:32:07 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 09:18:25 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void		ft_sti(t_vm *vm, t_champ *champ)
 		c_pc = mem_check(c_pc);
 		arg3 = temp1 + temp2;
 	}
-	vm->mem[(champ->pc + ((arg2 + arg3) % IDX_MOD))] = champ->reg[arg1];
+	vm->mem[mem_check(champ->pc + ((arg2 + arg3) % IDX_MOD))] = champ->reg[(arg1 & 0xff000000) >> 24];
+	vm->mem[mem_check((champ->pc + 1) + ((arg2 + arg3) % IDX_MOD))] = champ->reg[(arg1 & 0x00ff0000) >> 16];
+	vm->mem[mem_check((champ->pc + 2) + ((arg2 + arg3) % IDX_MOD))] = champ->reg[(arg1 & 0x0000ff00) >> 8];
+	vm->mem[mem_check((champ->pc + 3) + ((arg2 + arg3) % IDX_MOD))] = champ->reg[(arg1 & 0xff0000ff)];
 	champ->pc = c_pc;
 }

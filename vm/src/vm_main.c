@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:38:24 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 13:21:49 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,13 @@ int					main(int argc, char **argv)
 
 	print_vm(*vm);
 	t_champ			*champ_ptr = champ_head;
-	while (champ_ptr)
+/*	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-
-	run_machine_run(champ_head, vm);
+*/	run_machine_run(champ_head, vm);
 	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
@@ -124,6 +123,10 @@ int					main(int argc, char **argv)
 		champ_ptr = champ_ptr->next;
 	}
 	print_vm(*vm);
+	if (vm->last_live != 0)
+		ft_printf("Player %i won\n", vm->last_live);
+	else
+		ft_printf("No live calls\n");
 	find_winner_struct(champ_head, vm->last_live);
 	free_structs(&champ_head, &vm);	
 	return (0);
