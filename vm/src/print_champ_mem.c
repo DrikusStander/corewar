@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 10:08:35 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:47:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 **	For debugging and testing.
 */
 
-void				print_vm(t_vm vm)
+void				print_vm(t_vm vm, int bit)
 {
 	ft_printf("Deluxe Virtual Machine Current State :\n\n");
 	ft_printf("Current cycle :%i\n", vm.cur_cycle);
 	ft_printf("Cycle to die  :%i\n", vm.cycle_to_die);
 	ft_printf("Cycle delta   :%i\n", vm.cycle_delta);
-	print_memory((void *)&vm.mem, MEM_SIZE);
+	print_memory((void *)&vm.mem, MEM_SIZE, bit);
 }
 
 /*

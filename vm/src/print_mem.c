@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:42:39 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 16:05:44 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,27 @@ void	ft_print_hex(int c)
 
 /*
 **	Subfunction of print memory
+**	bit is the amount of bytes printed on a single nine
 */
 
-unsigned char 	*print_line(unsigned char *mem, size_t size)
+unsigned char 	*print_line(unsigned char *mem, size_t size, int bit)
 {
 	unsigned char *mem_c;
 
 	mem_c = mem;
-	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 32)
+	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
 	{
 		ft_print_hex(*mem_c);
 		write(1, " ", 1);
 		++mem_c;
 	}
-	while((mem_c - mem) < 32)
+	while((mem_c - mem) < bit)
 	{
 		write(1, "   ", 3);
 		++mem_c;
 	}
-	mem_c = mem;
-	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 32)
+/*	mem_c = mem;
+	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
 	{
 		if (*mem_c >= 32 && *mem_c <= 126)
 			write(1, &(*mem_c), 1);
@@ -53,7 +54,7 @@ unsigned char 	*print_line(unsigned char *mem, size_t size)
 			write(1, ".", 1);
 		++mem_c;
 	}
-	write(1, "\n", 1);
+*/	write(1, "\n", 1);
 	return (mem_c);
 }
 
@@ -62,15 +63,15 @@ unsigned char 	*print_line(unsigned char *mem, size_t size)
 **	of size size.
 */
 
-void	print_memory(const void *addr, size_t size)
+void	print_memory(const void *addr, size_t size, int bit)
 {
 	unsigned char *mem;
 
 	mem = (unsigned char *)addr;
 	while ((long int)size > 0)
 	{
-		mem = print_line(mem, size);
-		size -= 32;
+		mem = print_line(mem, size, bit);
+		size -= bit;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:43:39 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:50:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int					main(int argc, char **argv)
 	open_files(argc, argv, champ_head, vm);
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 
-	print_vm(*vm);
+	print_vm(*vm, 64);
 	t_champ			*champ_ptr = champ_head;
 /*	while (champ_ptr)
 	{
@@ -123,7 +123,7 @@ int					main(int argc, char **argv)
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-	print_vm(*vm);
+	print_vm(*vm, 64);
 	if (vm->last_live != 0)
 		ft_printf("Player %i won\n", vm->last_live);
 	else

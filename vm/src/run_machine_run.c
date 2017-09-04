@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 10:29:31 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:54:21 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 		{
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
-				print_memory((void *)&vm->mem, MEM_SIZE);
+				print_memory((void *)&vm->mem, MEM_SIZE, 32);
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}

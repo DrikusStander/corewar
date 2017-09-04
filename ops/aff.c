@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/01 15:39:55 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:26:40 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		ft_aff(t_vm *vm, t_champ *champ)
 	c_pc = mem_check(c_pc);
 	champ->exec_cycle = g_op_tab[9].no_cycles;
 	arg1 = vm->mem[c_pc++];
+	champ->pc = mem_check(c_pc);
 	ft_printf("%c\n", (oct_to_dec(champ->reg[arg1]) % 256));
 }
 
