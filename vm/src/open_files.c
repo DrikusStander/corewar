@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 11:27:20 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:34:05 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,14 @@ void				read_champ(int fd, int prog_num, t_champ *champ_ptr,
 	lseek(fd, 136, SEEK_SET);
 	read(fd, (void *)&champ_ptr->head.prog_size, 4);
 	champ_ptr->head.prog_size = swop_bytes(champ_ptr->head.prog_size, 4);
-	if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE)
+	if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE ||
+			champ_ptr->head.prog_size == 0)
 	{
-		ft_printf("\n**** Program size too big for champion %s - exiting ****\n\n",
+		if (champ_ptr->head.prog_size > CHAMP_MAX_SIZE)
+			ft_printf("\n** Program size too big for champion %s - exiting **\n\n",
+				champ_ptr->head.prog_name);
+		else
+			ft_printf("\n** No program code for champion %s - exiting **\n\n",
 				champ_ptr->head.prog_name);
 		free_structs(&champ_head, &vm);
 		exit (0);
