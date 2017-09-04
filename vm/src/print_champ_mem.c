@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/30 16:03:29 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 10:08:35 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void				print_champ(t_champ *champ_ptr)
 	ft_printf("Prog next cycle            :%i\n", champ_ptr->exec_cycle);
 	while (++ctr < 17)
 		ft_printf("Reg[%i]                :%i\n", ctr, champ_ptr->reg[ctr]);
-	ft_printf("Program binary:\n");
-	print_memory((void *)&champ_ptr->prog, champ_ptr->head.prog_size);
+//	ft_printf("Program binary:\n");
+//	print_memory((void *)&champ_ptr->prog, champ_ptr->head.prog_size);
 }
