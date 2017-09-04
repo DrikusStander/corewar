@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 17:52:15 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 18:12:07 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ int					main(int argc, char **argv)
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 
 	print_vm(*vm, 64);
-	t_champ			*champ_ptr = champ_head;
-/*	while (champ_ptr)
+/*	t_champ			*champ_ptr = champ_head;
+	while (champ_ptr)
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
