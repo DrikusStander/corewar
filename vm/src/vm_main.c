@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 15:50:37 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 17:52:15 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,35 @@ void				find_winner_struct(t_champ *champ_head, int ll)
 			champ_ptr->head.prog_name);
 }
 
+/*
+**	Reverses the champion list as last player plays first
+*/
+
+void				reverse_list(t_champ **champ_head)
+{
+	t_champ			*champ_ptr;
+	t_champ			*new_head;
+
+	new_head = *champ_head;
+	while (new_head->next)
+		new_head = new_head->next;
+	while (1)
+	{
+		champ_ptr = *champ_head;
+		while (champ_ptr->next && champ_ptr->next->next)
+			champ_ptr = champ_ptr->next;
+		if (champ_ptr == *champ_head)
+		{
+			if (champ_ptr->next)
+				champ_ptr->next->next = champ_ptr;
+			champ_ptr->next = NULL;
+			break ;
+		}
+		champ_ptr->next->next = champ_ptr;
+		champ_ptr->next = NULL;
+	}
+	*champ_head = new_head;
+}
 
 int					main(int argc, char **argv)
 {
@@ -109,14 +138,15 @@ int					main(int argc, char **argv)
 	print_vm(*vm, 64);
 	t_champ			*champ_ptr = champ_head;
 /*	while (champ_ptr)
+	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-
-*/	run_machine_run(champ_head, vm);
-	champ_ptr = champ_head;
+*/	reverse_list(&champ_head);
+	run_machine_run(champ_head, vm);
+/*	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
@@ -128,7 +158,8 @@ int					main(int argc, char **argv)
 		ft_printf("Player %i won\n", vm->last_live);
 	else
 		ft_printf("No live calls\n");
-	find_winner_struct(champ_head, vm->last_live);
+*/	find_winner_struct(champ_head, vm->last_live);
+	print_vm(*vm, 64);
 	free_structs(&champ_head, &vm);	
 	return (0);
 }
