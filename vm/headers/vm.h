@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 08:16:37 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:31:01 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ struct					s_champ
 struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
-	int					player_nbrs[MAX_PLAYERS];
 	unsigned int		cur_cycle;
 	unsigned int		dump_cycle;
 	unsigned int		total_cycles;

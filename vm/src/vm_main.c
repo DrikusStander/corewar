@@ -6,11 +6,15 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/04 08:13:17 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:43:39 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
+
+/*
+**	Frees all malloced champion structs and the malloced vm
+*/
 
 void				free_structs(t_champ **head, t_vm **vm)
 {
@@ -25,22 +29,62 @@ void				free_structs(t_champ **head, t_vm **vm)
 	free(*vm);
 }
 
+/*
+**	Counts the number of flag arguments
+*/
 
 int					count_flags(int argc, char **argv)
 {
 	int				ret;
+	int				arg_count;
 
 	ret = 0;
 	argc--;
+	arg_count = argc;
 	while (argc > 0)
 	{
 		if (ft_strcmp(argv[argc], "-n") == 0)
+		{
+			if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
+			{
+				ft_printf("-n usage: -n <player_number> - exiting\n");
+				exit (0);
+			}
 			ret += 2;
+		}
 		else if (ft_strcmp(argv[argc], "-dump") == 0)
+		{
+			if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
+			{
+				ft_printf("-dump usage: -dump <num_cycles> - exiting\n");
+				exit (0);
+			}
 			ret += 2;
+		}
 		argc--;
 	}
 	return (ret);
+}
+
+/*
+**	Finds the struct with the last live call (if any) and prints 
+**	out the winner
+*/
+
+void				find_winner_struct(t_champ *champ_head, int ll)
+{
+	t_champ			*champ_ptr;
+
+	if (ll == 0)
+	{
+		ft_printf("No live calls\n");
+		return ;
+	}
+	champ_ptr = champ_head;
+	while (champ_ptr && champ_ptr->player_num != ll)
+		champ_ptr = champ_ptr->next;
+	ft_printf("Player %i (%s) is the winner\n", champ_ptr->player_num,
+			champ_ptr->head.prog_name);
 }
 
 
@@ -80,10 +124,11 @@ int					main(int argc, char **argv)
 		champ_ptr = champ_ptr->next;
 	}
 	print_vm(*vm);
-	free_structs(&champ_head, &vm);	
 	if (vm->last_live != 0)
 		ft_printf("Player %i won\n", vm->last_live);
 	else
 		ft_printf("No live calls\n");
+	find_winner_struct(champ_head, vm->last_live);
+	free_structs(&champ_head, &vm);	
 	return (0);
 }
