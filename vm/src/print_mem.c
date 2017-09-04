@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/31 15:39:58 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/04 11:20:24 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ unsigned char 	*print_line(unsigned char *mem, size_t size)
 	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < 16)
 	{
 		ft_print_hex(*mem_c);
-//		if ((size_t)(mem_c + 1) % 2 == 0)
-//			write(1, " ", 1);
+		if ((size_t)(mem_c + 1) % 2 == 0)
+			write(1, " ", 1);
 		++mem_c;
 	}
 	while((mem_c - mem) < 16)
 	{
 		write(1, "  ", 2);
-//		if ((size_t)(mem_c + 1) % 2 == 0)
-//			write(1, " ", 1);
+		if ((size_t)(mem_c + 1) % 2 == 0)
+			write(1, " ", 1);
 		++mem_c;
 	}
 	mem_c = mem;
