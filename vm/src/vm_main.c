@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/05 15:21:24 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 15:45:46 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int					main(int argc, char **argv)
 	open_files(argc, argv, champ_head, vm);
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 
-	print_vm(*vm, 64);
+//	print_vm(*vm, 64);
 	t_champ			*champ_ptr = champ_head;
 /*	while (champ_ptr)
 	{
@@ -152,7 +152,7 @@ int					main(int argc, char **argv)
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-	print_vm(*vm, 64);
+//	print_vm(*vm, 64);
 	find_winner_struct(champ_head, vm->last_live);
 	free_structs(&champ_head, &vm);	
 	return (0);
