@@ -6,7 +6,7 @@ test:
 live:
 	live %37
 	and r1, 42, r5
-	ld %52, r3
+	lldi -15, %4, r3
 	aff r3
 	st r3, 1999
 
