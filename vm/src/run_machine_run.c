@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/05 09:45:19 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/05 10:04:39 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 
 	ctr = 0;
 	champ_ptr->pc++;
+	champ_ptr->pc = mem_check(champ_ptr->pc);
 //	ft_printf("pc :%i\n", champ_ptr->pc);
 	champ_ptr->exec_cycle += g_op_tab[0].no_cycles;
 //	print_memory((void *)&vm->mem[champ_ptr->pc], 4);
@@ -71,6 +72,7 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 			ft_printf("A process shows that player %i (%s) is alive\n",
 					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->live_calls++;
+			champ_ptr->pc = mem_check(champ_ptr->pc + 4);
 			vm->last_live = champ_ptr->player_num;
 		}
 		champ_ptr = champ_ptr->next;
@@ -93,7 +95,7 @@ void			exec_champ(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	{
 //		ft_printf("Invalid opcode for player %i- pc increase by 1\n\n",
 //				champ_ptr->player_num);
-		champ_ptr->pc++;
+//		champ_ptr->pc++;
 		champ_ptr->exec_cycle++;
 	}
 }
@@ -125,7 +127,8 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				{
 					exec_champ(champ_head, champ_ptr, vm);
 				}
-				champ_ptr->exec_cycle--;
+				if (champ_ptr->exec_cycle)
+					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
 			vm->cur_cycle++;
