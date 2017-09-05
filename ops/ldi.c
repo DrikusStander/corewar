@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 08:39:17 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 11:52:58 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void		ft_ldi(t_vm *vm, t_champ *champ)
 	arg1 = to_signed_int(arg1, 16);
 	arg3 = vm->mem[c_pc++];
 	c_pc = mem_check(c_pc);
-	champ->reg[arg3] = arg1;
+	if ((champ->reg[arg3] = arg1))
+		champ->carry = 0;
+	else
+		champ->carry = 1;
 	champ->pc = c_pc;
-	champ->carry = (champ->carry == 1 ? 0 : 1);
+//	champ->carry = (champ->carry == 1 ? 0 : 1);
 }
