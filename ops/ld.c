@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 11:40:49 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 15:41:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		champ->reg[vm->mem[champ->pc]] = vm->mem[champ->pc + (val % IDX_MOD)];
+		champ->reg[vm->mem[champ->pc]] = vm->mem[mem_check(champ->pc + (val % IDX_MOD))];
 	}
 	champ->exec_cycle += 5;
 	if (champ->reg[vm->mem[champ->pc]] == 0)

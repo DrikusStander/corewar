@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 11:54:34 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 15:28:43 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		champ->reg[vm->mem[champ->pc]] = vm->mem[champ->pc + val];
+		champ->reg[vm->mem[champ->pc]] = vm->mem[mem_check(champ->pc + val)];
 	}
 	if (champ->reg[vm->mem[champ->pc]])
 		champ->carry = 0;

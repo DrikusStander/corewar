@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 10:54:23 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 15:38:59 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		ft_fork(t_vm *vm, t_champ *champ)
 	arg1 = temp1 + temp2;
 	arg1 = to_signed_int(arg1, 16);
 	new_champ->pc = mem_check(champ->pc + (arg1 % IDX_MOD));
+	champ->pc = c_pc;
 	while (champ->next)
 		champ = champ->next;
 	champ->next = new_champ;
