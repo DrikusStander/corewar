@@ -6,11 +6,18 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 15:28:43 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 16:58:43 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vm/headers/vm.h"
+
+static void	inc_pc(t_champ *champ)
+{
+	champ->pc = mem_check(champ->pc);
+	champ->pc++;
+	champ->pc = mem_check(champ->pc);
+}
 
 /*
 **Fetches 2 bytes if indirect val
@@ -27,20 +34,14 @@ static int	indirect(t_champ *champ, t_vm *vm)
 	{
 		bytes[i] = vm->mem[champ->pc];
 		i++;
-		champ->pc++;
-		champ->pc = mem_check(champ->pc);
+		inc_pc(champ);
 	}
 	tmp = ((0x00ff & bytes[0]) * 256);
 	tmp += ((0x00ff & bytes[1]));
 	return (tmp);
 }
 
-static void	inc_pc(t_champ *champ)
-{
-	champ->pc = mem_check(champ->pc);
-	champ->pc++;
-	champ->pc = mem_check(champ->pc);
-}
+
 
 /*
 **Fetches 4 bytes if direct val
@@ -77,12 +78,15 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	unsigned char	enc;
 	unsigned char	dec[4];
 	int				val;
+	int				tmp;
+	int				c_pc;
 
+	tmp = 0;
+	c_pc = champ->pc;
 	inc_pc(champ);
 	enc = vm->mem[champ->pc];
 	inc_pc(champ);
 	ft_decode(enc, dec);
-	inc_pc(champ);
 	if (dec[0] == 2)
 	{
 		val = direct(champ, vm);
@@ -92,7 +96,10 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		champ->reg[vm->mem[champ->pc]] = vm->mem[mem_check(champ->pc + val)];
+		val = to_signed_int(val, 16);
+		tmp	+= (vm->mem[mem_check(c_pc + val)]) * 256;
+		tmp	+= (vm->mem[mem_check(c_pc + 1 + val)]);
+		champ->reg[vm->mem[champ->pc]] = tmp;
 	}
 	if (champ->reg[vm->mem[champ->pc]])
 		champ->carry = 0;

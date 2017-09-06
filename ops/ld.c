@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 15:41:34 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 16:58:46 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	unsigned char	enc;
 	unsigned char	dec[4];
 	int				val;
+	int				tmp;
+	int 			c_pc;
 
+	c_pc = champ->pc;
+	tmp = 0;
 	inc_pc(champ);
 	enc = vm->mem[champ->pc];
 	inc_pc(champ);
@@ -90,7 +94,10 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		champ->reg[vm->mem[champ->pc]] = vm->mem[mem_check(champ->pc + (val % IDX_MOD))];
+		val = to_signed_int(val, 16);
+		tmp	+= (vm->mem[mem_check(c_pc + (val % IDX_MOD))]) * 256;
+		tmp	+= (vm->mem[mem_check(c_pc + 1 + (val % IDX_MOD))]);
+		champ->reg[vm->mem[champ->pc]] = tmp; 
 	}
 	champ->exec_cycle += 5;
 	if (champ->reg[vm->mem[champ->pc]] == 0)

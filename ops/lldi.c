@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 11:53:49 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/05 18:09:03 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,12 @@ void		ft_lldi(t_vm *vm, t_champ *champ)
 	}
 	else if (dec[0] == 2)
 	{
-		temp1 = (((0x00ff & vm->mem[c_pc++]) * 256) * 256) *256;
-		c_pc = mem_check(c_pc);
-		temp2 = ((0x00ff & vm->mem[c_pc++]) * 256) * 256;
-		c_pc = mem_check(c_pc);
-		arg1 = temp1 + temp2;
 		temp1 = (0x00ff & vm->mem[c_pc++]) * 256;
 		c_pc = mem_check(c_pc);
 		temp2 = (0x00ff & vm->mem[c_pc++]);
 		c_pc = mem_check(c_pc);
 		arg1 = temp1 + temp2;
+		arg1 = to_signed_int(arg1, 16);
 	}
 	else
 	{
@@ -56,6 +52,7 @@ void		ft_lldi(t_vm *vm, t_champ *champ)
 		temp2 = (0x00ff & vm->mem[c_pc++]);
 		c_pc = mem_check(c_pc);
 		arg1 = temp1 + temp2;
+		arg1 = to_signed_int(arg1, 16);
 		arg1 = vm->mem[mem_check(champ->pc + arg1)];
 	}
 	if (dec[1] == 1)
@@ -66,32 +63,27 @@ void		ft_lldi(t_vm *vm, t_champ *champ)
 	}
 	else
 	{
-		temp1 = (((0x00ff & vm->mem[c_pc++]) * 256) * 256) *256;
-		c_pc = mem_check(c_pc);
-		temp2 = ((0x00ff & vm->mem[c_pc++]) * 256) * 256;
-		c_pc = mem_check(c_pc);
-		arg2 = temp1 + temp2;
 		temp1 = (0x00ff & vm->mem[c_pc++]) * 256;
 		c_pc = mem_check(c_pc);
 		temp2 = (0x00ff & vm->mem[c_pc++]);
 		c_pc = mem_check(c_pc);
 		arg2 = temp1 + temp2;
+		arg2 = to_signed_int(arg2, 16);
 	}
+	arg3 = vm->mem[c_pc++];
 	s = arg1 + arg2;
-	s = (champ->pc + s);
-	c_pc = mem_check(s);
+	s = (c_pc + s);
+	s = mem_check(s);
 	temp1 = (((0x00ff & vm->mem[s++]) * 256) * 256) *256;
-	c_pc = mem_check(s);
+	s = mem_check(s);
 	temp2 = ((0x00ff & vm->mem[s++]) * 256) * 256;
-	c_pc = mem_check(s);
+	s = mem_check(s);
 	arg1 = temp1 + temp2;
 	temp1 = ((0x00ff & vm->mem[s++]) * 256);
-	c_pc = mem_check(s);
+	s = mem_check(s);
 	temp2 = (0x00ff & vm->mem[s++]);
-	c_pc = mem_check(s);
-	arg1 = temp1 + temp2;
-	arg1 = to_signed_int(arg1, 16);
-	arg3 = vm->mem[c_pc++];
+	s = mem_check(s);
+	arg1 += temp1 + temp2;
 	c_pc = mem_check(c_pc);
 	if ((champ->reg[arg3] = arg1))
 		champ->carry = 0;
