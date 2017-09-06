@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 13:18:30 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/06 09:55:24 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 		if (champ_ptr->player_num == p_num)
 		{
 			champ_ptr->called_alive = 1;
-			ft_printf("A process shows that player %i (%s) is alive\n",
-					champ_ptr->player_num, champ_ptr->head.prog_name);
+//			ft_printf("A process shows that player %i (%s) is alive\n",
+//					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->live_calls++;
 			vm->last_live = champ_ptr->player_num;
 		}
@@ -103,7 +103,6 @@ void			exec_champ(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 void			run_machine_run(t_champ *champ_head, t_vm *vm)
 {
 	t_champ		*champ_ptr;
-	
 	while (check_who_alive(champ_head))
 	{
 		while (vm->cur_cycle < vm->cycle_to_die)
@@ -132,6 +131,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
+			print_vm(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
 		}

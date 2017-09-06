@@ -71,14 +71,14 @@ OSC			=	vm_main.o\
 				ld.o\
 				lld.o\
 
-FLAGS		=	-Wall -Werror -Wextra
+FLAGS		=	-Wall -Werror -Wextra 
 
 all	:	$(NAME)
 
 $(NAME)	:	$(OSRC)
 	make -C $(PATH_LIB) fclean && make -C $(PATH_LIB)
 	gcc $(FLAGS) -I $(PATH_HEAD)$(HEADERS) -c $(SRC)
-	gcc -o $(NAME) $(OSC) -L$(PATH_LIB) -lft
+	gcc -o $(NAME) $(OSC) -L$(PATH_LIB) -lft -lncurses
 
 $(OSRC) :
 	
