@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/05 15:05:20 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/06 09:53:49 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ struct					s_champ
 struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
-	unsigned int		cur_cycle;
+	int					cur_cycle;
 	unsigned int		dump_cycle;
 	unsigned int		total_cycles;
-	unsigned int		cycle_to_die;
+	int					cycle_to_die;
 	unsigned int		cycle_delta;
 	unsigned int		live_calls;
 	unsigned int		checks;

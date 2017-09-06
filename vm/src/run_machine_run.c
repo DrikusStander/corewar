@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 13:17:34 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/06 13:18:30 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,12 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}
-/*			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
-			ft_printf("----------------->live calls: %i\n", vm->live_calls);
-			ft_printf("----------------->checks: %i\n", vm->checks);
-			ft_printf("----------------->cycle to die: %i\n", vm->cycle_to_die);
-*/			champ_ptr = champ_head;
+//			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
+//			ft_printf("----------------->cur_cycle: %i\n", vm->cur_cycle);
+//			ft_printf("----------------->live calls: %i\n", vm->live_calls);
+//			ft_printf("----------------->checks: %i\n", vm->checks);
+//			ft_printf("----------------->cycle to die: %i\n", vm->cycle_to_die);
+			champ_ptr = champ_head;
 			while (champ_ptr)
 			{
 //				ft_printf("Champ number :%i\n", champ_ptr->player_num);
