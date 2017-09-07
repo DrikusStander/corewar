@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/01 15:51:17 by hstander         ###   ########.fr        #
+#    Updated: 2017/09/07 15:56:54 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)print_mem.c\
 				$(PATH_SRC)init_vm.c\
 				$(PATH_SRC)print_champ_mem.c\
-				$(PATH_SRC)opcodes.c\
 				../ops/st.c\
 				$(PATH_SRC)run_machine_run.c\
 				$(PATH_SRC)op.c\
@@ -51,7 +50,6 @@ OSC			=	vm_main.o\
 				print_mem.o\
 				init_vm.o\
 				print_champ_mem.o\
-				opcodes.o\
 				st.o\
 				run_machine_run.o\
 				op.o\

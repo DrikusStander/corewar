@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/06 18:22:52 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 17:56:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int			ft_direct(t_vm *vm, int *c_pc)
 
 	arg = (((0x00ff & vm->mem[*c_pc]) * 256) * 256) * 256;
 	*c_pc = mem_check(*c_pc + 1);
-	arg += ((0x00ff & vm->mem[*c_pc]) * 256) * 256;
+	arg += (((0x00ff & vm->mem[*c_pc]) * 256) * 256);
 	*c_pc = mem_check(*c_pc + 1);
-	arg += (0x00ff & vm->mem[*c_pc]) * 256;
+	arg += ((0x00ff & vm->mem[*c_pc]) * 256);
 	*c_pc = mem_check(*c_pc + 1);
 	arg += (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
+	arg = to_signed_int(arg, 16);
 	return (arg);
 }
 
@@ -31,7 +32,7 @@ int			ft_indirect(t_vm *vm, int *c_pc)
 {
 	int		arg;
 
-	arg = (0x00ff & vm->mem[*c_pc]) * 256;
+	arg = ((0x00ff & vm->mem[*c_pc]) * 256);
 	*c_pc = mem_check(*c_pc + 1);
 	arg += (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);

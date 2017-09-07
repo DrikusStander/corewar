@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/07 10:27:55 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 18:18:47 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,29 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 //	ft_printf("pc :%i\n", champ_ptr->pc);
 	champ_ptr->exec_cycle += g_op_tab[0].no_cycles;
 //	print_memory((void *)&vm->mem[champ_ptr->pc], 4);
-	p_num = get_int_from_mem(&vm->mem[champ_ptr->pc], 4);
+	
+//	p_num = get_int_from_mem(&vm->mem[champ_ptr->pc], 4);
+
+	p_num = vm->mem[mem_check(champ_ptr->pc)] * 256 * 256 * 256;
+	p_num += vm->mem[mem_check(champ_ptr->pc + 1)] * 256 * 256;
+	p_num += vm->mem[mem_check(champ_ptr->pc + 2)] * 256;
+	p_num += vm->mem[mem_check(champ_ptr->pc + 3)];
+
 	champ_ptr->pc = mem_check(champ_ptr->pc + 4);
+
 //	p_num = get_int_from_mem(&vm->mem[champ_ptr->pc + p_num - 1], 4);
 //	ft_printf("Interger value :%i\n", p_num);
+	champ_ptr->called_alive = 1;
 	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
-		champ_ptr->called_alive = 1;
 		if (champ_ptr->player_num == p_num)
 		{
 //			ft_printf("A process shows that player %i (%s) is alive\n",
 //					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->last_live = champ_ptr->player_num;
+			vm->live_calls++;
 		}
-		vm->live_calls++;
 		champ_ptr = champ_ptr->next;
 	}
 }
@@ -109,6 +117,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 		{
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
+				endwin();
 				print_memory((void *)&vm->mem, MEM_SIZE, 32);
 				free_structs(&champ_head, &vm);
 				exit(0);
@@ -131,7 +140,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
-			print_vm(*vm, 64);
+		//	print_vm(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
 		}

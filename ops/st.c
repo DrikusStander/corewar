@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/07 10:34:46 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 18:00:25 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ static void	ft_to_mem(t_vm *vm, t_champ *champ, int arg2, int arg1)
 	int		c_pc;
 
 	c_pc = champ->pc;
-	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0xff000000) >> 24;
-	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0x00ff0000) >> 16;
-	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0x0000ff00) >> 8;
+	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0xff000000) >> 24;
+	c_pc++;
+	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x00ff0000) >> 16;
+	c_pc++;
+	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x0000ff00) >> 8;
+	c_pc++;
 	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x000000ff);
 }
 
@@ -36,7 +39,10 @@ void		ft_st(t_vm *vm, t_champ *champ)
 	c_pc = mem_check(c_pc);
 	arg1 = ft_reg(vm, &c_pc, champ);
 	if (dec[1] == 1)
+	{
 		arg2 = ft_reg(vm, &c_pc, champ);
+		champ->reg[arg2] = champ->reg[arg1];
+	}
 	else
 	{
 		arg2 = ft_indirect(vm, &c_pc);

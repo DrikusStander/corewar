@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_mem.c                                        :+:      :+:    :+:   */
+/*   print_ncurses.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/07 11:05:08 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 10:59:10 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	ft_print_hex(int c)
 {
 	char *map = "0123456789abcdef";
 
-	write(1, map + (c / 16), 1);
-	write(1, map + (c % 16), 1);
+	addch(*(map + (c / 16)));
+	addch(*(map + (c % 16)));
+//	write(1, map + (c / 16), 1);
+//	write(1, map + (c % 16), 1);
 }
 
 /*
@@ -37,14 +39,28 @@ unsigned char 	*print_line(unsigned char *mem, size_t size, int bit)
 	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
 	{
 		ft_print_hex(*mem_c);
-		write(1, " ", 1);
+		printw(" ");
+//		write(1, " ", 1);
 		++mem_c;
 	}
 	while((mem_c - mem) < bit)
 	{
-		write(1, "   ", 3);
+		printw("   ");
+//		write(1, "   ", 3);
 		++mem_c;
 	}
+/*	mem_c = mem;
+	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
+	{
+		if (*mem_c >= 32 && *mem_c <= 126)
+			write(1, &(*mem_c), 1);
+		else
+			write(1, ".", 1);
+		++mem_c;
+	}
+*/
+	
+//	write(1, "\n", 1);
 	return (mem_c);
 }
 
@@ -61,7 +77,8 @@ void	print_memory(const void *addr, size_t size, int bit)
 	while ((long int)size > 0)
 	{
 		mem = print_line(mem, size, bit);
-		write(1, "\n", 1);
+		printw("\n");
+		refresh();
 		size -= bit;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/07 09:38:06 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 17:56:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	unsigned char	dec[4];
 	int				val;
 	int				temp;
+	int				temp2;
 
+	temp = champ->pc;
 	inc_pc(champ);
 	ft_decode(vm->mem[champ->pc], dec);
 	inc_pc(champ);
@@ -89,10 +91,11 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		temp = vm->mem[mem_check(champ->pc + (val % IDX_MOD))];
-		champ->reg[vm->mem[champ->pc]] = temp;
+		temp2 = vm->mem[mem_check(temp + (val % IDX_MOD))] * 256;
+		temp2 += vm->mem[mem_check((temp + 1) + (val % IDX_MOD))];
+		champ->reg[vm->mem[mem_check(champ->pc)]] = temp2; 
 	}
-	if (champ->reg[vm->mem[champ->pc]] == 0)
+	if (champ->reg[vm->mem[mem_check(champ->pc)]] == 0)
 		champ->carry = 1;
 	else
 		champ->carry = 0;
