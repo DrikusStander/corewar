@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 16:58:46 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:38:06 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int	direct(t_champ *champ, t_vm *vm)
 	byte[2] = vm->mem[champ->pc];
 	inc_pc(champ);
 	byte[3] = vm->mem[champ->pc];
+	inc_pc(champ);
 	tmp = (0x00ff & byte[0]) * 256 * 256 * 256;
 	tmp += ((0x00ff & byte[1]) * 256 * 256);
 	tmp += ((0x00ff & byte[2]) * 256);
@@ -73,37 +74,28 @@ static int	direct(t_champ *champ, t_vm *vm)
 
 void		ft_ld(t_vm *vm, t_champ *champ)
 {
-	unsigned char	enc;
 	unsigned char	dec[4];
 	int				val;
-	int				tmp;
-	int 			c_pc;
+	int				temp;
 
-	c_pc = champ->pc;
-	tmp = 0;
 	inc_pc(champ);
-	enc = vm->mem[champ->pc];
+	ft_decode(vm->mem[champ->pc], dec);
 	inc_pc(champ);
-	ft_decode(enc, dec);
 	if (dec[0] == 2)
 	{
 		val = direct(champ, vm);
-		inc_pc(champ);
 		champ->reg[vm->mem[champ->pc]] = val;
 	}
 	else
 	{
 		val = indirect(champ, vm);
-		val = to_signed_int(val, 16);
-		tmp	+= (vm->mem[mem_check(c_pc + (val % IDX_MOD))]) * 256;
-		tmp	+= (vm->mem[mem_check(c_pc + 1 + (val % IDX_MOD))]);
-		champ->reg[vm->mem[champ->pc]] = tmp; 
+		temp = vm->mem[mem_check(champ->pc + (val % IDX_MOD))];
+		champ->reg[vm->mem[champ->pc]] = temp;
 	}
-	champ->exec_cycle += 5;
 	if (champ->reg[vm->mem[champ->pc]] == 0)
-			champ->carry = 1;
-		else
-			champ->carry = 0;
-//	champ->carry = (champ->carry == 0 ? 1 : 0);
+		champ->carry = 1;
+	else
+		champ->carry = 0;
+	champ->exec_cycle += 5;
 	inc_pc(champ);
 }

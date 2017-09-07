@@ -8,7 +8,7 @@ live:
 	and r1, 42, r5
 	lldi -15, %4, r3
 	aff r3
-	st r3, 1999
+	sti r3, %51, %4
 
 jump:
 	zjmp %4048

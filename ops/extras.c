@@ -6,23 +6,23 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/01 11:33:40 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:42:00 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vm/headers/vm.h"
 
-int to_signed_int(unsigned int value, int bitLength)
+int			to_signed_int(unsigned int value, int bitlength)
 {
-	int signed_value;
+	int		signed_value;
 
 	signed_value = value;
-	if (value >> (bitLength - 1))
-		signed_value |= -1 << bitLength;
+	if (value >> (bitlength - 1))
+		signed_value |= -1 << bitlength;
 	return (signed_value);
 }
 
-void        ft_decode(unsigned int i, unsigned char *buf)
+void		ft_decode(unsigned int i, unsigned char *buf)
 {
 	buf[0] = (i & 0b11000000) >> 6;
 	buf[1] = (i & 0b00110000) >> 4;
@@ -30,14 +30,14 @@ void        ft_decode(unsigned int i, unsigned char *buf)
 	buf[3] = (i & 0b00000011);
 }
 
-int         mem_check(int pc)
+int			mem_check(int pc)
 {
 	return (pc % MEM_SIZE);
 }
 
-void        init_champ(t_champ *champ, t_champ *new_champ)
+void		init_champ(t_champ *champ, t_champ *new_champ)
 {
-	int     i;
+	int		i;
 
 	i = 0;
 	new_champ->player_num = champ->player_num;

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 13:15:44 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 10:28:11 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,14 @@ int					main(int argc, char **argv)
 	print_vm(*vm, 64);
 */	find_winner_struct(champ_head, vm->last_live);
 	free_structs(&champ_head, &vm);	
+//	print_vm(*vm, 64);
 	getch();
 	endwin();
+	while (champ_ptr)
+	{
+		print_champ(champ_ptr);
+		ft_printf("\n");
+		champ_ptr = champ_ptr->next;
+	}
 	return (0);
 }

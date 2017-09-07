@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 13:30:54 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/06 17:39:21 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct          s_op
 	int                 no_args;
 	char                type[MAX_ARGS_NUMBER];
 	char                id;
-	int                 no_cycles;
+	int					no_cycles;
 	char                *desc;
 	int                 has_acb;
 	int                 is_index;
@@ -109,10 +109,10 @@ struct					s_champ
 struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
-	int					cur_cycle;
+	long long			cur_cycle;
 	unsigned int		dump_cycle;
 	unsigned int		total_cycles;
-	int					cycle_to_die;
+	long long			cycle_to_die;
 	unsigned int		cycle_delta;
 	unsigned int		live_calls;
 	unsigned int		checks;
@@ -195,6 +195,9 @@ void					ft_decode(unsigned int i, unsigned char *buf);
 int						to_signed_int(unsigned int value, int bitLength);
 int						mem_check(int pc);
 void					init_champ(t_champ *champ, t_champ *new_champ);
+int						ft_direct(t_vm *vm, int *c_pc);
+int						ft_indirect(t_vm *vm, int *c_pc);
+int						ft_reg(t_vm *vm, int *c_pc, t_champ *champ);
 
 /*
 **	vm_main.c

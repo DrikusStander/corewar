@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 09:08:08 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:26:50 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			oct_to_dec(int octet)
 	int		ret;
 
 	i = 0;
-	ret = 0;	
+	ret = 0;
 	while (octet > 0)
 	{
 		ret += (octet % 10) * ft_pow(8, i);
@@ -53,4 +53,3 @@ void		ft_aff(t_vm *vm, t_champ *champ)
 	champ->pc = mem_check(c_pc);
 	ft_printf("%c\n", (oct_to_dec(champ->reg[arg1]) % 256));
 }
-

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 15:38:59 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/06 16:02:31 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,3 @@ void		ft_fork(t_vm *vm, t_champ *champ)
 		champ = champ->next;
 	champ->next = new_champ;
 }
-

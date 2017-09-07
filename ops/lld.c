@@ -6,18 +6,11 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/05 16:58:43 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:38:55 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../vm/headers/vm.h"
-
-static void	inc_pc(t_champ *champ)
-{
-	champ->pc = mem_check(champ->pc);
-	champ->pc++;
-	champ->pc = mem_check(champ->pc);
-}
 
 /*
 **Fetches 2 bytes if indirect val
@@ -34,14 +27,20 @@ static int	indirect(t_champ *champ, t_vm *vm)
 	{
 		bytes[i] = vm->mem[champ->pc];
 		i++;
-		inc_pc(champ);
+		champ->pc++;
+		champ->pc = mem_check(champ->pc);
 	}
 	tmp = ((0x00ff & bytes[0]) * 256);
 	tmp += ((0x00ff & bytes[1]));
 	return (tmp);
 }
 
-
+static void	inc_pc(t_champ *champ)
+{
+	champ->pc = mem_check(champ->pc);
+	champ->pc++;
+	champ->pc = mem_check(champ->pc);
+}
 
 /*
 **Fetches 4 bytes if direct val
@@ -75,18 +74,13 @@ static int	direct(t_champ *champ, t_vm *vm)
 
 void		ft_lld(t_vm *vm, t_champ *champ)
 {
-	unsigned char	enc;
 	unsigned char	dec[4];
 	int				val;
-	int				tmp;
-	int				c_pc;
 
-	tmp = 0;
-	c_pc = champ->pc;
 	inc_pc(champ);
-	enc = vm->mem[champ->pc];
 	inc_pc(champ);
-	ft_decode(enc, dec);
+	ft_decode(vm->mem[champ->pc], dec);
+	inc_pc(champ);
 	if (dec[0] == 2)
 	{
 		val = direct(champ, vm);
@@ -96,10 +90,7 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		val = to_signed_int(val, 16);
-		tmp	+= (vm->mem[mem_check(c_pc + val)]) * 256;
-		tmp	+= (vm->mem[mem_check(c_pc + 1 + val)]);
-		champ->reg[vm->mem[champ->pc]] = tmp;
+		champ->reg[vm->mem[champ->pc]] = vm->mem[mem_check(champ->pc + val)];
 	}
 	if (champ->reg[vm->mem[champ->pc]])
 		champ->carry = 0;
@@ -107,5 +98,4 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 		champ->carry = 1;
 	champ->exec_cycle += 10;
 	inc_pc(champ);
-	//champ->carry = (champ->carry == 0 ? 1 : 0);
 }

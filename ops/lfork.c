@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/05 16:59:52 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:42:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ void		ft_lfork(t_vm *vm, t_champ *champ)
 	new_champ->pc = mem_check(champ->pc + arg1);
 	while (champ->next)
 		champ = champ->next;
-	champ->pc = c_pc;
 	champ->next = new_champ;
 }
-

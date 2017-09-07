@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 09:55:24 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/07 10:27:55 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
+		champ_ptr->called_alive = 1;
 		if (champ_ptr->player_num == p_num)
 		{
-			champ_ptr->called_alive = 1;
 //			ft_printf("A process shows that player %i (%s) is alive\n",
 //					champ_ptr->player_num, champ_ptr->head.prog_name);
-			vm->live_calls++;
 			vm->last_live = champ_ptr->player_num;
 		}
+		vm->live_calls++;
 		champ_ptr = champ_ptr->next;
 	}
 }

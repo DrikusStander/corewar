@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/06 13:14:43 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/07 10:48:27 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				print_vm(t_vm vm, int bit)
 {
 	initscr();
 	move(0, 0);
-	printw("Deluxe Virtual Machine Current State :\n");
+	printw("Deluxe Virtual Machine Current State :   ");
 	printw("Current cycle :%i   ", vm.cur_cycle);
 	printw("Cycle to die  :%i   ", vm.cycle_to_die);
 	printw("Cycle delta   :%i   \n", vm.cycle_delta);
