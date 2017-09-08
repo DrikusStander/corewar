@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/07 12:17:09 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 11:00:30 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void		ft_decode(unsigned int i, unsigned char *buf)
 
 int			mem_check(int pc)
 {
+	if (pc < 0)
+		pc = MEM_SIZE + pc;
 	return (pc % MEM_SIZE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/07 18:00:25 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 11:04:04 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void		ft_st(t_vm *vm, t_champ *champ)
 	arg1 = ft_reg(vm, &c_pc, champ);
 	if (dec[1] == 1)
 	{
-		arg2 = ft_reg(vm, &c_pc, champ);
-		champ->reg[arg2] = champ->reg[arg1];
+		arg2 = vm->mem[c_pc++];
+		mem_check(c_pc);
+		champ->reg[arg2] = arg1;
 	}
 	else
 	{
