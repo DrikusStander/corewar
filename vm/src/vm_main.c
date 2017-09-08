@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 08:56:27 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/08 18:17:44 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,35 @@ void				free_structs(t_champ **head, t_vm **vm)
 }
 
 /*
-**	Counts the number of flag arguments
+**	Subfunction of count_flags. Checks for correct usage
+**	of flags, and if not prints out correct usage, frees
+**	struct memory and exits.
+*/
+
+void					print_usage_flags(int argc, char **argv, int arg_count)
+{
+	if (ft_strcmp(argv[argc], "-n") == 0)
+	{
+		if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
+		{
+			ft_printf("-n usage: -n <player_number> - exiting\n");
+			exit (0);
+		}
+	}
+	else if (ft_strcmp(argv[argc], "-dump") == 0)
+	{
+		if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
+		{
+			ft_printf("-dump usage: -dump <num_cycles> - exiting\n");
+			exit (0);
+		}
+	}
+}
+
+
+/*
+**	Counts the number of flag arguments, and checks for correct
+**	usage with subfunction print_usage.
 */
 
 int					count_flags(int argc, char **argv)
@@ -43,7 +71,13 @@ int					count_flags(int argc, char **argv)
 	arg_count = argc;
 	while (argc > 0)
 	{
-		if (ft_strcmp(argv[argc], "-n") == 0)
+		if (ft_strcmp(argv[argc], "-n") == 0 || ft_strcmp(argv[argc], "-dump") == 0)
+		{
+			print_usage_flags(argc, argv, arg_count);
+			ret += 2;
+		}
+		
+/*		if (ft_strcmp(argv[argc], "-n") == 0)
 		{
 			if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
 			{
@@ -61,7 +95,7 @@ int					count_flags(int argc, char **argv)
 			}
 			ret += 2;
 		}
-		argc--;
+*/		argc--;
 	}
 	return (ret);
 }
@@ -133,37 +167,28 @@ int					main(int argc, char **argv)
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));
 	open_files(argc, argv, champ_head, vm);
-	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
-
-//	print_vm(*vm, 64);
 	t_champ			*champ_ptr = champ_head;
-/*	while (champ_ptr)
-	{
-		print_champ(champ_ptr);
-		ft_printf("\n");
-		champ_ptr = champ_ptr->next;
-	}
-*/	reverse_list(&champ_head);
-	run_machine_run(champ_head, vm);
-	
-	champ_ptr = champ_head;
-/*	while (champ_ptr)
-	{
-		print_champ(champ_ptr);
-		ft_printf("\n");
-		champ_ptr = champ_ptr->next;
-	}
-	print_vm(*vm, 64);
-*/	find_winner_struct(champ_head, vm->last_live);
-	free_structs(&champ_head, &vm);	
-//	getch();
-//	endwin();
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
+	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
+	reverse_list(&champ_head);
 	print_vm(*vm, 64);
+	run_machine_run(champ_head, vm);
+/*	getch();
+	endwin();
+	t_champ			*champ_ptr = champ_head;
+	while (champ_ptr)
+	{
+		print_champ(champ_ptr);
+		ft_printf("\n");
+		champ_ptr = champ_ptr->next;
+	}
+*/	print_vm(*vm, 64);
+	find_winner_struct(champ_head, vm->last_live);
+	free_structs(&champ_head, &vm);	
 	return (0);
 }

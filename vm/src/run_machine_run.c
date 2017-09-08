@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 12:32:52 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/08 18:18:13 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,20 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	ctr = 0;
 	champ_ptr->pc++;
 	champ_ptr->pc = mem_check(champ_ptr->pc);
-//	ft_printf("pc :%i\n", champ_ptr->pc);
 	champ_ptr->exec_cycle += g_op_tab[0].no_cycles;
-//	print_memory((void *)&vm->mem[champ_ptr->pc], 4);
-	
-//	p_num = get_int_from_mem(&vm->mem[champ_ptr->pc], 4);
-
 	p_num = vm->mem[mem_check(champ_ptr->pc)] * 256 * 256 * 256;
 	p_num += vm->mem[mem_check(champ_ptr->pc + 1)] * 256 * 256;
 	p_num += vm->mem[mem_check(champ_ptr->pc + 2)] * 256;
 	p_num += vm->mem[mem_check(champ_ptr->pc + 3)];
-
 	champ_ptr->pc = mem_check(champ_ptr->pc + 4);
-
-//	p_num = get_int_from_mem(&vm->mem[champ_ptr->pc + p_num - 1], 4);
-//	ft_printf("Interger value :%i\n", p_num);
 	champ_ptr->called_alive = 1;
 	champ_ptr = champ_head;
 	while (champ_ptr)
 	{
 		if (champ_ptr->player_num == p_num)
 		{
-			ft_printf("A process shows that player %i (%s) is alive\n",
-					champ_ptr->player_num, champ_ptr->head.prog_name);
+//			ft_printf("A process shows that player %i (%s) is alive\n",
+//					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->last_live = champ_ptr->player_num;
 			vm->live_calls++;
 		}
@@ -91,19 +82,14 @@ void			exec_champ(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 {
 	if (vm->mem[champ_ptr->pc] == 1)
 	{
-//		ft_printf("exec champ live call\n\n");
 		call_live(champ_head, champ_ptr, vm);
 	}
 	else if (vm->mem[champ_ptr->pc] >= 2 && vm->mem[champ_ptr->pc] <= 16)
 	{
-//		ft_printf("exec func call\n\n");
 		vm->func[vm->mem[champ_ptr->pc]](vm, champ_ptr);
 	}
 	else
 	{
-//		ft_printf("Invalid opcode for player %i- pc increase by 1\n\n",
-//				champ_ptr->player_num);
-//		champ_ptr->pc++;
 		champ_ptr->exec_cycle++;
 	}
 }
@@ -115,7 +101,6 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	{
 		while (vm->cur_cycle < vm->cycle_to_die)
 		{
-//			ft_printf("start of loop\n");
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
 				endwin();
@@ -123,17 +108,9 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}
-//			ft_printf("after if\n");
-//			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
-//			ft_printf("----------------->cur_cycle: %i\n", vm->cur_cycle);
-//			ft_printf("----------------->live calls: %i\n", vm->live_calls);
-//			ft_printf("----------------->checks: %i\n", vm->checks);
-//			ft_printf("----------------->cycle to die: %i\n", vm->cycle_to_die);
 			champ_ptr = champ_head;
 			while (champ_ptr)
 			{
-//				ft_printf("Champ number :%i\n", champ_ptr->player_num);
-//				ft_printf("Alive? :%i\nTime till next exec? :%i\nCalled alive? :%i\n", champ_ptr->alive, champ_ptr->exec_cycle, champ_ptr->called_alive);
 				if (champ_ptr->alive && !champ_ptr->exec_cycle)
 				{
 					exec_champ(champ_head, champ_ptr, vm);
@@ -142,7 +119,6 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
-//			ft_printf("after while\n");
 //			print_vm(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
