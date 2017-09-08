@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 10:23:51 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 12:13:16 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 
 void			exec_champ(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 {
-	ft_printf("current OP = %d\n", vm->mem[champ_ptr->pc]);
-	ft_printf("current PC = %d\n", champ_ptr->pc);
 	if (vm->mem[champ_ptr->pc] == 1)
 	{
 //		ft_printf("exec champ live call\n\n");
@@ -117,7 +115,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	{
 		while (vm->cur_cycle < vm->cycle_to_die)
 		{
-			ft_printf("start of loop\n");
+//			ft_printf("start of loop\n");
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
 				endwin();
@@ -125,7 +123,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}
-			ft_printf("after if\n");
+//			ft_printf("after if\n");
 //			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
 //			ft_printf("----------------->cur_cycle: %i\n", vm->cur_cycle);
 //			ft_printf("----------------->live calls: %i\n", vm->live_calls);
@@ -144,8 +142,8 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
-			ft_printf("after while\n");
-			print_vm(*vm, 64);
+//			ft_printf("after while\n");
+//			print_vm(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
 		}
