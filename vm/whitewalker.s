@@ -14,10 +14,10 @@ sub r5, r4, r6	#subtracts pn from r5 into r6		r6 = pn
 and r4, r6, r7	#ands r4 & r6 (pn's) into r7		r7 = pn			carry = 0
 and r2, r7, r8	#r2(0) & r7(pn) into r8				r8 = 0			carry = 1
 or r7, r8, r9	#r7(pn) | r8(0) = r9				r9 = pn			carry = 0
-xor	r2, r1, r10	#1 ^ 1 = r10						r10 = 0			carry = 1
-
-
-
+xor	r1, r1, r10	#1 ^ 1 = r10						r10 = 0			carry = 1
+#zjmp %-61			#jumps to begining of program
+#ldi -62, %0,r11	#reads 0 + 1 into r11				r11
+st r11, 100
 
 
 #l2:     sti r1,%:live,%1
