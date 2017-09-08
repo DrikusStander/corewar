@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/06 18:23:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 12:14:43 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		ft_xor(t_vm *vm, t_champ *champ)
 	arg2 = ft_get_arg(vm, &c_pc, dec[1], champ);
 	arg3 = vm->mem[c_pc++];
 	c_pc = mem_check(c_pc);
-	if ((champ->reg[arg3] = arg1 & arg2))
+	if ((champ->reg[arg3] = arg1 ^ arg2))
 		champ->carry = 0;
 	else
 		champ->carry = 1;
