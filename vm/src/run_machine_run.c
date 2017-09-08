@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 12:13:16 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/08 17:16:29 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,20 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 	{
 		while (vm->cur_cycle < vm->cycle_to_die)
 		{
-//			ft_printf("start of loop\n");
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
 				endwin();
-				print_memory((void *)&vm->mem, MEM_SIZE, 32);
+				champ_ptr = champ_head;
+				 while (champ_ptr)
+				{
+				     print_champ(champ_ptr);
+				     ft_printf("\n");
+				     champ_ptr = champ_ptr->next;
+				}
+				print_memory((void *)&vm->mem, MEM_SIZE, 64);
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}
-//			ft_printf("after if\n");
 //			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
 //			ft_printf("----------------->cur_cycle: %i\n", vm->cur_cycle);
 //			ft_printf("----------------->live calls: %i\n", vm->live_calls);
@@ -142,8 +147,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 					champ_ptr->exec_cycle--;
 				champ_ptr = champ_ptr->next;
 			}
-//			ft_printf("after while\n");
-//			print_vm(*vm, 64);
+			print_vm_nc(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
 		}

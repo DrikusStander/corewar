@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 11:04:55 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 13:33:31 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void					ft_print_hex(int c);
 unsigned char			*print_line(unsigned char *mem, size_t size, int bit);
 void					print_memory(const void *addr, size_t size, int bit);
 int						get_int_from_mem(unsigned char *mem, int size);
+void					print_mem_nc(const void *addr, size_t size, int bit);
 
 /*
 **	init_vm.c
@@ -158,6 +159,7 @@ void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
 **	print_champ_mem.c
 */
 
+void					print_vm_nc(t_vm vm, int bit);
 void					print_vm(t_vm vm, int bit);
 void					print_champ(t_champ *champ_ptr);
 

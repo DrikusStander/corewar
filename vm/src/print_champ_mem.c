@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/07 15:56:16 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 15:04:33 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,26 @@
 
 /*
 **	Function for printing out the current state of the vm.
-**	For debugging and testing.
+**	in Ncurses Mode.
 */
-void				print_vm(t_vm vm, int bit)
+void				print_vm_nc(t_vm vm, int bit)
 {
-/*	initscr();
+	initscr();
 	move(0, 0);
 	printw("Deluxe Virtual Machine Current State :   ");
 	printw("Current cycle :%i   ", vm.cur_cycle);
 	printw("Cycle to die  :%i   ", vm.cycle_to_die);
 	printw("Cycle delta   :%i   \n", vm.cycle_delta);
-	print_memory((void *)&vm.mem, MEM_SIZE, bit);
 	refresh();
-*/	
+	print_mem_nc((void *)&vm.mem, MEM_SIZE, bit);
+}
+
+/*
+**	Function for printing out the current state of the vm.
+**	For debugging and testing like dump cycle etc.
+*/
+void				print_vm(t_vm vm, int bit)
+{
 	ft_printf("Deluxe Virtual Machine Current State :\n\n");
 	ft_printf("Current cycle :%i\n", vm.cur_cycle);
 	ft_printf("Cycle to die  :%i\n", vm.cycle_to_die);

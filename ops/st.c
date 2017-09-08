@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 11:04:04 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 15:59:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	ft_to_mem(t_vm *vm, t_champ *champ, int arg2, int arg1)
 	int		c_pc;
 
 	c_pc = champ->pc;
-	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0xff000000) >> 24;
+	vm->mem[c_pc + (arg2 % IDX_MOD)] = (arg1 & 0xff000000) >> 24;
 	c_pc++;
-	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x00ff0000) >> 16;
+	vm->mem[c_pc + (arg2 % IDX_MOD)] = (arg1 & 0x00ff0000) >> 16;
 	c_pc++;
-	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x0000ff00) >> 8;
+	vm->mem[c_pc + (arg2 % IDX_MOD)] = (arg1 & 0x0000ff00) >> 8;
 	c_pc++;
-	vm->mem[mem_check(c_pc + (arg2 % IDX_MOD))] = (arg1 & 0x000000ff);
+	vm->mem[c_pc + (arg2 % IDX_MOD)] = (arg1 & 0x000000ff);
 }
 
 void		ft_st(t_vm *vm, t_champ *champ)

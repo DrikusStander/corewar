@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 11:05:29 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 17:07:11 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		ft_lfork(t_vm *vm, t_champ *champ)
 	int				temp2;
 	t_champ			*new_champ;
 
-	ft_printf("lfork start pc = %d\n", champ->pc);
 	new_champ = (t_champ *)ft_memalloc(sizeof(t_champ));
 	c_pc = champ->pc + 1;
 	c_pc = mem_check(c_pc);
@@ -38,7 +37,6 @@ void		ft_lfork(t_vm *vm, t_champ *champ)
 	init_champ(champ, new_champ);
 	new_champ->pc = mem_check(champ->pc + arg1);
 	champ->pc = c_pc;
-	ft_printf("lforki end pc = %d\n", champ->pc);
 	while (champ->next)
 		champ = champ->next;
 	champ->next = new_champ;
