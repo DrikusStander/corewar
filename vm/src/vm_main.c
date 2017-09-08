@@ -6,7 +6,11 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2017/09/08 18:17:44 by gvan-roo         ###   ########.fr       */
+=======
+/*   Updated: 2017/09/08 17:26:17 by hstander         ###   ########.fr       */
+>>>>>>> 187d10cfc3e42b7ba9864cc037d13efe109ee5d3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +181,17 @@ int					main(int argc, char **argv)
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 	reverse_list(&champ_head);
 	print_vm(*vm, 64);
+<<<<<<< HEAD
 	run_machine_run(champ_head, vm);
 /*	getch();
 	endwin();
 	t_champ			*champ_ptr = champ_head;
+=======
+*/	find_winner_struct(champ_head, vm->last_live);
+	free_structs(&champ_head, &vm);	
+	getch();
+	endwin();
+>>>>>>> 187d10cfc3e42b7ba9864cc037d13efe109ee5d3
 	while (champ_ptr)
 	{
 		print_champ(champ_ptr);

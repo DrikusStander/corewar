@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/07 08:38:54 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 16:57:05 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 static int	ft_s(int arg1, int arg2, t_vm *vm, int c_pc)
 {
+	int		arg;
 	int		s;
 
-	s = (c_pc + ((arg1 + arg2) % IDX_MOD));
-	s = mem_check(s);
-	return (ft_direct(vm, &s));
+	s = arg1 + arg2;
+	arg = (((0x00ff & vm->mem[mem_check((c_pc + (s % IDX_MOD)))]) * 256) * 256) * 256;
+	arg += (((0x00ff & vm->mem[mem_check(((c_pc + 1) + (s % IDX_MOD)))]) * 256) * 256);
+	arg += ((0x00ff & vm->mem[mem_check(((c_pc + 2) + (s % IDX_MOD)))]) * 256);
+	arg += (0x00ff & vm->mem[mem_check(((c_pc + 3) + (s % IDX_MOD)))]);
+	return (arg);
 }
 
 static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 {
 	int		arg1;
+	int		temp;
 
 	if (dec == 1)
 		arg1 = ft_reg(vm, c_pc, champ);
@@ -32,7 +37,10 @@ static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 	else
 	{
 		arg1 = ft_indirect(vm, c_pc);
-		arg1 = vm->mem[mem_check(champ->pc + (arg1 % IDX_MOD))];
+		temp = vm->mem[mem_check(champ->pc + (arg1 % IDX_MOD))] * 256;
+		temp += vm->mem[mem_check((champ->pc + 1) + (arg1 % IDX_MOD))];
+		temp = to_signed_int(temp, 16);
+		arg1 = temp;
 	}
 	return (arg1);
 }
@@ -53,7 +61,7 @@ void		ft_ldi(t_vm *vm, t_champ *champ)
 	arg2 = ft_get_arg(vm, &c_pc, dec[1], champ);
 	arg3 = vm->mem[c_pc++];
 	c_pc = mem_check(c_pc);
-	if ((champ->reg[arg3] = ft_s(arg1, arg2, vm, c_pc)))
+	if ((champ->reg[arg3] = ft_s(arg1, arg2, vm, champ->pc)))
 		champ->carry = 0;
 	else
 		champ->carry = 1;

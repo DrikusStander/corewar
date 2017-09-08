@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/07 15:56:54 by hstander         ###   ########.fr        #
+#    Updated: 2017/09/08 13:34:02 by hstander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)check_key_swop_bytes.c\
 				$(PATH_SRC)open_files.c\
 				$(PATH_SRC)print_mem.c\
+				$(PATH_SRC)print_ncurses.c\
 				$(PATH_SRC)init_vm.c\
 				$(PATH_SRC)print_champ_mem.c\
 				../ops/st.c\
@@ -48,6 +49,7 @@ OSC			=	vm_main.o\
 				check_key_swop_bytes.o\
 				open_files.o\
 				print_mem.o\
+				print_ncurses.o\
 				init_vm.o\
 				print_champ_mem.o\
 				st.o\

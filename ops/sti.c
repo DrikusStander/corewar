@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 11:03:27 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 17:45:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	ft_get_arg(unsigned char dec, int *c_pc, t_vm *vm, t_champ *champ)
 		tmp = to_signed_int(arg, 16);
 		arg = ((vm->mem[mem_check(champ->pc + (tmp % IDX_MOD))]) * 256);
 		arg += (vm->mem[mem_check((champ->pc + 1) + (tmp % IDX_MOD))]);
+		arg = to_signed_int(arg, 16);
 	}
 	return (arg);
 }

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 12:14:38 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/08 17:06:19 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			ft_direct(t_vm *vm, int *c_pc)
 	*c_pc = mem_check(*c_pc + 1);
 	arg += (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg = to_signed_int(arg, 16);
+	arg = to_signed_int(arg, 32);
 	return (arg);
 }
 
@@ -59,7 +59,7 @@ static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 	else if (dec == 2)
 	{
 		arg1 = ft_direct(vm, c_pc);
-		arg1 = to_signed_int(arg1, 16);
+		arg1 = to_signed_int(arg1, 32);
 	}
 	else
 	{
