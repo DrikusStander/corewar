@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/09 08:12:16 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/09 10:43:39 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void				open_files(int ac, char **av, t_champ *champ_head, t_vm *vm)
 		p_num = 0;
 		close(fd);
 		ctr++;
-		if (ctr < ac)
+		if (ctr < ac && (ft_strcmp(av[ctr], "-dump") != 0 || (ctr + 2) < ac))
 		{
 			champ_ptr->next = ft_memalloc(sizeof(t_champ));
 			champ_ptr = champ_ptr->next;

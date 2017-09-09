@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/09 07:37:49 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/09 10:57:39 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,25 +168,25 @@ int					main(int argc, char **argv)
 	vm = ft_memalloc(sizeof(t_vm));
 	open_files(argc, argv, champ_head, vm);
 	t_champ			*champ_ptr = champ_head;
-/*	while (champ_ptr)
+	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-*/	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
+	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 	reverse_list(&champ_head);
 //	print_vm(*vm, 64);
 	run_machine_run(champ_head, vm);
 /*	getch();
 	endwin();
-*/	while (champ_ptr)
+	while (champ_ptr)
 	{
 		print_champ(champ_ptr);
 		ft_printf("\n");
 		champ_ptr = champ_ptr->next;
 	}
-//	print_vm(*vm, 64);
+*/	print_vm(*vm, 64);
 	find_winner_struct(champ_head, vm->last_live);
 	free_structs(&champ_head, &vm);	
 	return (0);

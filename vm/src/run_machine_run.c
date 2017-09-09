@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/09 07:23:50 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/09 10:58:23 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	{
 		if (champ_ptr->player_num == p_num)
 		{
-			ft_printf("A process shows that player %i (%s) is alive\n",
-					champ_ptr->player_num, champ_ptr->head.prog_name);
+//			ft_printf("A process shows that player %i (%s) is alive\n",
+//					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->last_live = champ_ptr->player_num;
 			vm->live_calls++;
 		}
@@ -80,6 +80,7 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 
 void			exec_champ(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 {
+//	ft_printf("opcode exec :%i\n", vm->mem[champ_ptr->pc]);
 	if (vm->mem[champ_ptr->pc] == 1)
 	{
 		call_live(champ_head, champ_ptr, vm);
@@ -103,7 +104,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 		{
 			if (vm->dump_cycle != 0 && vm->total_cycles >= vm->dump_cycle)
 			{
-				endwin();
+/*				endwin();
 				champ_ptr = champ_head;
 				 while (champ_ptr)
 				{
@@ -111,11 +112,13 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				     ft_printf("\n");
 				     champ_ptr = champ_ptr->next;
 				}
-				print_memory((void *)&vm->mem, MEM_SIZE, 64);
+				ft_printf("----------------->vm->dump_cycle :%i\n", vm->dump_cycle);
+				ft_printf("----------------->vm->total_cycle: %i\n", vm->total_cycles);
+*/				print_memory((void *)&vm->mem, MEM_SIZE, 64);
 				free_structs(&champ_head, &vm);
 				exit(0);
 			}
-//			ft_printf("----------------->total cycles: %i\n", vm->total_cycles);
+//			ft_printf("----------------->vm->dump_cycle: %i\n", vm->dump_cycle);
 //			ft_printf("----------------->cur_cycle: %i\n", vm->cur_cycle);
 //			ft_printf("----------------->live calls: %i\n", vm->live_calls);
 //			ft_printf("----------------->checks: %i\n", vm->checks);
