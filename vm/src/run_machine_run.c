@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:44:22 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 18:26:15 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/09 07:23:50 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void			call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm)
 	{
 		if (champ_ptr->player_num == p_num)
 		{
-//			ft_printf("A process shows that player %i (%s) is alive\n",
-//					champ_ptr->player_num, champ_ptr->head.prog_name);
+			ft_printf("A process shows that player %i (%s) is alive\n",
+					champ_ptr->player_num, champ_ptr->head.prog_name);
 			vm->last_live = champ_ptr->player_num;
 			vm->live_calls++;
 		}
@@ -132,7 +132,7 @@ void			run_machine_run(t_champ *champ_head, t_vm *vm)
 				champ_ptr = champ_ptr->next;
 			}
 //			print_vm(*vm, 64);
-			print_vm_nc(*vm, 64);
+//			print_vm_nc(*vm, 64);
 			vm->cur_cycle++;
 			vm->total_cycles++;
 		}
