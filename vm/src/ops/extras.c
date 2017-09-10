@@ -6,11 +6,11 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 17:51:14 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:03:57 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
 int			to_signed_int(unsigned int value, int bitlength)
 {

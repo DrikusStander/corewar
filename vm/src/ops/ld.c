@@ -6,11 +6,11 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/08 16:59:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:04:30 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
 static void	inc_pc(t_champ *champ)
 {

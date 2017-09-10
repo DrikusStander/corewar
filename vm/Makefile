@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/10 12:52:15 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/09/10 13:01:33 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME		=	corewar
 PATH_HEAD	=	./headers/
 PATH_LIB	=	./libft/
 PATH_SRC	=	./src/
+PATH_OPS	=	./src/ops/
 PATH_OSC	=	./orc/
 
 HEADERS		=	vm.h
@@ -25,25 +26,25 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)print_ncurses.c\
 				$(PATH_SRC)init_vm.c\
 				$(PATH_SRC)print_champ_mem.c\
-				../ops/st.c\
 				$(PATH_SRC)run_machine_run.c\
 				$(PATH_SRC)op.c\
 				$(PATH_SRC)utils_vm.c\
-				../ops/add.c\
-				../ops/sub.c\
-				../ops/and.c\
-				../ops/or.c\
-				../ops/xor.c\
-				../ops/zjmp.c\
-				../ops/extras.c\
-				../ops/ldi.c\
-				../ops/sti.c\
-				../ops/fork.c\
-				../ops/lldi.c\
-				../ops/lfork.c\
-				../ops/aff.c\
-				../ops/ld.c\
-				../ops/lld.c\
+				$(PATH_OPS)st.c\
+				$(PATH_OPS)add.c\
+				$(PATH_OPS)sub.c\
+				$(PATH_OPS)and.c\
+				$(PATH_OPS)or.c\
+				$(PATH_OPS)xor.c\
+				$(PATH_OPS)zjmp.c\
+				$(PATH_OPS)extras.c\
+				$(PATH_OPS)ldi.c\
+				$(PATH_OPS)sti.c\
+				$(PATH_OPS)fork.c\
+				$(PATH_OPS)lldi.c\
+				$(PATH_OPS)lfork.c\
+				$(PATH_OPS)aff.c\
+				$(PATH_OPS)ld.c\
+				$(PATH_OPS)lld.c\
 
 OSC			=	vm_main.o\
 				open_files.o\

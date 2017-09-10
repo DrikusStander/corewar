@@ -6,11 +6,11 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/06 13:48:50 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:02:38 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
 void		ft_add(t_vm *vm, t_champ *champ)
 {

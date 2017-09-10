@@ -6,38 +6,32 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 17:07:11 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:07:08 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
-void		ft_lfork(t_vm *vm, t_champ *champ)
+void		ft_zjmp(t_vm *vm, t_champ *champ)
 {
 	int				c_pc;
 	int				arg1;
 	int				temp1;
 	int				temp2;
-	t_champ			*new_champ;
 
-	new_champ = (t_champ *)ft_memalloc(sizeof(t_champ));
 	c_pc = champ->pc + 1;
 	c_pc = mem_check(c_pc);
-	champ->exec_cycle = g_op_tab[14].no_cycles;
-	temp1 = (0x00ff & vm->mem[c_pc++]) * 256;
-	c_pc = mem_check(c_pc);
-	temp2 = (0x00ff & vm->mem[c_pc++]);
-	c_pc = mem_check(c_pc);
-	arg1 = temp1 + temp2;
-	arg1 = to_signed_int(arg1, 16);
-	if (arg1 == 0)
-		champ->carry = 1;
+	champ->exec_cycle = g_op_tab[8].no_cycles;
+	if (champ->carry == 1)
+	{
+		temp1 = (0x00ff & vm->mem[c_pc++]) * 256;
+		c_pc = mem_check(c_pc);
+		temp2 = (0x00ff & vm->mem[c_pc++]);
+		c_pc = mem_check(c_pc);
+		arg1 = temp1 + temp2;
+		arg1 = to_signed_int(arg1, 16);
+		champ->pc = mem_check(champ->pc + (arg1 % IDX_MOD));
+	}
 	else
-		champ->carry = 0;
-	init_champ(champ, new_champ);
-	new_champ->pc = mem_check(champ->pc + arg1);
-	champ->pc = c_pc;
-	while (champ->next)
-		champ = champ->next;
-	champ->next = new_champ;
+		champ->pc = mem_check(champ->pc + 3);
 }

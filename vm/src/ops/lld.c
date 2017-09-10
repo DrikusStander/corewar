@@ -6,11 +6,11 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/08 16:58:56 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:05:02 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
 /*
 **Fetches 2 bytes if indirect val

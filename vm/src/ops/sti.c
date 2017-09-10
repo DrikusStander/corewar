@@ -6,11 +6,11 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 17:45:34 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:05:50 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
 static void	ft_to_mem(int arg1, int arg2, t_champ *champ, t_vm *vm)
 {

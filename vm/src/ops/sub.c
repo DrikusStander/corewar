@@ -6,32 +6,31 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/08 16:52:17 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:06:02 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vm/headers/vm.h"
+#include "../../headers/vm.h"
 
-void		ft_zjmp(t_vm *vm, t_champ *champ)
+void		ft_sub(t_vm *vm, t_champ *champ)
 {
 	int				c_pc;
 	int				arg1;
-	int				temp1;
-	int				temp2;
+	int				arg2;
+	int				arg3;
 
-	c_pc = champ->pc + 1;
+	c_pc = champ->pc + 2;
 	c_pc = mem_check(c_pc);
-	champ->exec_cycle = g_op_tab[8].no_cycles;
-	if (champ->carry == 1)
-	{
-		temp1 = (0x00ff & vm->mem[c_pc++]) * 256;
-		c_pc = mem_check(c_pc);
-		temp2 = (0x00ff & vm->mem[c_pc++]);
-		c_pc = mem_check(c_pc);
-		arg1 = temp1 + temp2;
-		arg1 = to_signed_int(arg1, 16);
-		champ->pc = mem_check(champ->pc + (arg1 % IDX_MOD));
-	}
+	champ->exec_cycle = g_op_tab[4].no_cycles;
+	arg1 = vm->mem[c_pc++];
+	c_pc = mem_check(c_pc);
+	arg2 = vm->mem[c_pc++];
+	c_pc = mem_check(c_pc);
+	arg3 = vm->mem[c_pc++];
+	c_pc = mem_check(c_pc);
+	if ((champ->reg[arg3] = champ->reg[arg1] - champ->reg[arg2]))
+		champ->carry = 0;
 	else
-		champ->pc = mem_check(champ->pc + 3);
+		champ->carry = 1;
+	champ->pc = c_pc;
 }
