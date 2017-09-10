@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/10 13:01:33 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/09/10 13:23:35 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ HEADERS		=	vm.h
 
 SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)open_files.c\
+				$(PATH_SRC)read_champs.c\
 				$(PATH_SRC)print_mem.c\
 				$(PATH_SRC)print_ncurses.c\
 				$(PATH_SRC)init_vm.c\
@@ -48,6 +49,7 @@ SRC			=	$(PATH_SRC)vm_main.c\
 
 OSC			=	vm_main.o\
 				open_files.o\
+				read_champs.o\
 				print_mem.o\
 				print_ncurses.o\
 				init_vm.o\

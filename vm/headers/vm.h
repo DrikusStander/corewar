@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/10 12:49:59 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/10 13:22:32 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,16 @@ int						check_key(const void *mem, size_t size);
 **	open_files.c
 */
 
-void					read_champ(int fd, int prog_num, t_champ *champ_ptr,
-							t_vm *vm, t_champ *champ_head);
 void					open_files(int ac, char **av, t_champ *champ_head, t_vm *vm);
 int						get_next_player_number(t_champ *champ_head);
 int						check_availible_num(t_champ *champ_head, int nbr);
+
+/*
+**	read_champs.c
+*/
+
+void					read_champ(int fd, int prog_num, t_champ *champ_ptr,
+							t_vm *vm, t_champ *champ_head);
 
 /*
 **	print_mem.c
