@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/08 13:34:02 by hstander         ###   ########.fr        #
+#    Updated: 2017/09/10 12:52:15 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ PATH_OSC	=	./orc/
 HEADERS		=	vm.h
 
 SRC			=	$(PATH_SRC)vm_main.c\
-				$(PATH_SRC)check_key_swop_bytes.c\
 				$(PATH_SRC)open_files.c\
 				$(PATH_SRC)print_mem.c\
 				$(PATH_SRC)print_ncurses.c\
@@ -29,6 +28,7 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				../ops/st.c\
 				$(PATH_SRC)run_machine_run.c\
 				$(PATH_SRC)op.c\
+				$(PATH_SRC)utils_vm.c\
 				../ops/add.c\
 				../ops/sub.c\
 				../ops/and.c\
@@ -46,7 +46,6 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				../ops/lld.c\
 
 OSC			=	vm_main.o\
-				check_key_swop_bytes.o\
 				open_files.o\
 				print_mem.o\
 				print_ncurses.o\
@@ -55,6 +54,7 @@ OSC			=	vm_main.o\
 				st.o\
 				run_machine_run.o\
 				op.o\
+				utils_vm.o\
 				add.o\
 				sub.o\
 				and.o\
@@ -92,3 +92,7 @@ fclean	:	clean
 
 re	:	fclean
 	make
+
+
+#				$(PATH_SRC)check_key_swop_bytes.c
+#				check_key_swop_bytes.o

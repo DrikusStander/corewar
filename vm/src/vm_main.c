@@ -6,28 +6,11 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/09 10:57:39 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/10 12:28:40 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
-
-/*
-**	Frees all malloced champion structs and the malloced vm
-*/
-
-void				free_structs(t_champ **head, t_vm **vm)
-{
-	t_champ			*champ_temp;
-
-	while (*head)
-	{
-		champ_temp = (*head)->next;
-		free(*head);
-		*head = champ_temp;
-	}
-	free(*vm);
-}
 
 /*
 **	Subfunction of count_flags. Checks for correct usage
@@ -35,14 +18,14 @@ void				free_structs(t_champ **head, t_vm **vm)
 **	struct memory and exits.
 */
 
-void					print_usage_flags(int argc, char **argv, int arg_count)
+void				print_usage_flags(int argc, char **argv, int arg_count)
 {
 	if (ft_strcmp(argv[argc], "-n") == 0)
 	{
 		if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
 		{
 			ft_printf("-n usage: -n <player_number> - exiting\n");
-			exit (0);
+			exit(0);
 		}
 	}
 	else if (ft_strcmp(argv[argc], "-dump") == 0)
@@ -50,11 +33,10 @@ void					print_usage_flags(int argc, char **argv, int arg_count)
 		if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
 		{
 			ft_printf("-dump usage: -dump <num_cycles> - exiting\n");
-			exit (0);
+			exit(0);
 		}
 	}
 }
-
 
 /*
 **	Counts the number of flag arguments, and checks for correct
@@ -71,37 +53,19 @@ int					count_flags(int argc, char **argv)
 	arg_count = argc;
 	while (argc > 0)
 	{
-		if (ft_strcmp(argv[argc], "-n") == 0 || ft_strcmp(argv[argc], "-dump") == 0)
+		if (ft_strcmp(argv[argc], "-n") == 0 ||
+				ft_strcmp(argv[argc], "-dump") == 0)
 		{
 			print_usage_flags(argc, argv, arg_count);
 			ret += 2;
 		}
-		
-/*		if (ft_strcmp(argv[argc], "-n") == 0)
-		{
-			if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
-			{
-				ft_printf("-n usage: -n <player_number> - exiting\n");
-				exit (0);
-			}
-			ret += 2;
-		}
-		else if (ft_strcmp(argv[argc], "-dump") == 0)
-		{
-			if ((arg_count >= argc + 1) && (ft_atoi(argv[argc + 1]) == 0))
-			{
-				ft_printf("-dump usage: -dump <num_cycles> - exiting\n");
-				exit (0);
-			}
-			ret += 2;
-		}
-*/		argc--;
+		argc--;
 	}
 	return (ret);
 }
 
 /*
-**	Finds the struct with the last live call (if any) and prints 
+**	Finds the struct with the last live call (if any) and prints
 **	out the winner
 */
 
@@ -167,27 +131,10 @@ int					main(int argc, char **argv)
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));
 	open_files(argc, argv, champ_head, vm);
-	t_champ			*champ_ptr = champ_head;
-	while (champ_ptr)
-	{
-		print_champ(champ_ptr);
-		ft_printf("\n");
-		champ_ptr = champ_ptr->next;
-	}
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 	reverse_list(&champ_head);
-//	print_vm(*vm, 64);
 	run_machine_run(champ_head, vm);
-/*	getch();
-	endwin();
-	while (champ_ptr)
-	{
-		print_champ(champ_ptr);
-		ft_printf("\n");
-		champ_ptr = champ_ptr->next;
-	}
-*/	print_vm(*vm, 64);
 	find_winner_struct(champ_head, vm->last_live);
-	free_structs(&champ_head, &vm);	
+	free_structs(&champ_head, &vm);
 	return (0);
 }

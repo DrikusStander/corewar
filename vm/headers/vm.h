@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 13:33:31 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/10 12:49:59 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ struct					s_vm
 
 char					*add_byte(unsigned char *mem_c, char *key);
 int						check_key(const void *mem, size_t size);
-int						swop_bytes(int i, int no_bytes);
 
 /*
 **	open_files.c
@@ -175,6 +174,23 @@ void					exec_champ(t_champ *champ_head,
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 /*
+**	vm_utils.c
+*/
+
+void					free_structs(t_champ **head, t_vm **vm);
+int						swop_bytes(int i, int no_bytes);
+
+/*
+**	vm_main.c
+*/
+
+void					print_usage_flags(int argc, char **argv, int arg_count);
+int						count_flags(int argc, char **argv);
+void					find_winner_struct(t_champ *champ_head, int ll);
+void					reverse_list(t_champ **champ_head);
+
+
+/*
 **	opcodes .c
 */
 
@@ -200,17 +216,5 @@ void					init_champ(t_champ *champ, t_champ *new_champ);
 int						ft_direct(t_vm *vm, int *c_pc);
 int						ft_indirect(t_vm *vm, int *c_pc);
 int						ft_reg(t_vm *vm, int *c_pc, t_champ *champ);
-
-/*
-**	vm_main.c
-*/
-
-void					free_structs(t_champ **head, t_vm **vm);
-int						count_flags(int argc, char **argv);
-void					find_winner_struct(t_champ *champ_head, int ll);
-void					reverse_list(t_champ **champ_head);
-
-
-
 
 #endif
