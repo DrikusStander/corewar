@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/10 13:42:30 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/10 14:20:05 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ void				open_files(int ac, char **av, t_champ *champ_head, t_vm *vm)
 		}
 		if (p_num == 0)
 			p_num = get_next_player_number(champ_head);
-		fd = open(av[ctr], O_RDONLY);
-		if (fd < 0)
+		if ((fd = open(av[ctr], O_RDONLY)) < 0)
 		{
 			ft_printf("Unable to open file %s - exiting\n", av[ctr]);
 			free_structs(&champ_head, &vm);
