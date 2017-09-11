@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/10 14:20:05 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 11:23:53 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,68 +55,80 @@ int					check_availible_num(t_champ *champ_head, int nbr)
 	return (0);
 }
 
+static void			handle_flags(t_info *info, int *ctr)
+{
+	if (ft_strcmp(info->av[*ctr], "-dump") == 0)
+	{
+		if ((*ctr + 1) < info->ac)
+			info->vm->dump_cycle = ft_atoi(info->av[*ctr + 1]);
+		*ctr += 2;
+	}
+	if (ft_strcmp(info->av[*ctr], "-n") == 0)
+	{
+		if ((*ctr + 1) < info->ac)
+		{
+			info->p_num = ft_atoi(info->av[*ctr + 1]);
+			if (info->p_num < 1 || info->p_num > 4)
+			{
+				ft_printf("Invalid player number %i - number", info->p_num);
+				ft_printf(" must be between 1 and 4. A player number ");
+				ft_printf("will be system generated\n");
+				info->p_num = get_next_player_number(info->champ_head);
+			}
+			else if (check_availible_num(info->champ_head, info->p_num))
+				info->p_num = get_next_player_number(info->champ_head);
+		}
+		*ctr += 2;
+	}
+}
+
+/*
+** Checks if a next champ will be needed, and if so
+** mallocs a new champ, and moves the pointer to the
+** new node. Sets the next pointer to null.
+*/
+
+void				malloc_new_champ(t_info *info, int ctr, t_champ **champ_ptr)
+{
+	if (ctr < info->ac && (ft_strcmp(info->av[ctr], "-dump") != 0 ||
+				(ctr + 2) < info->ac))
+	{
+		(*champ_ptr)->next = ft_memalloc(sizeof(t_champ));
+		*champ_ptr = (*champ_ptr)->next;
+	}
+	(*champ_ptr)->next = NULL;
+}
+
 /*
 **	Tries to open files passed as arguments to main. If successfull
 **	mallocs space for a new champion, and call read function which
 **	reads the file info into the champion struct.
 */
 
-void				open_files(int ac, char **av, t_champ *champ_head, t_vm *vm)
+void				open_files(t_info *info)
 {
 	int				ctr;
 	int				fd;
 	t_champ			*champ_ptr;
-	int				p_num;
 
 	ctr = 1;
-	vm->dump_cycle = 0;
-	p_num = 0;
-	champ_head->player_num = 0;
-	champ_ptr = champ_head;
-	while (ctr < ac)
+	champ_ptr = info->champ_head;
+	while (ctr < info->ac)
 	{
-		if (ft_strcmp(av[ctr], "-dump") == 0)
+		if ((ft_strcmp(info->av[ctr], "-dump") == 0) ||
+				(ft_strcmp(info->av[ctr], "-n") == 0))
 		{
-			if ((ctr + 1) < ac)
-				vm->dump_cycle = ft_atoi(av[ctr + 1]);
-			ctr += 2;
+			handle_flags(info, &ctr);
 			continue ;
 		}
-		if (ft_strcmp(av[ctr], "-n") == 0)
-		{
-			if ((ctr + 1) < ac)
-			{
-				p_num = ft_atoi(av[ctr + 1]);
-				if (p_num < 1 || p_num > 4)
-				{
-					ft_printf("Invalid player number %i - number", p_num);
-					ft_printf(" must be between 1 and 4. A player number ");
-					ft_printf("will be system generated\n");
-					p_num = get_next_player_number(champ_head);
-				}
-				else if (check_availible_num(champ_head, p_num))
-					p_num = get_next_player_number(champ_head);
-			}
-			ctr += 2;
-			continue ;
-		}
-		if (p_num == 0)
-			p_num = get_next_player_number(champ_head);
-		if ((fd = open(av[ctr], O_RDONLY)) < 0)
-		{
-			ft_printf("Unable to open file %s - exiting\n", av[ctr]);
-			free_structs(&champ_head, &vm);
-			exit(0);
-		}
-		read_champ(fd, p_num, champ_ptr, vm, champ_head);
-		p_num = 0;
+		if (info->p_num == 0)
+			info->p_num = get_next_player_number(info->champ_head);
+		if ((fd = open(info->av[ctr], O_RDONLY)) < 0)
+			unable_to_open(info, ctr);
+		read_champ(fd, info->p_num, champ_ptr, info->vm, info->champ_head);
+		info->p_num = 0;
 		close(fd);
 		ctr++;
-		if (ctr < ac && (ft_strcmp(av[ctr], "-dump") != 0 || (ctr + 2) < ac))
-		{
-			champ_ptr->next = ft_memalloc(sizeof(t_champ));
-			champ_ptr = champ_ptr->next;
-		}
-		champ_ptr->next = NULL;
+		malloc_new_champ(info, ctr, &champ_ptr);
 	}
 }

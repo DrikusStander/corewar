@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/10 15:16:54 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 11:19:13 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,16 @@ struct					s_vm
 	void				(*func[17])(t_vm *, t_champ *);
 };
 
+typedef struct			s_info
+{
+	int					ac;
+	char				**av;
+	t_champ				*champ_head;
+	t_vm				*vm;
+	int					p_num;
+}						t_info;
+
+
 /*
 **	check_key_swop_bytes.c
 */
@@ -131,10 +141,12 @@ int						check_key(const void *mem, size_t size);
 **	open_files.c
 */
 
-void					open_files(int ac, char **av, t_champ *champ_head, t_vm *vm);
+void					open_files(t_info *info);
 int						get_next_player_number(t_champ *champ_head);
 int						check_availible_num(t_champ *champ_head, int nbr);
-
+void					malloc_new_champ(t_info *info, int ctr, t_champ
+							**champ_ptr);
+		
 /*
 **	read_champs.c
 */
@@ -173,7 +185,8 @@ void					print_champ(t_champ *champ_ptr);
 
 int						check_who_alive(t_champ *champ_head);
 void					new_cycle_to_die(t_champ *champ_head, t_vm *vm);
-void					call_live(t_champ *champ_head, t_champ *champ_ptr, t_vm *vm);
+void					call_live(t_champ *champ_head, t_champ *champ_ptr,
+							t_vm *vm);
 void					exec_champ(t_champ *champ_head,
 							t_champ *champ_ptr, t_vm *vm);
 void					run_machine_run(t_champ *champ_head, t_vm *vm);
@@ -184,6 +197,10 @@ void					run_machine_run(t_champ *champ_head, t_vm *vm);
 
 void					free_structs(t_champ **head, t_vm **vm);
 int						swop_bytes(int i, int no_bytes);
+void					print_usage_exit(void);
+void					read_main_info(char **argv, t_champ *champ_head,
+							t_vm *vm, t_info *info);
+void					unable_to_open(t_info *info, int ctr);
 
 /*
 **	vm_main.c
