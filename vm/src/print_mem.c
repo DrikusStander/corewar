@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/07 11:05:08 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/11 15:34:12 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 **	Function for printing out bytes in hexadecimal
 */
 
-void	ft_print_hex(int c)
+void				ft_print_hex(int c)
 {
-	char *map = "0123456789abcdef";
+	char			*map;
 
+	map = ft_strdup("0123456789abcdef");
 	write(1, map + (c / 16), 1);
 	write(1, map + (c % 16), 1);
+	free(map);
 }
 
 /*
@@ -29,9 +31,9 @@ void	ft_print_hex(int c)
 **	bit is the amount of bytes printed on a single nine
 */
 
-unsigned char 	*print_line(unsigned char *mem, size_t size, int bit)
+unsigned char		*print_line(unsigned char *mem, size_t size, int bit)
 {
-	unsigned char *mem_c;
+	unsigned char	*mem_c;
 
 	mem_c = mem;
 	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
@@ -40,7 +42,7 @@ unsigned char 	*print_line(unsigned char *mem, size_t size, int bit)
 		write(1, " ", 1);
 		++mem_c;
 	}
-	while((mem_c - mem) < bit)
+	while ((mem_c - mem) < bit)
 	{
 		write(1, "   ", 3);
 		++mem_c;
@@ -53,9 +55,9 @@ unsigned char 	*print_line(unsigned char *mem, size_t size, int bit)
 **	of size size.
 */
 
-void	print_memory(const void *addr, size_t size, int bit)
+void				print_memory(const void *addr, size_t size, int bit)
 {
-	unsigned char *mem;
+	unsigned char	*mem;
 
 	mem = (unsigned char *)addr;
 	while ((long int)size > 0)
@@ -71,10 +73,10 @@ void	print_memory(const void *addr, size_t size, int bit)
 **	to the integer value.
 */
 
-int			get_int_from_mem(unsigned char *mem, int size)
+int					get_int_from_mem(unsigned char *mem, int size)
 {
-	int		ret;
-	int		mul;
+	int				ret;
+	int				mul;
 
 	mul = 1;
 	ret = 0;

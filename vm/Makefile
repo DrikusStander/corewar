@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/11 11:19:29 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/09/11 16:06:12 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC			=	$(PATH_SRC)vm_main.c\
 				$(PATH_SRC)run_machine_run.c\
 				$(PATH_SRC)op.c\
 				$(PATH_SRC)utils_vm.c\
+				$(PATH_SRC)utils2_vm.c\
 				$(PATH_OPS)st.c\
 				$(PATH_OPS)add.c\
 				$(PATH_OPS)sub.c\
@@ -58,6 +59,7 @@ OSC			=	vm_main.o\
 				run_machine_run.o\
 				op.o\
 				utils_vm.o\
+				utils2_vm.o\
 				add.o\
 				sub.o\
 				and.o\

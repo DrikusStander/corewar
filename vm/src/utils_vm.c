@@ -6,19 +6,19 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 11:45:26 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 10:58:00 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 16:11:40 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
 
 /*
- **  Frees all malloced champion structs and the malloced vm
- */
+**  Frees all malloced champion structs and the malloced vm
+*/
 
-void                free_structs(t_champ **head, t_vm **vm)
+void				free_structs(t_champ **head, t_vm **vm)
 {
-	t_champ         *champ_temp;
+	t_champ			*champ_temp;
 
 	while (*head)
 	{
@@ -30,10 +30,10 @@ void                free_structs(t_champ **head, t_vm **vm)
 }
 
 /*
- **  Swops the bytes of a passed argument int
- */
+**  Swops the bytes of a passed argument int
+*/
 
-int                 swop_bytes(int i, int no_bytes)
+int					swop_bytes(int i, int no_bytes)
 {
 	if (no_bytes == 4)
 	{
@@ -44,8 +44,8 @@ int                 swop_bytes(int i, int no_bytes)
 }
 
 /*
- **	Prints program usage and exits
- */
+**	Prints program usage and exits
+*/
 
 void				print_usage_exit(void)
 {
@@ -56,12 +56,12 @@ void				print_usage_exit(void)
 	exit(0);
 }
 
-
 /*
- **	Reads basic global info into a t_info struct
- */
+**	Reads basic global info into a t_info struct
+*/
 
-void				read_main_info(char **argv, t_champ *champ_head, t_vm *vm, t_info *info)
+void				read_main_info(char **argv, t_champ *champ_head,
+						t_vm *vm, t_info *info)
 {
 	int				ctr;
 
@@ -78,8 +78,8 @@ void				read_main_info(char **argv, t_champ *champ_head, t_vm *vm, t_info *info)
 }
 
 /*
- **	Prints error message, frees malloc memory and exits
- */
+**	Prints error message, frees malloc memory and exits
+*/
 
 void				unable_to_open(t_info *info, int ctr)
 {

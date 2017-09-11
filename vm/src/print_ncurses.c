@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/08 15:04:48 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/11 15:39:42 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 **	Function for printing out bytes in hexadecimal
 */
 
-static void	ft_print_hex_nc(int c)
+static void				ft_print_hex_nc(int c)
 {
-	char *map = "0123456789abcdef";
+	char				*map;
 
+	map = ft_strdup("0123456789abcdef");
 	addch(*(map + (c / 16)));
 	addch(*(map + (c % 16)));
+	free(map);
 }
 
 /*
@@ -29,9 +31,9 @@ static void	ft_print_hex_nc(int c)
 **	bit is the amount of bytes printed on a single nine
 */
 
-static unsigned char 	*print_line_nc(unsigned char *mem, size_t size, int bit)
+static unsigned char	*print_line_nc(unsigned char *mem, size_t size, int bit)
 {
-	unsigned char *mem_c;
+	unsigned char		*mem_c;
 
 	mem_c = mem;
 	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
@@ -40,7 +42,7 @@ static unsigned char 	*print_line_nc(unsigned char *mem, size_t size, int bit)
 		printw(" ");
 		++mem_c;
 	}
-	while((mem_c - mem) < bit)
+	while ((mem_c - mem) < bit)
 	{
 		printw("   ");
 		++mem_c;
@@ -54,9 +56,9 @@ static unsigned char 	*print_line_nc(unsigned char *mem, size_t size, int bit)
 **	of size size.
 */
 
-void	print_mem_nc(const void *addr, size_t size, int bit)
+void					print_mem_nc(const void *addr, size_t size, int bit)
 {
-	unsigned char *mem;
+	unsigned char		*mem;
 
 	mem = (unsigned char *)addr;
 	while ((long int)size > 0)

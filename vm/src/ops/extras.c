@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/10 13:03:57 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 16:20:31 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		init_champ(t_champ *champ, t_champ *new_champ)
 	new_champ->alive = champ->alive;
 	new_champ->called_alive = champ->called_alive;
 	new_champ->carry = champ->carry;
-	new_champ->exec_cycle = 0;//champ->exec_cycle;
+	new_champ->exec_cycle = champ->exec_cycle;
 	new_champ->next = NULL;
 	i = 0;
 	while (i < 17)

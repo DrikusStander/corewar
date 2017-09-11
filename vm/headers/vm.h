@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 13:45:28 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 16:04:38 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,12 @@ void					print_usage_exit(void);
 void					read_main_info(char **argv, t_champ *champ_head,
 							t_vm *vm, t_info *info);
 void					unable_to_open(t_info *info, int ctr);
+
+/*
+**	utils2_vm.c
+*/
+
+void					check_dump_cycle(t_champ *champ_head, t_vm *vm);
 
 /*
 **	vm_main.c
