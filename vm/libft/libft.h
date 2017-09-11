@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/29 11:17:43 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/07/28 11:13:12 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/08/28 09:29:23 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int				get_next_line(const int fd, char **line);
 int				ft_printf(const char *restrict format, ...);
+int				ft_printf_fd(int fd, const char *restrict format, ...);
 char			**ft_strsplit_shell(char *s);
 void			free_2d(char ***array);
+char			**ft_split(char const *s, char c);
 
 #endif
