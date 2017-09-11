@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 11:23:53 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 13:47:06 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void				open_files(t_info *info)
 			info->p_num = get_next_player_number(info->champ_head);
 		if ((fd = open(info->av[ctr], O_RDONLY)) < 0)
 			unable_to_open(info, ctr);
-		read_champ(fd, info->p_num, champ_ptr, info->vm, info->champ_head);
+		read_champ(fd, champ_ptr, info);
 		info->p_num = 0;
 		close(fd);
 		ctr++;

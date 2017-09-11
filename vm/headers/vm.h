@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 11:19:13 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 13:45:28 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,9 @@ void					malloc_new_champ(t_info *info, int ctr, t_champ
 **	read_champs.c
 */
 
-void					read_champ(int fd, int prog_num, t_champ *champ_ptr,
-							t_vm *vm, t_champ *champ_head);
+void					check_magic(t_champ *champ_ptr, t_info *info);
+void					check_file_size(t_champ *champ_ptr, t_info *info);
+void					read_champ(int fd, t_champ *champ_ptr, t_info *info);
 
 /*
 **	print_mem.c
