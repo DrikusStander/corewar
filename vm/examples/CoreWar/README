@@ -1,0 +1,9 @@
+Yes you don't automatically have execution rights on both asm and corewar,
+but you should know by now how to change that and be able to execute those
+two proprely. So copy this folder in your home before playing around.
+
+asm: reference assembler ./asm for usage
+corewar: reference virtual machine .corewar for usage
+Champions/: basic examples of champions
+
+To use corewar with graphic mode i suggest you to use a fullscreen terminal.
