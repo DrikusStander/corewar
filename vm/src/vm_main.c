@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 11:22:09 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 18:12:26 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int					main(int argc, char **argv)
 	t_vm			*vm;
 	t_info			*info;
 
-	if (argc < 2 || (argc - count_flags(argc, argv)) > MAX_PLAYERS + 1)
+	if (argc - count_flags(argc, argv) < 2 ||
+			(argc - count_flags(argc, argv)) > MAX_PLAYERS + 1)
 		print_usage_exit();
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));

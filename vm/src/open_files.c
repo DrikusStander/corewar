@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 13:47:06 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/11 18:08:43 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void			handle_flags(t_info *info, int *ctr)
 			info->vm->dump_cycle = ft_atoi(info->av[*ctr + 1]);
 		*ctr += 2;
 	}
-	if (ft_strcmp(info->av[*ctr], "-n") == 0)
+	if ((*ctr < info->ac) && ft_strcmp(info->av[*ctr], "-n") == 0)
 	{
 		if ((*ctr + 1) < info->ac)
 		{
