@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/10 13:05:17 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/12 11:58:44 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@ static int	ft_s(int arg1, int arg2, t_vm *vm, int c_pc)
 	int     arg;
 	int     s;
 
+	(void)c_pc;
 	s = arg1 + arg2;
-	arg = (((0x00ff & vm->mem[mem_check((c_pc + (s % IDX_MOD)))]) * 256) * 256) * 256;
+	arg = ft_direct(vm, &s);
+/*	arg = (((0x00ff & vm->mem[mem_check((c_pc + (s % IDX_MOD)))]) * 256) * 256) * 256;
 	arg += (((0x00ff & vm->mem[mem_check(((c_pc + 1) + (s % IDX_MOD)))]) * 256) * 256);
 	arg += ((0x00ff & vm->mem[mem_check(((c_pc + 2) + (s % IDX_MOD)))]) * 256);
 	arg += (0x00ff & vm->mem[mem_check(((c_pc + 3) + (s % IDX_MOD)))]);
-	return (arg);
+*/	return (arg);
 }
 
 static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 {
-	int		arg1;
-	int		temp;
+	int				arg1;
+	unsigned char	temp[2];
 
 	if (dec == 1)
 		arg1 = ft_reg(vm, c_pc, champ);
@@ -37,10 +39,9 @@ static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 	else
 	{
 		arg1 = ft_indirect(vm, c_pc);
-		temp = vm->mem[mem_check(champ->pc + arg1)] * 256;
-		temp += vm->mem[mem_check((champ->pc + 1) + arg1)];
-		temp = to_signed_int(temp, 16);
-		arg1 = temp;
+		temp[0] = vm->mem[mem_check(champ->pc + arg1)];
+		temp[1] = vm->mem[mem_check((champ->pc + 1) + arg1)];
+		arg1 = to_signed_ind(temp);
 	}
 	return (arg1);
 }

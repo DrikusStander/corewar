@@ -6,20 +6,58 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/11 16:20:31 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/12 14:55:24 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/vm.h"
 
-int			to_signed_int(unsigned int value, int bitlength)
+int			to_signed_ind(unsigned char *bytes)
 {
-	int		signed_value;
+	int		tmp;
 
-	signed_value = value;
-	if (value >> (bitlength - 1))
-		signed_value |= -1 << bitlength;
-	return (signed_value);
+	if (bytes[0] & 0b1000000)
+	{
+		bytes[0] = ~bytes[0];
+		bytes[1] = ~bytes[1];
+		tmp = ((0x00ff & bytes[0]) * 256);
+		tmp += ((0x00ff & bytes[1]));
+		tmp += 1;
+		tmp *= -1;
+	}
+	else
+	{
+		tmp = ((0x00ff & bytes[0]) * 256);
+		tmp += ((0x00ff & bytes[1]));
+	}
+	return(tmp);
+}
+
+int			to_signed_dir(unsigned char *bytes)
+{
+	int		tmp;
+
+	if (bytes[0] & 0b1000000)
+	{
+		bytes[0] = ~bytes[0];
+		bytes[1] = ~bytes[1];
+		bytes[2] = ~bytes[2];
+		bytes[3] = ~bytes[3];
+		tmp = ((0x00ff & bytes[0]) * 256 * 256 * 256);
+		tmp += ((0x00ff & bytes[1]) * 256 * 256);
+		tmp += ((0x00ff & bytes[2]) * 256);
+		tmp += ((0x00ff & bytes[3]));
+		tmp += 1;
+		tmp *= -1;
+	}
+	else
+	{
+		tmp = ((0x00ff & bytes[0]) * 256 * 256 * 256);
+		tmp += ((0x00ff & bytes[1]) * 256 * 256);
+		tmp += ((0x00ff & bytes[2]) * 256);
+		tmp += ((0x00ff & bytes[3]));
+	}
+	return(tmp);
 }
 
 void		ft_decode(unsigned int i, unsigned char *buf)

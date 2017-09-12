@@ -6,37 +6,40 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/10 13:03:40 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/12 11:17:22 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/vm.h"
 
+
 int			ft_direct(t_vm *vm, int *c_pc)
 {
-	int		arg;
+	unsigned char		bytes[4];
+	int					arg;
 
-	arg = (((0x00ff & vm->mem[*c_pc]) * 256) * 256) * 256;
+	bytes[0] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg += (((0x00ff & vm->mem[*c_pc]) * 256) * 256);
+	bytes[1] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg += ((0x00ff & vm->mem[*c_pc]) * 256);
+	bytes[2] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg += (0x00ff & vm->mem[*c_pc]);
+	bytes[3] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg = to_signed_int(arg, 32);
+	arg = to_signed_dir(bytes);
 	return (arg);
 }
 
 int			ft_indirect(t_vm *vm, int *c_pc)
 {
-	int		arg;
+	int				arg;
+	unsigned char	bytes[2];
 
-	arg = ((0x00ff & vm->mem[*c_pc]) * 256);
+	bytes[0] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg += (0x00ff & vm->mem[*c_pc]);
+	bytes[1] = (0x00ff & vm->mem[*c_pc]);
 	*c_pc = mem_check(*c_pc + 1);
-	arg = to_signed_int(arg, 16);
+	arg = to_signed_ind(bytes);
 	return (arg);
 }
 
@@ -59,7 +62,6 @@ static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 	else if (dec == 2)
 	{
 		arg1 = ft_direct(vm, c_pc);
-		arg1 = to_signed_int(arg1, 32);
 	}
 	else
 	{

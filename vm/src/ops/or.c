@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/10 13:05:29 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/12 11:17:37 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	ft_get_arg(t_vm *vm, int *c_pc, unsigned char dec, t_champ *champ)
 	else if (dec == 2)
 	{
 		arg1 = ft_direct(vm, c_pc);
-		arg1 = to_signed_int(arg1, 32);
 	}
 	else
 	{

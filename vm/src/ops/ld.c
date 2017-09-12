@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 09:06:17 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/10 13:04:30 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/12 11:57:46 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static int	indirect(t_champ *champ, t_vm *vm)
 		i++;
 		inc_pc(champ);
 	}
-	tmp = ((0x00ff & bytes[0]) * 256);
-	tmp += ((0x00ff & bytes[1]));
+	tmp = to_signed_ind(bytes);
 	return (tmp);
 }
 
@@ -58,10 +57,7 @@ static int	direct(t_champ *champ, t_vm *vm)
 	inc_pc(champ);
 	byte[3] = vm->mem[champ->pc];
 	inc_pc(champ);
-	tmp = (0x00ff & byte[0]) * 256 * 256 * 256;
-	tmp += ((0x00ff & byte[1]) * 256 * 256);
-	tmp += ((0x00ff & byte[2]) * 256);
-	tmp += ((0x00ff & byte[3]));
+	tmp = to_signed_dir(byte);
 	return (tmp);
 }
 
@@ -75,6 +71,7 @@ static int	direct(t_champ *champ, t_vm *vm)
 void		ft_ld(t_vm *vm, t_champ *champ)
 {
 	unsigned char	dec[4];
+	unsigned char	tmp[2];
 	int				val;
 	int				temp;
 	int				temp2;
@@ -86,16 +83,14 @@ void		ft_ld(t_vm *vm, t_champ *champ)
 	if (dec[0] == 2)
 	{
 		val = direct(champ, vm);
-		val = to_signed_int(val, 32);
 		champ->reg[vm->mem[champ->pc]] = val;
 	}
 	else
 	{
 		val = indirect(champ, vm);
-		val = to_signed_int(val, 16);
-		temp2 = vm->mem[mem_check(temp + (val % IDX_MOD))] * 256;
-		temp2 += vm->mem[mem_check((temp + 1) + (val % IDX_MOD))];
-		temp2 = to_signed_int(temp2, 16);
+		tmp[0] = vm->mem[mem_check(temp + (val % IDX_MOD))];
+		tmp[1] = vm->mem[mem_check((temp + 1) + (val % IDX_MOD))];
+		temp2 = to_signed_ind(tmp);
 		champ->reg[vm->mem[mem_check(champ->pc)]] = temp2; 
 	}
 	if (champ->reg[vm->mem[mem_check(champ->pc)]] == 0)
