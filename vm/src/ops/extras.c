@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/12 15:44:35 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 17:11:53 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		init_champ(t_champ *champ, t_champ *new_champ)
 	i = 0;
 	new_champ->player_num = champ->player_num;
 	new_champ->head = champ->head;
-	while (i < MEM_SIZE)
+	while (i < CHAMP_MAX_SIZE)
 	{
 		new_champ->prog[i] = champ->prog[i];
 		i++;
