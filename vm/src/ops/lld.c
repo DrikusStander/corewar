@@ -6,7 +6,7 @@
 /*   By: chgreen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 13:11:12 by chgreen           #+#    #+#             */
-/*   Updated: 2017/09/12 11:30:37 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 16:12:31 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@ static int	direct(t_champ *champ, t_vm *vm)
 	return (tmp);
 }
 
+static int	ft_mem(t_vm *vm, int arg, int c_pc)
+{
+	unsigned char	tmp[2];
+
+	tmp[0] = vm->mem[mem_check(c_pc + arg)];
+	tmp[1] = vm->mem[mem_check((c_pc + 1) + arg)];
+	arg = to_signed_ind(tmp);
+	return (arg);
+}
+
 /*
 **Fetches bytes from vm memory
 **decodes encoding byte
@@ -74,8 +84,6 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	unsigned char	dec[4];
 	int				val;
 	int				temp;
-	int				temp2;
-	unsigned char	tmp[2];
 
 	temp = champ->pc;
 	inc_pc(champ);
@@ -90,10 +98,7 @@ void		ft_lld(t_vm *vm, t_champ *champ)
 	else
 	{
 		val = indirect(champ, vm);
-		tmp[0] = vm->mem[mem_check(temp + val)];
-		tmp[1] = vm->mem[mem_check((temp + 1) + val)];
-		temp2 = to_signed_ind(tmp);
-		champ->reg[vm->mem[champ->pc]] = temp2;
+		champ->reg[vm->mem[champ->pc]] = ft_mem(vm, val, temp);
 	}
 	if (champ->reg[vm->mem[champ->pc]])
 		champ->carry = 0;

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 12:56:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/12 14:55:24 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 15:44:35 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			to_signed_ind(unsigned char *bytes)
 		tmp = ((0x00ff & bytes[0]) * 256);
 		tmp += ((0x00ff & bytes[1]));
 	}
-	return(tmp);
+	return (tmp);
 }
 
 int			to_signed_dir(unsigned char *bytes)
@@ -57,7 +57,7 @@ int			to_signed_dir(unsigned char *bytes)
 		tmp += ((0x00ff & bytes[2]) * 256);
 		tmp += ((0x00ff & bytes[3]));
 	}
-	return(tmp);
+	return (tmp);
 }
 
 void		ft_decode(unsigned int i, unsigned char *buf)

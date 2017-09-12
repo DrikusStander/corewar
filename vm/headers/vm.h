@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/12 11:12:11 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 16:23:42 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,70 +21,67 @@
 # include <ncurses.h>
 # include "../libft/libft.h"
 
-
-#define IND_SIZE				2
-#define REG_SIZE				4
-#define DIR_SIZE				REG_SIZE
-
+# define IND_SIZE				2
+# define REG_SIZE				4
+# define DIR_SIZE				REG_SIZE
 
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
 
+# define MAX_ARGS_NUMBER			4
+# define MAX_PLAYERS				4
+# define MEM_SIZE				(4*1024)
+# define IDX_MOD					(MEM_SIZE / 8)
+# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
-#define MAX_ARGS_NUMBER			4
-#define MAX_PLAYERS				4
-#define MEM_SIZE				(4*1024)
-#define IDX_MOD					(MEM_SIZE / 8)
-#define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+# define COMMENT_CHAR			'#'
+# define LABEL_CHAR				':'
+# define DIRECT_CHAR				'%'
+# define SEPARATOR_CHAR			','
 
-#define COMMENT_CHAR			'#'
-#define LABEL_CHAR				':'
-#define DIRECT_CHAR				'%'
-#define SEPARATOR_CHAR			','
+# define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-#define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
+# define NAME_CMD_STRING			".name"
+# define COMMENT_CMD_STRING		".comment"
 
-#define NAME_CMD_STRING			".name"
-#define COMMENT_CMD_STRING		".comment"
+# define REG_NUMBER				16
 
-#define REG_NUMBER				16
-
-#define CYCLE_TO_DIE			1536
-#define CYCLE_DELTA				50
-#define NBR_LIVE				21
-#define MAX_CHECKS				10
+# define CYCLE_TO_DIE			1536
+# define CYCLE_DELTA				50
+# define NBR_LIVE				21
+# define MAX_CHECKS				10
 
 typedef char	t_arg_type;
 
-#define T_REG					1
-#define T_DIR					2
-#define T_IND					4
-#define T_LAB					8
+# define T_REG					1
+# define T_DIR					2
+# define T_IND					4
+# define T_LAB					8
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct          s_op
+typedef struct			s_op
 {
-	char                *name;
-	int                 no_args;
-	char                type[MAX_ARGS_NUMBER];
-	char                id;
+	char				*name;
+	int					no_args;
+	char				type[MAX_ARGS_NUMBER];
+	char				id;
 	int					no_cycles;
-	char                *desc;
-	int                 has_acb;
-	int                 is_index;
-}                       t_op;
+	char				*desc;
+	int					has_acb;
+	int					is_index;
+}						t_op;
 
-extern  t_op            g_op_tab[];
+extern t_op				g_op_tab[];
 
-typedef struct header_s	header_t;
+typedef struct s_header	t_header;
 typedef struct s_champ	t_champ;
 typedef struct s_vm		t_vm;
 
-struct					header_s
+struct					s_header
 {
 	unsigned int		magic;
 	char				prog_name[PROG_NAME_LENGTH + 1];
@@ -95,7 +92,7 @@ struct					header_s
 struct					s_champ
 {
 	int					player_num;
-	header_t			head;
+	t_header			head;
 	unsigned char		prog[CHAMP_MAX_SIZE];
 	int					alive;
 	int					called_alive;
@@ -129,7 +126,6 @@ typedef struct			s_info
 	int					p_num;
 }						t_info;
 
-
 /*
 **	check_key_swop_bytes.c
 */
@@ -146,7 +142,7 @@ int						get_next_player_number(t_champ *champ_head);
 int						check_availible_num(t_champ *champ_head, int nbr);
 void					malloc_new_champ(t_info *info, int ctr, t_champ
 							**champ_ptr);
-		
+
 /*
 **	read_champs.c
 */
@@ -169,7 +165,8 @@ void					print_mem_nc(const void *addr, size_t size, int bit);
 **	init_vm.c
 */
 
-void					alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset);
+void					alloc_champ_mem(t_vm *vm, t_champ *champ_ptr,
+							int offset);
 void					init_vm(t_vm *vm, t_champ *champ_head, int argc);
 
 /*
@@ -217,7 +214,6 @@ void					print_usage_flags(int argc, char **argv, int arg_count);
 int						count_flags(int argc, char **argv);
 void					find_winner_struct(t_champ *champ_head, int ll);
 void					reverse_list(t_champ **champ_head);
-
 
 /*
 **	opcodes .c

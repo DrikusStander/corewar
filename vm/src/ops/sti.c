@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/12 11:53:48 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 16:14:40 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	ft_to_mem(int arg1, int arg2, t_champ *champ, t_vm *vm)
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0x0000ff00) >> 8;
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0xff0000ff);
 }
-
 
 static int	ft_get_arg(unsigned char dec, int *c_pc, t_vm *vm, t_champ *champ)
 {

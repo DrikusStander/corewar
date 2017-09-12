@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/12 15:22:51 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 16:15:11 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ int					main(int argc, char **argv)
 	free(info);
 	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
 	reverse_list(&champ_head);
-	run_machine_run(champ_head, vm);	
+	run_machine_run(champ_head, vm);
+	print_vm(*vm, 64);
 	find_winner_struct(champ_head, vm->last_live);
 	free_structs(&champ_head, &vm);
 	return (0);

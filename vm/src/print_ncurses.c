@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/12 12:41:58 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 16:15:03 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static unsigned char	*print_line_nc(unsigned char *mem, size_t size, int bit)
 		printw("   ");
 		++mem_c;
 	}
-	//refresh();
 	return (mem_c);
 }
 

@@ -6,12 +6,11 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/12 11:17:22 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/12 15:44:08 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/vm.h"
-
 
 int			ft_direct(t_vm *vm, int *c_pc)
 {
