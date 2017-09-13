@@ -5,51 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/05/29 11:02:17 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/08/28 13:10:37 by hstander         ###   ########.fr        #
+#    Created: 2017/09/13 13:39:56 by gvan-roo          #+#    #+#              #
+#    Updated: 2017/09/13 16:42:11 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	asm
+NAME_A		=	asm
 
-PATH_HEAD	=	./headers/
-PATH_LIB	=	./libft/
-PATH_SRC	=	./src/
-PATH_OSC	=	./orc/
+SDIR_A		=	./src
+ODIR_A		=	./obj
+IDIR_A		=	./headers
+CFLAGS_A	=	-I$(IDIR_A)
+LDIR		=	./libft
+LIBS_A		=	-lft
 
-HEADERS		=	asm.h
+_DEPS_A		=	asm.h op.h
+DEPS_A		=	$(patsubst %,$(IDIR_A)/%,$(_DEPS_A))
 
-SRC			=	$(PATH_SRC)asm_main.c\
-				$(PATH_SRC)check.c\
-				$(PATH_SRC)list.c\
-				$(PATH_SRC)extras.c\
-				$(PATH_SRC)parse_line.c\
-				$(PATH_SRC)free.c\
-				$(PATH_SRC)label_offset.c\
-				$(PATH_SRC)name_comment.c\
-				$(PATH_SRC)init.c\
-				$(PATH_SRC)op.c\
-				$(PATH_SRC)st.c\
-				$(PATH_SRC)and.c\
-				$(PATH_SRC)or.c\
-				$(PATH_SRC)xor.c\
-				$(PATH_SRC)find_offset.c\
-				$(PATH_SRC)ld.c\
-				$(PATH_SRC)zjmp.c\
-				$(PATH_SRC)ldi.c\
-				$(PATH_SRC)sti.c\
-				$(PATH_SRC)ft_fork.c\
-				$(PATH_SRC)lld.c\
-				$(PATH_SRC)lldi.c\
-				$(PATH_SRC)lfork.c\
-				$(PATH_SRC)add.c\
-				$(PATH_SRC)sub.c\
-				$(PATH_SRC)live.c\
-				$(PATH_SRC)aff.c\
-				$(PATH_SRC)error.c\
-				$(PATH_SRC)extras2.c\
-
-OSC			=	asm_main.o\
+_OBJ_A		=	asm_main.o\
 				check.o\
 				list.o\
 				extras.o\
@@ -77,26 +50,24 @@ OSC			=	asm_main.o\
 				live.o\
 				aff.o\
 				error.o\
-				extras2.o\
+				extras2.o
+OBJ_A		=	$(patsubst %,$(ODIR_A)/%,$(_OBJ_A))
 
-FLAGS		=	-Wall -Werror -Wextra
+all:	$(NAME_A)
 
-all	:	$(NAME)
+$(ODIR_A)/%.o:	$(SDIR_A)/%.c
+	gcc -c -o $@ $< $(CFLAGS_A)
 
-$(NAME)	:	$(OSRC)
-	make -C $(PATH_LIB) fclean && make -C $(PATH_LIB)
-	gcc $(FLAGS) -I $(PATH_HEAD)$(HEADERS) -c $(SRC)
-	gcc -o $(NAME) $(OSC) -L$(PATH_LIB) -lft -ltermcap
+$(NAME_A):	$(OBJ_A)
+	make -C $(LDIR) re
+	gcc -o $@ $^ $(CFLAGS_A) -L$(LDIR) $(LIBS_A)
 
-$(OSRC) :
-	
-clean	:
-	rm -f $(OSC)
-	make -C $(PATH_LIB) clean
-
-fclean	:	clean
-	rm -f $(NAME)
-	make -C $(PATH_LIB) fclean
-
-re	:	fclean
+.PHONY:	clean fclean re
+clean:
+	rm -f $(ODIR_A)/*.o
+	make -C $(LDIR) clean
+fclean:	clean
+	rm -f $(NAME_A)
+	make -C $(LDIR) fclean
+re:	fclean
 	make
