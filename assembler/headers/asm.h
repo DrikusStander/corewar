@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/14 08:42:05 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 10:14:01 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ void					delete_cor(int error, t_args *ag);
 char					*ft_join(char *str, int begin, int len);
 int						arg_label(int arg, t_args *ag, t_prog *lst);
 char					*ft_substr(char *str, int len);
+void					ft_check_lbl(char *lbl, t_args *ag);
 
 #endif

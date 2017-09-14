@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:05:41 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 13:48:21 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 10:40:57 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,33 @@ char		*ft_substr(char *str, int len)
 	sub = ft_strsub(str, 0, len);
 	free(str);
 	return (sub);
+}
+
+void		ft_check_lbl(char *lbl, t_args *ag)
+{
+	int		i;
+	int		j;
+	int		flag;
+	char	*cmp;
+
+	i = 0;
+	flag = 0;
+	cmp = LABEL_CHARS;
+	while (lbl[i])
+	{
+		j = 0;
+		while (cmp[j])
+		{
+			if (lbl[i] == cmp[j])
+			{
+				flag = 1;
+				break ;
+			}
+			j++;
+		}
+		if (flag == 0)
+			my_error(8, ag);
+		flag = 0;
+		i++;
+	}
 }

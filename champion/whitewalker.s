@@ -2,7 +2,7 @@
 
 .comment "winter is coming"
 
-main:
+mai99n:
 ld %0, r2		#loads 0 into r2, modifies carry	r2 = 0			carry = 1
 st r1, r3		#copies player number into r3		r3 = pn
 st r3, 6		#load player number into live
