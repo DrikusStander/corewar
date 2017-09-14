@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 13:19:44 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 14:39:40 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/14 14:42:34 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void				check_magic(t_champ *champ_ptr, t_info *info)
 {
 	if (champ_ptr->head.magic != COREWAR_EXEC_MAGIC)
 	{
-		ft_printf("\nInvalid file magic number for %s - exiting\n",
-				champ_ptr->head.prog_name);
+		ft_printf("\nInvalid file magic number for player %i - exiting\n",
+				champ_ptr->player_num);
 		free_structs(&(info->champ_head), &(info->vm));
 		free(info);
 		exit(0);
@@ -77,8 +77,8 @@ void				read_champ(int fd, t_champ *champ_ptr, t_info *info)
 {
 	read(fd, (void *)&champ_ptr->head.magic, 4);
 	champ_ptr->head.magic = swop_bytes(champ_ptr->head.magic, 4);
-	check_magic(champ_ptr, info);
 	champ_ptr->player_num = info->p_num;
+	check_magic(champ_ptr, info);
 	read(fd, champ_ptr->head.prog_name, PROG_NAME_LENGTH);
 	lseek(fd, 136, SEEK_SET);
 	read(fd, (void *)&champ_ptr->head.prog_size, 4);
