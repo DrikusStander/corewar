@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 13:18:12 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 13:20:27 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:54:01 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 	else
 	{
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = ft_checknum(sub);
+		arg_param = ft_checknum(sub, ag);
 		free(sub);
 		if (lst->data[arg][0] == 'r' && (arg_param < 1 || arg_param > 16))
 			my_error(1, ag);
@@ -94,13 +94,13 @@ static void			create_param(t_args *ag, t_prog *lst)
 		free(sub);
 	}
 	else
-		arg_param = ft_checknum(lst->data[1]);
+		arg_param = ft_checknum(lst->data[1], ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[1][0]);
 	if (lst->data[2][0] == 'r' || lst->data[2][0] == '%')
 		arg_param = check_if_label(lst, 2, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
 	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
-	arg_param = ft_checknum(sub);
+	arg_param = ft_checknum(sub, ag);
 	if (arg_param < 1 || arg_param > 16)
 		my_error(1, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[3][0]);

@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:57:02 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 12:03:28 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:50:33 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static int			create_param_sub(char *arg1, t_args *ag, t_prog *lst)
 		else
 		{
 			sub = ft_strsub(arg1, 1, (ft_strlen(arg1) - 1));
-			arg_param = ft_checknum(sub);
+			arg_param = ft_checknum(sub, ag);
 		}
 	}
 	else
 	{
 		sub = ft_strsub(arg1, 1, (ft_strlen(arg1) - 1));
-		arg_param = ft_checknum(sub);
+		arg_param = ft_checknum(sub, ag);
 	}
 	free(sub);
 	return (arg_param);
@@ -98,10 +98,10 @@ static void			create_param(char *arg1, char *reg, t_args *ag, t_prog *lst)
 		free(sub);
 	}
 	else
-		arg_param = ft_checknum(arg1);
+		arg_param = ft_checknum(arg1, ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, arg1[0]);
 	sub = ft_strsub(reg, 1, (ft_strlen(reg) - 1));
-	arg_param = ft_checknum(sub);
+	arg_param = ft_checknum(sub, ag);
 	free(sub);
 	if (arg_param < 1 || arg_param > 16)
 		my_error(1, ag);

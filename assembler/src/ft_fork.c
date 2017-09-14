@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 08:19:21 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 11:40:51 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:48:57 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void			ft_fork(t_args *ag, t_prog *lst)
 	else
 	{
 		sub = ft_strsub(lst->data[1], 1, (ft_strlen(lst->data[1]) - 1));
-		arg_param = ft_checknum(sub);
+		arg_param = ft_checknum(sub, ag);
 	}
 	free(sub);
 	swop_int_bits(ag->fd, arg_param);

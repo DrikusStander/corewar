@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 11:41:47 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:46:10 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 	else
 	{
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = ft_checknum(sub);
+		arg_param = ft_checknum(sub, ag);
 	}
 	free(sub);
 	return (arg_param);

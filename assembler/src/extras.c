@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 11:04:39 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 13:09:59 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:41:32 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ft_chrn_i(char *str, char c)
 	return (-1);
 }
 
-int		ft_checknum(char *sub)
+int		ft_checknum(char *sub, t_args *ag)
 {
 	int		i;
 
@@ -90,8 +90,7 @@ int		ft_checknum(char *sub)
 		{
 			if (sub[i] != '-')
 			{
-				ft_printf("illigal arguement\n");
-				exit(0);
+				my_error(2, ag);
 			}
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 13:48:01 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 12:46:03 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 08:51:58 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int			check_if_label(t_prog *lst, int arg, t_args *ag)
 	else
 	{
 		sub = ft_strsub(lst->data[arg], 1, (ft_strlen(lst->data[arg]) - 1));
-		arg_param = ft_checknum(sub);
+		arg_param = ft_checknum(sub, ag);
 		free(sub);
 		if (lst->data[arg][0] == 'r' && (arg_param < 1 || arg_param > 16))
 			my_error(1, ag);
@@ -95,10 +95,10 @@ static void			create_param(t_args *ag, t_prog *lst)
 	else if (lst->data[2][0] == ':')
 		arg_param = arg_label(2, ag, lst);
 	else
-		arg_param = ft_checknum(lst->data[2]);
+		arg_param = ft_checknum(lst->data[2], ag);
 	arg_param = swop_int_bits(ag->fd, arg_param, lst->data[2][0]);
 	sub = ft_strsub(lst->data[3], 1, (ft_strlen(lst->data[3]) - 1));
-	arg_param = ft_checknum(sub);
+	arg_param = ft_checknum(sub, ag);
 	free(sub);
 	if (arg_param < 1 || arg_param > 16)
 		my_error(1, ag);
