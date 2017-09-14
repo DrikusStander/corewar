@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/12 17:11:55 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 09:15:58 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <ncurses.h>
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 
 # define IND_SIZE				2
 # define REG_SIZE				4

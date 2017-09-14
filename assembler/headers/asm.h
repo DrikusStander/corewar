@@ -6,14 +6,14 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/14 10:14:01 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 10:48:13 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ASM_H
 # define __ASM_H
 
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include "op.h"
