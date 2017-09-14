@@ -6,7 +6,7 @@
 #    By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 13:39:56 by gvan-roo          #+#    #+#              #
-#    Updated: 2017/09/13 15:46:25 by gvan-roo         ###   ########.fr        #
+#    Updated: 2017/09/14 08:20:25 by gvan-roo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,7 @@ OBJ_C		=	$(patsubst %,$(ODIR_C)/%,$(_OBJ_C))
 all:	$(NAME_A) $(NAME_C)
 
 $(ODIR_A)/%.o:	$(SDIR_A)/%.c
+	@mkdir -p $(ODIR_A)
 	gcc -c -o $@ $< $(CFLAGS_A)
 
 $(NAME_A):	$(OBJ_A)
@@ -104,6 +105,7 @@ $(NAME_A):	$(OBJ_A)
 	gcc -o $@ $^ $(CFLAGS_A) -L$(LDIR) $(LIBS_A)
 
 $(ODIR_C)/%.o:	$(SDIR_C)/%.c
+	@mkdir -p $(ODIR_C)
 	gcc -c -o $@ $< $(CFLAGS_C)
 
 $(NAME_C):	$(OBJ_C)
