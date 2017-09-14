@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:59:32 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/14 10:48:13 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 12:49:34 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ struct					s_args
 	char				**ref;
 	char				**ref2;
 	int					fd;
+	int					name_f;
+	int					comment_f;
 };
 
 int						check_arguments(t_args *ag, int argc, char **argv);
@@ -91,5 +93,6 @@ char					*ft_join(char *str, int begin, int len);
 int						arg_label(int arg, t_args *ag, t_prog *lst);
 char					*ft_substr(char *str, int len);
 void					ft_check_lbl(char *lbl, t_args *ag);
+void					check_nm_com(t_args *ag);
 
 #endif

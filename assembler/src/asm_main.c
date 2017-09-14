@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 10:21:51 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/08/28 17:18:38 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 12:50:41 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int			main(int argc, char **argv)
 	ag.header = (t_header *)ft_memalloc(sizeof(t_header));
 	ag.fd = check_arguments(&ag, argc, argv);
 	ft_readfile(&ag);
+	check_nm_com(&ag);
 	ag.fd = open(ag.file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	ft_init(&ag);
 	lst = ag.head;

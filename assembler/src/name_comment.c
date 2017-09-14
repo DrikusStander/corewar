@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 15:13:23 by hstander          #+#    #+#             */
-/*   Updated: 2017/08/28 16:55:00 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/14 12:49:13 by hstander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_name(t_args *ag, int i)
 			exit(6);
 		}
 		ft_strcpy(ag->header->prog_name, temp);
+		ag->name_f = 1;
 		free(temp);
 	}
 	else
@@ -62,6 +63,7 @@ void	ft_comment(t_args *ag, int i)
 			exit(6);
 		}
 		ft_strcpy(ag->header->comment, temp);
+		ag->comment_f = 1;
 		free(temp);
 	}
 	else
@@ -109,4 +111,18 @@ void	ft_nm_com(t_args *ag)
 	}
 	else
 		exit(ft_exit_nmcm(ag, -3));
+}
+
+void	check_nm_com(t_args *ag)
+{
+	if (ag->name_f == 0)
+	{
+		ft_printf_fd(2, "No name present\nAborting ...\n");
+		exit(-1);
+	}
+	if (ag->comment_f == 0)
+	{
+		ft_printf_fd(2, "No comment present\nAborting ...\n");
+		exit(-1);
+	}
 }
