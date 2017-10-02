@@ -6,23 +6,32 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:07:23 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/12 16:15:03 by hstander         ###   ########.fr       */
+/*   Updated: 2017/09/27 07:59:52 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/vm.h"
 
+void					index_inc(int *i)
+{
+	*i += 1;
+	if (*i == MEM_SIZE)
+		i = 0;
+}
+
 /*
 **	Function for printing out bytes in hexadecimal
 */
 
-static void				ft_print_hex_nc(int c)
+static void				ft_print_hex_nc(unsigned char c, unsigned char memp)
 {
 	char				*map;
 
+	attron(COLOR_PAIR(memp));
 	map = ft_strdup("0123456789abcdef");
 	addch(*(map + (c / 16)));
 	addch(*(map + (c % 16)));
+	attroff(COLOR_PAIR(memp));
 	free(map);
 }
 
@@ -31,23 +40,25 @@ static void				ft_print_hex_nc(int c)
 **	bit is the amount of bytes printed on a single nine
 */
 
-static unsigned char	*print_line_nc(unsigned char *mem, size_t size, int bit)
+static void				print_line_nc(t_vm *vm, size_t size, int bit, int *i)
 {
-	unsigned char		*mem_c;
+	t_vm				*mem_c;
+	int					k;
 
-	mem_c = mem;
-	while ((size_t)(mem_c - mem) < size && (mem_c - mem) < bit)
+	k = 0;
+	mem_c = vm;
+	while ((size_t)k < size && k < bit)
 	{
-		ft_print_hex_nc(*mem_c);
+		ft_print_hex_nc(mem_c->mem[*i], vm->mem_p[*i]);
 		printw(" ");
-		++mem_c;
+		index_inc(i);
+		k++;
 	}
-	while ((mem_c - mem) < bit)
+	while (k < bit)
 	{
 		printw("   ");
-		++mem_c;
+		k++;
 	}
-	return (mem_c);
 }
 
 /*
@@ -55,16 +66,23 @@ static unsigned char	*print_line_nc(unsigned char *mem, size_t size, int bit)
 **	of size size.
 */
 
-void					print_mem_nc(const void *addr, size_t size, int bit)
+void					print_mem_nc(t_vm *vm, size_t size, int bit)
 {
-	unsigned char		*mem;
+	t_vm				*vmc;
+	int					i;
+	int					lc;
 
-	mem = (unsigned char *)addr;
+	vmc = vm;
+	i = 0;
+	lc = 0;
 	while ((long int)size > 0)
 	{
-		mem = print_line_nc(mem, size, bit);
+		if (lc < 62)
+		{
+			print_line_nc(vmc, size, bit, &i);
+		}
+		lc++;
 		printw("\n");
-		refresh();
 		size -= bit;
 	}
 }

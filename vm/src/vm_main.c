@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:34:55 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/13 16:01:50 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 07:24:45 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void				print_usage_flags(int argc, char **argv, int arg_count)
 **	usage with subfunction print_usage.
 */
 
-int					count_flags(int argc, char **argv)
+int					count_flags(int argc, char **argv, int *nc)
 {
 	int				ret;
 	int				arg_count;
@@ -59,6 +59,11 @@ int					count_flags(int argc, char **argv)
 			print_usage_flags(argc, argv, arg_count);
 			ret += 2;
 		}
+		else if (ft_strcmp(argv[argc], "-ncurses") == 0)
+		{
+			*nc = 1;
+			ret++;
+		}
 		argc--;
 	}
 	return (ret);
@@ -69,7 +74,7 @@ int					count_flags(int argc, char **argv)
 **	out the winner
 */
 
-void				find_winner_struct(t_champ *champ_head, int ll)
+void				find_winner_struct(t_champ *champ_head, int ll, int ncurses)
 {
 	t_champ			*champ_ptr;
 
@@ -81,8 +86,12 @@ void				find_winner_struct(t_champ *champ_head, int ll)
 	champ_ptr = champ_head;
 	while (champ_ptr && champ_ptr->player_num != ll)
 		champ_ptr = champ_ptr->next;
-	ft_printf("Player %i (%s) is the winner\n", champ_ptr->player_num,
-			champ_ptr->head.prog_name);
+	if (ncurses == 1)
+		printw("Player %i (%s) is the winner\n", champ_ptr->player_num,
+				champ_ptr->head.prog_name);
+	else
+		ft_printf("Player %i (%s) is the winner\n", champ_ptr->player_num,
+				champ_ptr->head.prog_name);
 }
 
 /*
@@ -120,20 +129,24 @@ int					main(int argc, char **argv)
 	t_champ			*champ_head;
 	t_vm			*vm;
 	t_info			*info;
+	int				nc;
 
-	if (argc - count_flags(argc, argv) < 2 ||
-			(argc - count_flags(argc, argv)) > MAX_PLAYERS + 1)
+	nc = 0;
+	if (argc - count_flags(argc, argv, &nc) < 2 ||
+			(argc - count_flags(argc, argv, &nc)) > MAX_PLAYERS + 1)
 		print_usage_exit();
 	champ_head = ft_memalloc(sizeof(t_champ));
 	vm = ft_memalloc(sizeof(t_vm));
 	info = ft_memalloc(sizeof(t_info));
 	read_main_info(argv, champ_head, vm, info);
+	vm->ncurses = nc;
 	open_files(info);
 	free(info);
-	init_vm(vm, champ_head, (argc - count_flags(argc, argv)));
+	init_vm(vm, champ_head, (argc - count_flags(argc, argv, &nc)));
 	reverse_list(&champ_head);
 	run_machine_run(champ_head, vm);
-	find_winner_struct(champ_head, vm->last_live);
+	find_winner_struct(champ_head, vm->last_live, nc);
 	free_structs(&champ_head, &vm);
+	end_ncurses(nc);
 	return (0);
 }

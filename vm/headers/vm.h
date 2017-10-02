@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 08:35:37 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/14 09:15:58 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 08:25:54 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ struct					s_champ
 struct					s_vm
 {
 	unsigned char		mem[MEM_SIZE];
+	unsigned char		mem_p[MEM_SIZE];
+	unsigned int		ncurses;
 	long long			cur_cycle;
 	unsigned int		dump_cycle;
 	unsigned int		total_cycles;
@@ -159,7 +161,15 @@ void					ft_print_hex(int c);
 unsigned char			*print_line(unsigned char *mem, size_t size, int bit);
 void					print_memory(const void *addr, size_t size, int bit);
 int						get_int_from_mem(unsigned char *mem, int size);
-void					print_mem_nc(const void *addr, size_t size, int bit);
+void					print_mem_nc(t_vm *vm, size_t size, int bit);
+
+/*
+**	print_ncurses.c
+*/
+
+void					index_inc(int *i);
+static void				ft_print_hex_nc(unsigned char c, unsigned char memp);
+static void				print_line_nc(t_vm *vm, size_t size, int bit, int *i);
 
 /*
 **	init_vm.c
@@ -205,14 +215,17 @@ void					unable_to_open(t_info *info, int ctr);
 */
 
 void					check_dump_cycle(t_champ *champ_head, t_vm *vm);
+void					init_ncurses(int ncurses);
+void					end_ncurses(int ncurses);
+void					print_ifno_nc(t_vm *vm, t_champ *champ);
 
 /*
 **	vm_main.c
 */
 
 void					print_usage_flags(int argc, char **argv, int arg_count);
-int						count_flags(int argc, char **argv);
-void					find_winner_struct(t_champ *champ_head, int ll);
+int						count_flags(int argc, char **argv, int *nc);
+void					find_winner_struct(t_champ *champ_head, int ll, int nc);
 void					reverse_list(t_champ **champ_head);
 
 /*

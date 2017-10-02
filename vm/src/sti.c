@@ -6,7 +6,7 @@
 /*   By: hstander <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:51:54 by hstander          #+#    #+#             */
-/*   Updated: 2017/09/13 15:36:14 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 07:57:55 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ static void	ft_to_mem(int arg1, int arg2, t_champ *champ, t_vm *vm)
 	int		c_pc;
 
 	c_pc = champ->pc;
+	vm->mem_p[mem_check(c_pc + (arg2 % IDX_MOD))] = champ->player_num;
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0xff000000) >> 24;
+	vm->mem_p[mem_check(c_pc + (arg2 % IDX_MOD))] = champ->player_num;
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0x00ff0000) >> 16;
+	vm->mem_p[mem_check(c_pc + (arg2 % IDX_MOD))] = champ->player_num;
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0x0000ff00) >> 8;
+	vm->mem_p[mem_check(c_pc + (arg2 % IDX_MOD))] = champ->player_num;
 	vm->mem[mem_check(c_pc++ + (arg2 % IDX_MOD))] = (arg1 & 0xff0000ff);
 }
 

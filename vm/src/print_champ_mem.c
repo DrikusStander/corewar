@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:14:45 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 15:26:11 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 08:00:36 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@
 
 void				print_vm_nc(t_vm vm, int bit)
 {
-	initscr();
 	move(0, 0);
+	start_color();
 	printw("Deluxe Virtual Machine Current State :   ");
 	printw("Current cycle :%i   ", vm.cur_cycle);
 	printw("Cycle to die  :%i   ", vm.cycle_to_die);
-	printw("Cycle delta   :%i   \n", vm.cycle_delta);
+	printw("Cycle delta   :%i   ", vm.cycle_delta);
+	printw("Last live call: Player %i\n", vm.last_live);
+	print_mem_nc(&vm, MEM_SIZE, bit);
 	refresh();
-	print_mem_nc((void *)&vm.mem, MEM_SIZE, bit);
 }
 
 /*

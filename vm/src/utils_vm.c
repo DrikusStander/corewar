@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 11:45:26 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 16:11:40 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 07:48:35 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void				print_usage_exit(void)
 			MAX_PLAYERS);
 	ft_printf("    -dump <nbr_cycles> - dumps memory after nbr_cycles\n");
 	ft_printf("    -n <player_nbr> - assigns the next player player_nbr\n");
+	ft_printf("    -ncurses - runs the program with ncurses output\n");
 	exit(0);
 }
 

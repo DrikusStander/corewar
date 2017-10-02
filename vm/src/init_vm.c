@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:21:41 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 17:35:26 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 08:02:18 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void				alloc_champ_mem(t_vm *vm, t_champ *champ_ptr, int offset)
 	while (ctr < champ_ptr->head.prog_size)
 	{
 		vm->mem[offset] = champ_ptr->prog[ctr];
+		vm->mem_p[offset] = champ_ptr->player_num;
 		offset++;
 		ctr++;
 	}
@@ -69,6 +70,7 @@ void				init_vm(t_vm *vm, t_champ *champ_head, int argc)
 	space = MEM_SIZE / (argc - 1);
 	champ_offset = 0;
 	ft_bzero(vm->mem, MEM_SIZE);
+	ft_bzero(vm->mem_p, MEM_SIZE);
 	while (champ_ptr)
 	{
 		alloc_champ_mem(vm, champ_ptr, champ_offset);

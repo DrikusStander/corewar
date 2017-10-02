@@ -6,7 +6,7 @@
 /*   By: gvan-roo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 16:17:54 by gvan-roo          #+#    #+#             */
-/*   Updated: 2017/09/11 18:08:43 by gvan-roo         ###   ########.fr       */
+/*   Updated: 2017/09/27 08:01:16 by gvan-roo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int					check_availible_num(t_champ *champ_head, int nbr)
 		{
 			ft_printf("Player number %i already in use -", nbr);
 			ft_printf(" system generating a new one\n");
+			sleep(3);
 			return (1);
 		}
 		champ_ptr = champ_ptr->next;
@@ -70,9 +71,9 @@ static void			handle_flags(t_info *info, int *ctr)
 			info->p_num = ft_atoi(info->av[*ctr + 1]);
 			if (info->p_num < 1 || info->p_num > 4)
 			{
-				ft_printf("Invalid player number %i - number", info->p_num);
-				ft_printf(" must be between 1 and 4. A player number ");
-				ft_printf("will be system generated\n");
+				ft_printf("Invalid player number %i - number. ", info->p_num);
+				ft_printf("A player number will be system generated\n");
+				sleep(3);
 				info->p_num = get_next_player_number(info->champ_head);
 			}
 			else if (check_availible_num(info->champ_head, info->p_num))
@@ -80,6 +81,8 @@ static void			handle_flags(t_info *info, int *ctr)
 		}
 		*ctr += 2;
 	}
+	else if ((*ctr < info->ac) && ft_strcmp(info->av[*ctr], "-ncurses") == 0)
+		*ctr += 1;
 }
 
 /*
@@ -116,7 +119,8 @@ void				open_files(t_info *info)
 	while (ctr < info->ac)
 	{
 		if ((ft_strcmp(info->av[ctr], "-dump") == 0) ||
-				(ft_strcmp(info->av[ctr], "-n") == 0))
+				(ft_strcmp(info->av[ctr], "-n") == 0) ||
+					(ft_strcmp(info->av[ctr], "-ncurses") == 0))
 		{
 			handle_flags(info, &ctr);
 			continue ;
